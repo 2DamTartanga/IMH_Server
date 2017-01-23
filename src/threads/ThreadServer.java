@@ -1,5 +1,14 @@
 package threads;
 
-public class ThreadServer {
+import java.net.ServerSocket;
 
+public class ThreadServer extends Thread{
+	
+	private ServerSocket serverSocket;
+	
+	
+	@Override
+	public void run(){
+		
+	}
 }

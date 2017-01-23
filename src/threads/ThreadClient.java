@@ -1,5 +1,13 @@
 package threads;
 
-public class ThreadClient {
+import java.net.Socket;
 
+public class ThreadClient extends Thread {
+	
+	private Socket client;
+
+	@Override
+	public void run(){
+		
+	}
 }
