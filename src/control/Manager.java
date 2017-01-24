@@ -6,6 +6,7 @@ import interfaces.Database;
 import model.Group;
 import model.Issue;
 import model.Machine;
+import model.Message;
 import model.User;
 import model.WorkOrder;
 import model.WorkZone;
@@ -25,6 +26,49 @@ public class Manager implements Database {
 		}
 		return singleton;
 	}
+	
+	public void manageMessages(Message msg){
+		switch (msg.getAction()) {
+		case Message.ADD:
+			
+			break;
+		case Message.MOD:
+			
+			break;
+		case Message.DEL:
+			
+			break;
+		case Message.GET:
+			
+			break;
+
+		default:
+			break;
+		}
+	}
+	public void add(Message msg){
+		switch (msg.getObject()) {
+		case Message.GROUP:
+			addGroup((Group) msg.getContent());
+			break;
+
+		default:
+			break;
+		}
+	}
+	public void mod(Message msg){
+		
+	}
+	public void del(Message msg){
+		
+	}
+	public void get(Message msg){
+		
+	}
+	public void others(Message msg){
+		
+	}
+	
 
 	@Override
 	public User login(User user) throws Exception {
@@ -63,7 +107,6 @@ public class Manager implements Database {
 
 	@Override
 	public boolean addMachine(Machine machine) throws Exception {
-		// TODO Auto-generated method stub
 		return dbm.addMachine(machine);
 	}
 
