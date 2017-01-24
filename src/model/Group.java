@@ -10,4 +10,12 @@ public class Group {
 		this.isDirective = isDirective;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public boolean isDirective() {
+		return isDirective;
+	}
+	
 }

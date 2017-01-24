@@ -22,6 +22,7 @@ public class Machine {
 	private String severity;
 	private String fileSearch;
 	
+	
 	public Machine(String code, String type, String year, String phoneNumber, String model, String serialNumber,
 			String manager, String electricConnection, boolean hasPneumaticConnection, boolean hasHidraulicSystem,
 			String dimmensions, String powerSource, String weight, String typeOfOil, String workingPressure, int state,
@@ -45,6 +46,101 @@ public class Machine {
 		this.manufacturer = manufacturer;
 		this.severity = severity;
 		this.fileSearch = fileSearch;
+	}
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+	public String getType() {
+		return type;
+	}
+
+
+	public String getYear() {
+		return year;
+	}
+
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+	public String getModel() {
+		return model;
+	}
+
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+
+	public String getManager() {
+		return manager;
+	}
+
+
+	public String getElectricConnection() {
+		return electricConnection;
+	}
+
+
+	public boolean isHasPneumaticConnection() {
+		return hasPneumaticConnection;
+	}
+
+
+	public boolean isHasHidraulicSystem() {
+		return hasHidraulicSystem;
+	}
+
+
+	public String getDimmensions() {
+		return dimmensions;
+	}
+
+
+	public String getPowerSource() {
+		return powerSource;
+	}
+
+
+	public String getWeight() {
+		return weight;
+	}
+
+
+	public String getTypeOfOil() {
+		return typeOfOil;
+	}
+
+
+	public String getWorkingPressure() {
+		return workingPressure;
+	}
+
+
+	public int getState() {
+		return state;
+	}
+
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+
+	public String getSeverity() {
+		return severity;
+	}
+
+
+	public String getFileSearch() {
+		return fileSearch;
 	}
 	
 	
