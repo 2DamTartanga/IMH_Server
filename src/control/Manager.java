@@ -1,6 +1,5 @@
 package control;
 
-
 import db.DBManager;
 import interfaces.Database;
 import model.Group;
@@ -15,60 +14,192 @@ public class Manager implements Database {
 
 	private static Manager singleton;
 	private DBManager dbm;
-	
-	private Manager(){
+
+	private Manager() {
 		dbm = new DBManager();
 	}
-	
-	public Manager getInstance(){
-		if(singleton == null){
+
+	public Manager getInstance() {
+		if (singleton == null) {
 			singleton = new Manager();
 		}
 		return singleton;
 	}
-	
-	public void manageMessages(Message msg){
+
+	public Object manageMessages(Message msg) {
+		Object objectToReturn = null;
 		switch (msg.getAction()) {
+
 		case Message.ADD:
-			
+			try {
+				objectToReturn = add(msg);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case Message.MOD:
-			
+			try {
+				objectToReturn = mod(msg);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case Message.DEL:
-			
+			try {
+				objectToReturn = del(msg);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case Message.GET:
-			
+			objectToReturn = get(msg);
 			break;
-
+		case Message.LOGIN:
+			try {
+				objectToReturn = login( (User) msg.getContent() );
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
 		default:
 			break;
 		}
+		
+		return objectToReturn;
 	}
-	public void add(Message msg){
+
+	public boolean add(Message msg) throws Exception {
+		boolean resultOfTheOperation = false;
 		switch (msg.getObject()) {
-		case Message.GROUP:
-			addGroup((Group) msg.getContent());
-			break;
 
+		case Message.USER:
+			resultOfTheOperation = addUser( (User) msg.getContent());
+			break;
+		case Message.GROUP:
+			resultOfTheOperation = addGroup( (Group) msg.getContent());
+			break;
+		case Message.ISSUE:
+			resultOfTheOperation = addIssue( (Issue) msg.getContent());
+			break;
+		case Message.WORK_ORDER:
+			resultOfTheOperation = addWorkOrder( (WorkOrder) msg.getContent());
+			break;
+		case Message.REPAIR:
+			resultOfTheOperation = addRepair( (WorkOrder) msg.getContent());
+			break;
+		case Message.MACHINE:
+			resultOfTheOperation = addMachine( (Machine) msg.getContent());
+			break;
+		case Message.WORK_ZONE:
+			resultOfTheOperation = addWorkZone( (WorkZone) msg.getContent());
+			break;
 		default:
 			break;
 		}
+		
+		return resultOfTheOperation;
 	}
-	public void mod(Message msg){
+
+	public boolean mod(Message msg) throws Exception {
+		boolean resultOfTheOperation = false;
+		switch (msg.getObject()) {
+
+		case Message.USER:
+			resultOfTheOperation = modUser( (User) msg.getContent());
+			break;
+		case Message.GROUP:
+			resultOfTheOperation = modGroup( (Group) msg.getContent());
+			break;
+		case Message.ISSUE:
+			resultOfTheOperation = modIssue( (Issue) msg.getContent());
+			break;
+		case Message.WORK_ORDER:
+			resultOfTheOperation = modWorkOrder( (WorkOrder) msg.getContent());
+			break;
+		case Message.REPAIR:
+			resultOfTheOperation = modRepair( (WorkOrder) msg.getContent());
+			break;
+		case Message.MACHINE:
+			resultOfTheOperation = modMachine( (Machine) msg.getContent());
+			break;
+		case Message.WORK_ZONE:
+			resultOfTheOperation = modWorkZone( (WorkZone) msg.getContent());
+			break;
+		default:
+			break;
+		}
+		
+		return resultOfTheOperation;
+	}
+
+	public boolean del(Message msg) throws Exception {
+		boolean resultOfTheOperation = false;
+		switch (msg.getObject()) {
+
+		case Message.USER:
+			resultOfTheOperation = delUser( (User) msg.getContent());
+			break;
+		case Message.GROUP:
+			resultOfTheOperation = delGroup( (Group) msg.getContent());
+			break;
+		case Message.ISSUE:
+			resultOfTheOperation = delIssue( (Issue) msg.getContent());
+			break;
+		case Message.WORK_ORDER:
+			resultOfTheOperation = delWorkOrder( (WorkOrder) msg.getContent());
+			break;
+		case Message.REPAIR:
+			resultOfTheOperation = delRepair( (WorkOrder) msg.getContent());
+			break;
+		case Message.MACHINE:
+			resultOfTheOperation = delMachine( (Machine) msg.getContent());
+			break;
+		case Message.WORK_ZONE:
+			resultOfTheOperation = delWorkZone( (WorkZone) msg.getContent());
+			break;
+		default:
+			break;
+		}
+
+		return resultOfTheOperation;
+	}
+
+	public Object get(Message msg) {
+		Object resultOfTheOperation = null;
+		switch (msg.getObject()) {
+
+		case Message.USER:
+			resultOfTheOperation = (User) getUser(msg.getContent());
+			break;
+		case Message.GROUP:
+			resultOfTheOperation = (Group) getGroup(msg.getContent());
+			break;
+		case Message.ISSUE:
+			resultOfTheOperation = (Issue) getIssue(msg.getContent());
+			break;
+		case Message.WORK_ORDER:
+			resultOfTheOperation = (WorkOrder) getWorkOrder(msg.getContent());
+			break;
+		case Message.REPAIR:
+			resultOfTheOperation = (Repair) getRepair(msg.getContent());
+			break;
+		case Message.MACHINE:
+			resultOfTheOperation = (Machine) getMachine(msg.getContent());
+			break;
+		case Message.WORK_ZONE:
+			resultOfTheOperation = (WorkZone) getWorkZone(msg.getContent());
+			break;
+		default:
+			break;
+		}
+		
+		return resultOfTheOperation;
+
+	}
+
+	public void others(Message msg) {
 		
 	}
-	public void del(Message msg){
-		
-	}
-	public void get(Message msg){
-		
-	}
-	public void others(Message msg){
-		
-	}
-	
 
 	@Override
 	public User login(User user) throws Exception {
@@ -179,9 +310,4 @@ public class Manager implements Database {
 	public boolean delWorkZone(WorkZone workZone) throws Exception {
 		return dbm.delWorkZone(workZone);
 	}
-	
-	
-	
-	
-	
 }
