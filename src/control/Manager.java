@@ -30,6 +30,7 @@ public class Manager implements Database {
 		Object objectToReturn = null;
 		switch (msg.getAction()) {
 
+		//TODO arreglar esta chapuza de try/catch
 		case Message.ADD:
 			try {
 				objectToReturn = add(msg);
