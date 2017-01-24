@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 import com.mysql.jdbc.MysqlDataTruncation;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
@@ -24,6 +25,11 @@ public class DBManager implements Database {
 	private Statement stmt;
 	private ResultSet rs;
 	private String sql;
+	private SimpleDateFormat format;
+	
+	public DBManager(){
+		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	}
 	
 	/**
 	 * Abre la conexion
@@ -95,6 +101,7 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addGroup(Group group) throws Exception {
+		//TODO falta rollback
 		int id = group.getId();
 		char role = group.getRole();
 		role = Character.toUpperCase(role);
@@ -102,15 +109,41 @@ public class DBManager implements Database {
 		boolean ok = true;
 		this.connect();
 		try{
-			sql = "INSERT INTO groups (id,role) VALUES('"+id+"', '"+role+"');";
+			sql = "INSERT INTO groups(id,role) VALUES('"+id+"', '"+role+"');";
 			if(stmt.executeUpdate(sql) == 0) ok = false;
 			
 			else if(users != null){
 				
 				for(User user : users){
 					user.setGroup(new Group(group.getName(), group.isDirective()));
-					if(!addUser(user)) ok = false;
+					if(!modUsersGroup(user)) ok = false;
 				}
+			}
+		}catch(MySQLIntegrityConstraintViolationException | MysqlDataTruncation e){
+			ok = false;
+		}
+		this.close();
+		return ok;
+	}
+
+	private boolean modUsersGroup(User user) throws Exception {
+		boolean ok = true;
+		String name = user.getUserName();
+		int groupId = user.getGroup().getId();
+		this.connect();
+		try{
+			sql = "SELECT * FROM maintenance "
+					+ "WHERE LOWER(username) LIKE LOWER('"+name+"');";
+			rs = stmt.executeQuery(sql);
+			if(rs.next()){
+				sql = "UPDATE maintenance SET group_id = "+groupId+" "
+						+ "WHERE LOWER(username) LIKE LOWER('"+name+"');";
+			}else{
+				sql = "INSERT INTO maintenance(username, group_id)"
+						+ " VALUES('"+name+"', "+groupId+")";
+			}
+			if(stmt.executeUpdate(sql) == 0){
+				ok = false;
 			}
 		}catch(MySQLIntegrityConstraintViolationException | MysqlDataTruncation e){
 			ok = false;
@@ -121,7 +154,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean modGroup(Group group) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -138,15 +170,23 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addIssue(Issue issue) throws Exception {
+		//TODO
+		boolean ok;
+		boolean isOther = issue.getReporter().getSurname() == null;
+		String date = format.format(issue.getDate());
+		String name = (isOther)? issue.getReporter().getName() : issue.getReporter().getUserName();
 		this.connect();
+
+		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failure_type, subject, description, machine, equipment_available) "
+				+ "VALUES('" + date + "','" + name + "','" + failureType + "','" + subject + "','" + description + "','" + machine + "','" + equipmentAvailable + "')";
+		ok = stmt.executeUpdate(sql) == 1;
 		
 		this.close();
-		return false;
+		return ok;
 	}
 
 	@Override
 	public boolean modIssue(Issue issue) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -155,7 +195,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean delIssue(Issue issue) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -164,7 +203,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addMachine(Machine machine) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -173,7 +211,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean modMachine(Machine machine) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -182,7 +219,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean delMachine(Machine machine) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -191,17 +227,49 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
-		// TODO Auto-generated method stub
-
+		// TODO 
+		boolean ok;
 		this.connect();
 		
+		sql = "INSERT INTO assignated_groups("
+				+ "work_order,"
+				+ "group,"
+				+ "repair_date,"
+				+ "time_spent,"
+				+ "failure_localization,"
+				+ "failure_repaired,"
+				+ "replacements,"
+				+ "tools,"
+				+ "repair_process,"
+				+ "has_instructions,"
+				+ "needs_instructions,"
+				+ "subnormality,"
+				+ "not_enough_material,"
+				+ "not_enough_time)"
+				+ " VALUES("
+				+ ""+workOrderId+","
+				+ ""+repairDate+","
+				+ ""+timeSpent+","
+				+ ""+failureLocalization+","
+				+ ""+failureRepaired+","
+				+ ""+replacements+","
+				+ ""+tools+","
+				+ ""+repairProcess+","
+				+ ""+hasInstructions+","
+				+ ""+needsInstructions+","
+				+ ""+subnormality+","
+				+ ""+notEnoughMaterials+","
+				+ ""+notEnoughTime+","
+				+ ");";
+		
+		ok = stmt.executeUpdate(sql) == 1;
 		this.close();
-		return false;
+		return ok;
 	}
 
 	@Override
 	public boolean modRepair(WorkOrder workOrder) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO
 		this.connect();
 		
 		this.close();
@@ -210,7 +278,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean delRepair(WorkOrder workOrder) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -230,16 +297,16 @@ public class DBManager implements Database {
 		boolean ok = true;
 		this.connect();
 		try{
-			sql = "INSERT INTO users (username, password) VALUES('"+uname+"','"+pass+"');";
+			sql = "INSERT INTO users(username, password) VALUES('"+uname+"','"+pass+"');";
 			if(stmt.executeUpdate(sql) == 0) ok = false; 
 			else if(name != null){
-				sql = "INSERT INTO others (username, name, surname, email, course, type)"
-						+ "VALUES('"+uname+"','"+name+"','"+surname+"','"+email+"','"+course+"','"+type+"')  ;";
+				sql = "INSERT INTO others(username, name, surname, email, course, type)"
+						+ " VALUES('"+uname+"','"+name+"','"+surname+"','"+email+"','"+course+"','"+type+"')  ;";
 				if(stmt.executeUpdate(sql) == 0) ok = false;
 				else if(group != null){
 					int groupId = group.getId();
-					sql = "INSERT INTO maintenance (username, group_id) "
-							+ "VALUES('"+uname+"', "+groupId+")";
+					sql = "INSERT INTO maintenance(username, group_id)"
+							+ " VALUES('"+uname+"', "+groupId+")";
 					System.out.println(sql);
 					if(stmt.executeUpdate(sql) == 0) ok = false;
 				}
@@ -253,7 +320,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean modUser(User user) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -262,7 +328,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean delUser(User user) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -271,7 +336,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addWorkOrder(WorkOrder order) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -280,7 +344,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean modWorkOrder(WorkOrder order) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -289,7 +352,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean delWorkOrder(WorkOrder order) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -298,7 +360,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addWorkZone(WorkZone workZone) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -307,7 +368,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean modWorkZone(WorkZone workZone) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
@@ -316,7 +376,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean delWorkZone(WorkZone workZone) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
 		
 		this.close();
