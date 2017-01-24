@@ -47,21 +47,45 @@ public class DBManager implements Database {
 		con.close();
 	}
 	
+	/**
+	 * Me la he jugado mucho
+	 */
 	public User login(User user) throws Exception {//TODO esto!!
 		connect();
-		String name = user.getUsername();
+		User loggedUser = null;
+		Group group = null;
+		String name = user.getUserName();
 		String pass = user.getPassword();
-		String sql =;
-		
+		String sql = "SELECT * "
+				+ "FROM users JOIN others USING(username) "
+				+ "JOIN maintenance USING(username) "
+				+ "JOIN groups ON(mainetance.group = groups.id) "
+				+ "WHERE LOWER(username) LIKE LOWER("+name+") AND password "+pass+"";
+		rs = stmt.executeQuery(sql);
+		if(rs.next()){
+			short groupId = rs.getShort("group");
+			char role = rs.getString("role").charAt(0);
+			role = Character.toUpperCase(role);
+			String  groupName;
+			
+			loggedUser = new User(
+					rs.getString("username"), 
+					rs.getString("surname"), 
+					rs.getString("name"), 
+					rs.getString("password"), 
+					rs.getString("email"), 
+					rs.getString("course"), rs.getString("type"));
+			groupName = role + "-" + groupId;
+			group = new Group(groupName, role == 'D');
+			loggedUser.setGroup(group);
+		}
 		close();
 		return user;
 	}
 
 	@Override
 	public boolean addGroup(Group group) throws Exception {
-		// TODO Auto-generated method stub
 		this.connect();
-		
 		this.close();
 		return false;
 	}

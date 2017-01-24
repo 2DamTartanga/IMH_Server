@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Reader;
+
 public class User {
 	
 	private String userName;
@@ -19,6 +21,22 @@ public class User {
 		this.email = email;
 		this.course = course;
 		this.type = type;
+		this.group = group;
+	}
+	
+	public User(String name, String surname, String userName, String password, String email, String course, String type){
+		this.name = name;
+		this.surname = surname;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.course = course;
+		//TODO los 2 ultimos argumentos
+		this.type = type.charAt(0);
+		
+	}
+	
+	public void setGroup(Group group){
 		this.group = group;
 	}
 
