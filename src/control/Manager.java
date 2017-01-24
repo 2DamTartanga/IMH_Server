@@ -12,19 +12,12 @@ import model.WorkZone;
 
 public class Manager implements Database {
 
-	private static Manager singleton;
 	private DBManager dbm;
 
-	private Manager() {
+	public Manager() {
 		dbm = new DBManager();
 	}
 
-	public Manager getInstance() {
-		if (singleton == null) {
-			singleton = new Manager();
-		}
-		return singleton;
-	}
 
 	public Object manageMessages(Message msg) {
 		Object objectToReturn = null;
