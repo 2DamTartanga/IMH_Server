@@ -51,22 +51,8 @@ public class DBManager implements Database {
 		connect();
 		String name = user.getUsername();
 		String pass = user.getPassword();
-		String sql = "SELECT * FROM users WHERE lower(username) LIKE "
-				+ "lower('"+name+"') AND contrasena LIKE '"+pass+"';";
-		rs = stmt.executeQuery(sql);
-		if(rs.next()){
-			if(rs.getBoolean("admin"))
-				user = new Admin();
-			else
-				user = new Member();
-			
-			user.setUsername(rs.getString("nombreUsuario"));
-			user.setDate(rs.getDate("fecha"));
-			user.setDescription(rs.getString("descripcion"));
-			user.setEmail(rs.getString("email"));
-			user.setPassword(rs.getString("contrasena"));
-		}else 
-			user = null;
+		String sql =;
+		
 		close();
 		return user;
 	}
