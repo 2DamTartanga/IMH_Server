@@ -2,65 +2,45 @@ package model;
 
 public class Message {
 	public static final String MSG_LOGIN = "login";
-	public static final String MSG_ADD_GROUP = "add group";
-	public static final String MSG_DEL_GROUP = "mod group";
-	public static final String MSG_MOD_GROUP = "delete group";
 	
-	public static final String MSG_ADD_ISSUE = "add issue";
-	public static final String MSG_DEL_ISSUE = "mod issue";
-	public static final String MSG_MOD_ISSUE = "delete issue";
+	public static final String ADD = "add";
+	public static final String MOD = "mod";
+	public static final String DEL= "delete";
+	public static final String GET= "get";
 	
-	public static final String MSG_ADD_MACHINE = "add machine";
-	public static final String MSG_DEL_MACHINE = "mod machine";
-	public static final String MSG_MOD_MACHINE = "delete machine";
+	public static final String GROUP = "group";
+	public static final String ISSUE = "issue";
+	public static final String MACHINE = "machine";
+	public static final String REPAIR = "repair";
+	public static final String WORK_ORDER= "work order";
+	public static final String USER = "user";
+	public static final String WORK_ZONE = "work zone";
 	
-	public static final String MSG_ADD_REPAIR = "add repair";
-	public static final String MSG_DEL_REPAIR = "mod repair";
-	public static final String MSG_MOD_REPAIR = "delete repair";
-	
-	public static final String MSG_ADD_WORK_ORDER = "add work order";
-	public static final String MSG_DEL_WORK_ORDER = "mod work order";
-	public static final String MSG_MOD_WORK_ORDER = "delete work order";
-	
-	public static final String MSG_ADD_USER = "add user";
-	public static final String MSG_DEL_USER = "mod user";
-	public static final String MSG_MOD_USER = "delete user";
-	
-	public static final String MSG_ADD_WORK_ZONE = "add work zone";
-	public static final String MSG_DEL_WORK_ZONE = "mod work zone";
-	public static final String MSG_MOD_WORK_ZONE = "delete work zone";
 
-	
-	
-	private String messageType;
+	private String action;
+	private String object;
 	private Object content;
 	
 	
-	public Message(String messageType, Object content) {
-		super();
-		this.setMessageType(messageType);
-		this.setContent(content);
+	public Message(String action, String object, Object content) {
+		this.action = action;
+		this.object = object;
+		this.content = content;
 	}
 
 
-	public String getMessageType() {
-		return messageType;
+	public String getAction() {
+		return action;
 	}
 
 
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public String getObject() {
+		return object;
 	}
 
 
 	public Object getContent() {
 		return content;
 	}
-
-
-	public void setContent(Object content) {
-		this.content = content;
-	}
-	
 	
 }
