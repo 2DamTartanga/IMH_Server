@@ -29,7 +29,9 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.course = course;
-		this.type = type.charAt(0);
+		if(type != null){
+			this.type = type.charAt(0);
+		}
 		
 	}
 	
