@@ -4,6 +4,7 @@ public class Group {
 	
 	private String name;
 	private boolean isDirective;
+	private User[] users;
 	
 	public Group(String name, boolean isDirective){
 		this.name = name;
@@ -16,6 +17,10 @@ public class Group {
 
 	public boolean isDirective() {
 		return isDirective;
+	}
+	
+	public User[] getUsers() {
+		return users;
 	}
 	
 }
