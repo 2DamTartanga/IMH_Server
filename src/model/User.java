@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Reader;
-
 public class User {
 	
 	private String userName;
@@ -31,7 +29,6 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.course = course;
-		//TODO los 2 ultimos argumentos
 		this.type = type.charAt(0);
 		
 	}
@@ -46,6 +43,36 @@ public class User {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public char getType() {
+		return type;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	@Override
+	public String toString() {
+		return "User [\nuserName = " + userName + ", \nname = " + name + ", \nsurname = " + surname + ", \npassword = " + password
+				 +  ", \nemail = " + email + ", \ncourse = " + course + ", \ntype = " + type + ", \ngroup = [" + group + "\n]\n]";
 	}
 	
 	
