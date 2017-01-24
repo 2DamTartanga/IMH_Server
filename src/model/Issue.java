@@ -18,4 +18,25 @@ public class Issue {
 		this.severity = severity;
 	}
 
+	public String getFailureType() {
+		return failureType;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getSeverity() {
+		return severity;
+	}
+
+	
 }

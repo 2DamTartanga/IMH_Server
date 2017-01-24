@@ -22,4 +22,34 @@ public class Repair {
 		this.hasEnoughMaterial = hasEnoughMaterial;
 		this.instructionsFilledUrl = instructionsFilledUrl;
 	}
+
+	public Date getFinishDate() {
+		return finishDate;
+	}
+
+	public float getTimeSpent() {
+		return timeSpent;
+	}
+
+	public boolean isSolved() {
+		return isSolved;
+	}
+
+	public String getDifficulty() {
+		return difficulty;
+	}
+
+	public boolean isHasEnoughKnowledge() {
+		return hasEnoughKnowledge;
+	}
+
+	public boolean isHasEnoughMaterial() {
+		return hasEnoughMaterial;
+	}
+
+	public String getInstructionsFilledUrl() {
+		return instructionsFilledUrl;
+	}
+	
+	
 }

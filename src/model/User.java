@@ -2,9 +2,9 @@ package model;
 
 public class User {
 	
+	private String userName;
 	private String name;
 	private String surname;
-	private String userName;
 	private String password;
 	private String email;
 	private String course;

@@ -20,4 +20,25 @@ public class WorkOrder {
 		this.date = date;
 	}
 
+	public String getWorkOrderId() {
+		return workOrderId;
+	}
+
+	public int getRequiresTool() {
+		return requiresTool;
+	}
+
+	public String getInstructionsUrl() {
+		return instructionsUrl;
+	}
+
+	public boolean isValidated() {
+		return isValidated;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	
 }
