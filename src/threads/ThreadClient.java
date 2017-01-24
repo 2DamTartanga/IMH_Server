@@ -33,7 +33,11 @@ public class ThreadClient extends Thread {
 				Object commandToParse;
 				commandToParse = in.readObject();
 				
-				
+				// TODO parse command and implement posible commands
+				// FIXME change --> instanceof String
+				if(commandToParse instanceof String){
+					 // TODO implement correctly
+				}
 				
 			}catch(ClassNotFoundException e){
 				e.printStackTrace();
