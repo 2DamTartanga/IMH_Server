@@ -21,6 +21,16 @@ public class User {
 		this.type = type;
 		this.group = group;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	
+	
 	
 	
 
