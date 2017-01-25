@@ -19,7 +19,6 @@ public class Manager implements Database {
 		dbm = new DBManager();
 	}
 
-
 	public Object manageMessages(Message msg) {
 		Object objectToReturn = null;
 

@@ -5,10 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import control.Manager;
+import model.Message;
+
 public class ThreadClient extends Thread {
 	
 	private Socket clientSocket;
 	private ObjectOutputStream out;
+	private Manager man;
 	
 	public ThreadClient(Socket clientSocket, ObjectOutputStream out){
 		this.clientSocket = clientSocket;
@@ -20,24 +24,39 @@ public class ThreadClient extends Thread {
 		
 		ObjectInputStream in = null;
 		
+		// FIXME
+		man = new Manager();
+		
 		try{
 			in = new ObjectInputStream(clientSocket.getInputStream());
 		}catch(IOException e){
-			// FIXME change raised exception
 			e.printStackTrace();
 		}
 		
 		while(true){
 			
 			try{
-				Object msgToParse;
-				msgToParse = in.readObject();
+				Message msgToParse;
+				msgToParse = (Message) in.readObject();
 				
-				// TODO parse command and implement posible commands
-				// FIXME change --> instanceof String
-				if(msgToParse instanceof String){
-					 // TODO implement correctly
+				switch(msgToParse.getAction()){
+				
+				case Message.ADD:
+					manageAdds(msgToParse, man);
+					break;
+				case Message.DEL:
+					manageDeletes(msgToParse, man);
+					break;
+				case Message.MOD:
+					manageMods(msgToParse, man);
+					break;
+				case Message.GET:
+					manageGets(msgToParse, man);
+				
+				default:
+					break;
 				}
+				
 				
 			}catch(ClassNotFoundException e){
 				e.printStackTrace();
@@ -50,11 +69,122 @@ public class ThreadClient extends Thread {
 				}
 			}
 			
-			
-			
 		}
+	}
+	
+	private void manageAdds(Message msg, Manager man){
+		switch(msg.getObject()){
 		
+		case Message.ISSUE:
+			
+			break;
+		case Message.WORK_ORDER:
+			
+			break;
+		case Message.REPAIR:
+			
+			break;
+		case Message.USER:
+			
+			break;
+		case Message.GROUP:
+			
+			break;
+		case Message.MACHINE:
+			
+			break;
+		case Message.WORK_ZONE:
+			
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void manageMods(Message msg, Manager man){
+		switch(msg.getObject()){
 		
+		case Message.ISSUE:
+			
+			break;
+		case Message.WORK_ORDER:
+			
+			break;
+		case Message.REPAIR:
+			
+			break;
+		case Message.USER:
+			
+			break;
+		case Message.GROUP:
+			
+			break;
+		case Message.MACHINE:
+			
+			break;
+		case Message.WORK_ZONE:
+			
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void manageDeletes(Message msg, Manager man){
+		switch(msg.getObject()){
 		
+		case Message.ISSUE:
+			
+			break;
+		case Message.WORK_ORDER:
+			
+			break;
+		case Message.REPAIR:
+			
+			break;
+		case Message.USER:
+			
+			break;
+		case Message.GROUP:
+			
+			break;
+		case Message.MACHINE:
+			
+			break;
+		case Message.WORK_ZONE:
+			
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void manageGets(Message msg, Manager man){
+		switch(msg.getObject()){
+		
+		case Message.ISSUE:
+			
+			break;
+		case Message.WORK_ORDER:
+			
+			break;
+		case Message.REPAIR:
+			
+			break;
+		case Message.USER:
+			
+			break;
+		case Message.GROUP:
+			
+			break;
+		case Message.MACHINE:
+			
+			break;
+		case Message.WORK_ZONE:
+			
+			break;
+		default:
+			break;
+		}
 	}
 }

@@ -8,12 +8,13 @@ public class Message {
 	public static final String GET = "get";
 	public static final String LOGIN = "login";
 	
-	public static final String GROUP = "group";
+	
 	public static final String ISSUE = "issue";
-	public static final String MACHINE = "machine";
-	public static final String REPAIR = "repair";
 	public static final String WORK_ORDER= "work order";
+	public static final String REPAIR = "repair";
 	public static final String USER = "user";
+	public static final String GROUP = "group";
+	public static final String MACHINE = "machine";
 	public static final String WORK_ZONE = "work zone";
 	
 	private String action;
