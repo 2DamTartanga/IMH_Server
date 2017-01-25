@@ -18,24 +18,21 @@ public class User {
 
 	public User(String username, String password, String name, String surname, String email, String course,
 			char type) {
-		this.username = username;
-		this.password = password;
+		this(username, password);
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.course = course;
 		this.type = type;
+		if(this.name.isEmpty()) this.name = null;
+		if(this.surname.isEmpty()) this.surname = null;
+		if(this.email.isEmpty()) this.email = null;
+		if(this.course.isEmpty()) this.course = null;
 	}
 
 	public User(String username, String password, String name, String surname, String email, String course, char type,
 			Group group) {
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.course = course;
-		this.type = type;
+		this(username, password, name, surname, email, course, type);
 		this.group = group;
 	}
 

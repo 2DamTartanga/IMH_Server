@@ -7,13 +7,18 @@ public class Breakdown {
 	private int id;
 	private Date date;
 	private User reporter;
-	private int failureType;
+	private FailureType failureType;
 	private String subject;
 	private String description;
 	private Machine machine;
 	private int equipmentAvailable;
 	
-	public Breakdown(int id, Date date, User reporter, int failureType, String subject, String description,
+	public Breakdown(int id){
+		this.id = id;
+	}
+	
+	
+	public Breakdown(int id, Date date, User reporter, FailureType failureType, String subject, String description,
 			Machine machine, int equipmentAvailable) {
 		this.id = id;
 		this.date = date;
@@ -37,7 +42,7 @@ public class Breakdown {
 		return reporter;
 	}
 
-	public int getFailureType() {
+	public FailureType getFailureType() {
 		return failureType;
 	}
 

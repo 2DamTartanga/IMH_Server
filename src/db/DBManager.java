@@ -7,18 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import com.mysql.jdbc.MysqlDataTruncation;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import interfaces.Database;
-import model.Group;
-import model.Issue;
-import model.Machine;
-import model.Repair;
-import model.User;
-import model.WorkOrder;
-import model.WorkZone;
+import new_classes.*;
+
 
 public class DBManager implements Database {
 
@@ -70,7 +67,7 @@ public class DBManager implements Database {
 		connect();
 		User loggedUser = null;
 		Group group = null;
-		String name = user.getUserName();
+		String name = user.getUsername();
 		String pass = user.getPassword();
 		sql = "SELECT * "
 				+ "FROM users JOIN others USING(username) "
@@ -83,23 +80,22 @@ public class DBManager implements Database {
 			short groupId = rs.getShort("group");
 			char role = rs.getString("role").charAt(0);
 			role = Character.toUpperCase(role);
-			String  groupName;
-			
+			group = new Group(groupId, role);
 			loggedUser = new User(
 					rs.getString("username"), 
-					rs.getString("surname"), 
-					rs.getString("name"), 
 					rs.getString("password"), 
+					rs.getString("name"), 
+					rs.getString("surname"), 
 					rs.getString("email"), 
-					rs.getString("course"), rs.getString("type"));
-			groupName = role + "-" + groupId;
-			group = new Group(groupName, role == 'D');
-			loggedUser.setGroup(group);
+					rs.getString("course"), 
+					Character.toUpperCase(rs.getString("type").charAt(0)),
+					group);
 		}
 		close();
 		return loggedUser;
 	}
 
+	//TODO
 	@Override
 	public boolean addGroup(Group group) throws Exception {
 		//TODO falta rollback
@@ -129,7 +125,7 @@ public class DBManager implements Database {
 
 	private boolean modUsersGroup(User user) throws Exception {
 		boolean ok = true;
-		String name = user.getUserName();
+		String name = user.getUsername();
 		int groupId = user.getGroup().getId();
 		this.connect();
 		try{
@@ -170,12 +166,12 @@ public class DBManager implements Database {
 	}
 
 	@Override
-	public boolean addIssue(Issue issue) throws Exception {
+	public boolean addBreakdown(Breakdown breakdown) throws Exception {
 		//TODO
 		boolean ok;
-		boolean isOther = issue.getReporter().getSurname() == null;
-		String date = format.format(issue.getDate());
-		String name = (isOther)? issue.getReporter().getName() : issue.getReporter().getUserName();
+		boolean isOther = breakdown.getReporter().getSurname() == null;
+		String date = format.format(breakdown.getDate());
+		String name = (isOther)? breakdown.getReporter().getName() : breakdown.getReporter().getUserName();
 		this.connect();
 
 		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failure_type, subject, description, machine, equipment_available) "
@@ -187,7 +183,7 @@ public class DBManager implements Database {
 	}
 
 	@Override
-	public boolean modIssue(Issue issue) throws Exception {
+	public boolean modBreakdown(Breakdown breakdown) throws Exception {
 		this.connect();
 		
 		this.close();
@@ -195,7 +191,7 @@ public class DBManager implements Database {
 	}
 
 	@Override
-	public boolean delIssue(Issue issue) throws Exception {
+	public boolean delBreakdown(Breakdown breakdown) throws Exception {
 		this.connect();
 		
 		this.close();
@@ -229,6 +225,22 @@ public class DBManager implements Database {
 	@Override
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
 		// TODO 
+		//TODO pillar la repair mas nueva
+		Repair repair = workOrder.getRepairs().get(0);
+		int workOrderId = workOrder.getBreakdown().getId();
+		String repairDate = format.format(repair.getRepairDate());
+		float timeSpent = repair.getTimeSpent();
+		int failureLocalization = repair.getFailureLocalization().getId();
+		boolean failureRepaired = repair.isFailureRepaired();
+		String replacements = repair.getReplacements();
+		String tools = repair.getTools();
+		String repairProcess = repair.getRepairProcess();
+		boolean hasInstructions = repair.isHasInstructions();
+		boolean needsInstructions = repair.isNeedsInstructions();
+		boolean subnormality = repair.isSubnormality();
+		boolean notEnoughMaterials = repair.isNotEnoughMaterial();
+		boolean notEnoughTime = repair.isNotEnoughTime();
+		
 		boolean ok;
 		this.connect();
 		
@@ -270,7 +282,6 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean modRepair(WorkOrder workOrder) throws Exception {
-		// TODO
 		this.connect();
 		
 		this.close();
@@ -287,7 +298,7 @@ public class DBManager implements Database {
 
 	@Override
 	public boolean addUser(User user) throws Exception {//TODO falta rollback en caso de que falle algun insert
-		String uname = user.getUserName();
+		String uname = user.getUsername();
 		String name = user.getName();
 		String surname = user.getSurname();
 		String pass = user.getPassword();
@@ -360,7 +371,7 @@ public class DBManager implements Database {
 	}
 
 	@Override
-	public boolean addWorkZone(WorkZone workZone) throws Exception {
+	public boolean addLocalization(Localization localization) throws Exception {
 		this.connect();
 		
 		this.close();
@@ -368,7 +379,7 @@ public class DBManager implements Database {
 	}
 
 	@Override
-	public boolean modWorkZone(WorkZone workZone) throws Exception {
+	public boolean modLocalization(Localization localization) throws Exception {
 		this.connect();
 		
 		this.close();
@@ -376,7 +387,7 @@ public class DBManager implements Database {
 	}
 
 	@Override
-	public boolean delWorkZone(WorkZone workZone) throws Exception {
+	public boolean delLocalization(Localization localization) throws Exception {
 		this.connect();
 		
 		this.close();
@@ -385,43 +396,173 @@ public class DBManager implements Database {
 
 	@Override
 	public Group getGroup(Group group) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO
+		Group returnGroup = null;
+		ArrayList<User> users;
+		int groupId = group.getId();
+		char role = '.';
+		this.connect();
+		sql = "SELECT group_id, role FROM groups WHERE group_id = "+groupId+";";
+		rs = stmt.executeQuery(sql);
+		if(rs.next()){
+			role = rs.getString("role").charAt(0);
+		}
+		this.close();
+		if(group != null){
+			users = getUsersFromGroup(group);
+			returnGroup = new Group(groupId, role, users);
+		}
+		return returnGroup;
 	}
 
+	private ArrayList<User> getUsersFromGroup(Group group) throws Exception{
+		//TODO
+		int groupId = group.getId();
+		ArrayList<User> users = new ArrayList<>();
+		this.connect();
+		sql = "SELECT * "
+				+ "FROM users JOIN others USING(username) "
+				+ "JOIN maintenance USING(username) "
+				+ "JOIN groups ON(maintenance.group = groups.id) "
+				+ "WHERE group_id LIKE '"+groupId+"';";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			users.add(
+					new User(
+						rs.getString("username"), 
+						rs.getString("password"), 
+						rs.getString("name"), 
+						rs.getString("surname"), 
+						rs.getString("email"), 
+						rs.getString("course"), 
+						Character.toUpperCase(rs.getString("type").charAt(0))
+						)
+					);
+		}
+		this.close();
+		if(users.size() == 0) users = null;
+		
+		return users;
+	}
+	
 	@Override
-	public Issue getIssue(Issue issue) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Breakdown getBreakdown(Breakdown breakdown) throws Exception {
+		int id = breakdown.getId();
+		Breakdown returnBreakdown = null;;
+		Date date;
+		User reporter;
+		FailureType failureType;
+		String subject;
+		String description;
+		Machine machine;
+		int equipmentAvailable;
+		this.connect();
+		sql = "SELECT ";
+		this.close();
+		return breakdown;
 	}
 
 	@Override
 	public Machine getMachine(Machine machine) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO 
+		this.connect();
+		
+		this.close();
 		return null;
 	}
 
 	@Override
 	public Repair getRepair(WorkOrder workOrder) throws Exception {
 		// TODO Auto-generated method stub
+		this.connect();
+		
+		this.close();
 		return null;
 	}
 
 	@Override
 	public User getUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO 
+		this.connect();
+		User returnUser = null;
+		Group group = null;
+		String name = user.getUsername();
+		sql = "SELECT * "
+				+ "FROM users JOIN others USING(username) "
+				+ "JOIN maintenance USING(username) "
+				+ "JOIN groups ON(maintenance.group = groups.id) "
+				+ "WHERE LOWER(username) LIKE LOWER('"+name+"');";
+		System.out.println(sql);
+		rs = stmt.executeQuery(sql);
+		if(rs.next()){
+			short groupId = rs.getShort("group");
+			char role = rs.getString("role").charAt(0);
+			role = Character.toUpperCase(role);
+			group = new Group(groupId, role);
+			returnUser = new User(
+					rs.getString("username"), 
+					rs.getString("password"), 
+					rs.getString("name"), 
+					rs.getString("surname"), 
+					rs.getString("email"), 
+					rs.getString("course"), 
+					Character.toUpperCase(rs.getString("type").charAt(0)),
+					group);
+		}
+		this.close();
+		return returnUser;
 	}
 
 	@Override
 	public WorkOrder getWorkOrder(WorkOrder order) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO 
+		int id = order.getBreakdown().getId();
+		Date date = null;;
+		String others = null;
+		int typeOfMaintenance = null;
+		ArrayList<Repair> repairs = null;
+		WorkOrder returnWorkOrder = null;
+		Breakdown breakdown = null;
+		this.connect();
+		String subselect = "SELECT id FROM breakdowns WHERE id = "+id+";";
+		
+		sql = "SELECT * FROM work_orders "
+				+ "USING(id) WHERE ("+subselect+") = '"+id+"'";
+		rs = stmt.executeQuery(sql);
+		if(rs.next()){
+			date = format.parse(rs.getString("date"));
+			others = rs.getString("others");
+			typeOfMaintenance = rs.getInt("typeOfMaintenance");
+			
+		}
+		this.close();
+		
+		breakdown = getBreakdown(new Breakdown(id));
+		repairs = getRepairsFromWorkOrder(order);
+		returnWorkOrder = new WorkOrder(breakdown, date, others, typeOfMaintenance, repairs);
+		
+		return returnWorkOrder;
+	}
+
+	private ArrayList<Repair> getRepairsFromWorkOrder(WorkOrder order) throws Exception {
+		ArrayList<Repair> repairs = null;
+		
+		int id = 
+		
+		this.connect();
+		
+		
+		this.close();
+		
+		return repairs;
 	}
 
 	@Override
-	public WorkZone getWorkZone(WorkZone workZone) throws Exception {
-		// TODO Auto-generated method stub
+	public Localization getLocalization(Localization localization) throws Exception {
+		// TODO 
+		this.connect();
+		
+		this.close();
 		return null;
 	}
 
