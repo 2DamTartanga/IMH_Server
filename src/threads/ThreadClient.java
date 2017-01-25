@@ -23,8 +23,7 @@ public class ThreadClient extends Thread {
 	public void run(){
 		
 		ObjectInputStream in = null;
-		
-		// FIXME
+
 		man = new Manager();
 		
 		try{
@@ -39,7 +38,9 @@ public class ThreadClient extends Thread {
 				Message msgToParse;
 				msgToParse = (Message) in.readObject();
 				
-				man.manageMessages(msgToParse);
+				Object objectToSend = man.manageMessages(msgToParse);
+				
+				out.writeObject(objectToSend);
 				
 			}catch(ClassNotFoundException e){
 				e.printStackTrace();
