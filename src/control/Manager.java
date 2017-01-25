@@ -146,37 +146,36 @@ public class Manager implements Database {
 		return resultOfTheOperation;
 	}
 
-	public Object get(Message msg) {
+	public Object get(Message msg) throws Exception {
 		Object resultOfTheOperation = null;
 		switch (msg.getObject()) {
 
 		case Message.USER:
-			resultOfTheOperation = (User) getUser(msg.getContent());
+			resultOfTheOperation = (User) getUser( (User) msg.getContent());
 			break;
 		case Message.GROUP:
-			resultOfTheOperation = (Group) getGroup(msg.getContent());
+			resultOfTheOperation = (Group) getGroup( (Group) msg.getContent());
 			break;
 		case Message.ISSUE:
-			resultOfTheOperation = (Issue) getIssue(msg.getContent());
+			resultOfTheOperation = (Issue) getIssue( (Issue) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
-			resultOfTheOperation = (WorkOrder) getWorkOrder(msg.getContent());
+			resultOfTheOperation = (WorkOrder) getWorkOrder( (WorkOrder) msg.getContent());
 			break;
 		case Message.REPAIR:
-			resultOfTheOperation = (Repair) getRepair(msg.getContent());
+			resultOfTheOperation = (Repair) getRepair( (WorkOrder) msg.getContent());
 			break;
 		case Message.MACHINE:
-			resultOfTheOperation = (Machine) getMachine(msg.getContent());
+			resultOfTheOperation = (Machine) getMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = (WorkZone) getWorkZone(msg.getContent());
+			resultOfTheOperation = (WorkZone) getWorkZone( (WorkZone) msg.getContent());
 			break;
 		default:
 			break;
 		}
 		
 		return resultOfTheOperation;
-
 	}
 
 	public void others(Message msg) {
@@ -291,5 +290,40 @@ public class Manager implements Database {
 	@Override
 	public boolean delWorkZone(WorkZone workZone) throws Exception {
 		return dbm.delWorkZone(workZone);
+	}
+
+	@Override
+	public Group getGroup(Group group) throws Exception {
+		return dbm.getGroup(group);
+	}
+
+	@Override
+	public Issue getIssue(Issue issue) throws Exception {
+		return dbm.getIssue(issue);
+	}
+
+	@Override
+	public Machine getMachine(Machine machine) throws Exception {
+		return dbm.getMachine(machine);
+	}
+
+	@Override
+	public Repair getRepair(WorkOrder workOrder) throws Exception {
+		return dbm.getRepair(workOrder);
+	}
+
+	@Override
+	public User getUser(User user) throws Exception {
+		return dbm.getUser(user);
+	}
+
+	@Override
+	public WorkOrder getWorkOrder(WorkOrder order) throws Exception {
+		return dbm.getWorkOrder(order);
+	}
+
+	@Override
+	public WorkZone getWorkZone(WorkZone workZone) throws Exception {
+		return dbm.getWorkZone(workZone);
 	}
 }

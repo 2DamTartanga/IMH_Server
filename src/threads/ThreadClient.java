@@ -30,12 +30,12 @@ public class ThreadClient extends Thread {
 		while(true){
 			
 			try{
-				Object commandToParse;
-				commandToParse = in.readObject();
+				Object msgToParse;
+				msgToParse = in.readObject();
 				
 				// TODO parse command and implement posible commands
 				// FIXME change --> instanceof String
-				if(commandToParse instanceof String){
+				if(msgToParse instanceof String){
 					 // TODO implement correctly
 				}
 				

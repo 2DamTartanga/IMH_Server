@@ -17,9 +17,7 @@ public class ThreadServer extends Thread{
 		ts.start();
 	}
 	
-	public ThreadServer(){		
-		
-	}
+	public ThreadServer(){ }
 	
 	@Override
 	public void run(){
