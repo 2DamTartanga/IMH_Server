@@ -1,4 +1,4 @@
-package new_calsses;
+package new_classes;
 
 import java.util.ArrayList;
 

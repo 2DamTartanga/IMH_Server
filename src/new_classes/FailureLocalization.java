@@ -1,10 +1,10 @@
-package new_calsses;
+package new_classes;
 
-public class MachineType {
+public class FailureLocalization {
 
 	private int id;
 	private String name;
-	public MachineType(int id, String name) {
+	public FailureLocalization(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -15,7 +15,6 @@ public class MachineType {
 	public String getName() {
 		return name;
 	}
-	
 	
 	
 }
