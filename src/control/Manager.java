@@ -6,6 +6,7 @@ import model.Group;
 import model.Issue;
 import model.Machine;
 import model.Message;
+import model.Repair;
 import model.User;
 import model.WorkOrder;
 import model.WorkZone;
@@ -21,42 +22,29 @@ public class Manager implements Database {
 
 	public Object manageMessages(Message msg) {
 		Object objectToReturn = null;
-		switch (msg.getAction()) {
 
-		//TODO arreglar esta chapuza de try/catch
-		case Message.ADD:
-			try {
+		try{
+			switch (msg.getAction()) {
+			case Message.ADD:
 				objectToReturn = add(msg);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			break;
-		case Message.MOD:
-			try {
+				break;
+			case Message.MOD:
 				objectToReturn = mod(msg);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			break;
-		case Message.DEL:
-			try {
+				break;
+			case Message.DEL:
 				objectToReturn = del(msg);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			break;
-		case Message.GET:
-			objectToReturn = get(msg);
-			break;
-		case Message.LOGIN:
-			try {
+				break;
+			case Message.GET:
+				objectToReturn = get(msg);
+				break;
+			case Message.LOGIN:
 				objectToReturn = login( (User) msg.getContent() );
-			} catch (Exception e) {
-				e.printStackTrace();
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 		
 		return objectToReturn;
