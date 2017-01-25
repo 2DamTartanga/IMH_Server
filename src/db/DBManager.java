@@ -15,6 +15,7 @@ import interfaces.Database;
 import model.Group;
 import model.Issue;
 import model.Machine;
+import model.Repair;
 import model.User;
 import model.WorkOrder;
 import model.WorkZone;
@@ -380,6 +381,48 @@ public class DBManager implements Database {
 		
 		this.close();
 		return false;
+	}
+
+	@Override
+	public Group getGroup(Group group) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Issue getIssue(Issue issue) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Machine getMachine(Machine machine) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Repair getRepair(WorkOrder workOrder) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WorkOrder getWorkOrder(WorkOrder order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WorkZone getWorkZone(WorkZone workZone) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
