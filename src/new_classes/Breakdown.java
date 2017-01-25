@@ -1,6 +1,6 @@
 package new_classes;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Breakdown {
 
@@ -18,16 +18,21 @@ public class Breakdown {
 	}
 	
 	
-	public Breakdown(int id, Date date, User reporter, FailureType failureType, String subject, String description,
+	public Breakdown(int id, Date date, FailureType failureType, String subject, String description,
 			Machine machine, int equipmentAvailable) {
 		this.id = id;
 		this.date = date;
-		this.reporter = reporter;
 		this.failureType = failureType;
 		this.subject = subject;
 		this.description = description;
 		this.machine = machine;
 		this.equipmentAvailable = equipmentAvailable;
+	}
+	
+	public Breakdown(int id, Date date, User reporter, FailureType failureType, String subject, String description,
+			Machine machine, int equipmentAvailable) {
+		this(id, date, failureType, subject, description, machine, equipmentAvailable);
+		this.reporter = reporter;
 	}
 
 	public int getId() {
@@ -60,6 +65,10 @@ public class Breakdown {
 
 	public int getEquipmentAvailable() {
 		return equipmentAvailable;
+	}
+	
+	public void setReporter(User reporter){
+		this.reporter = reporter;
 	}
 	
 	

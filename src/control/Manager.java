@@ -2,14 +2,8 @@ package control;
 
 import db.DBManager;
 import interfaces.Database;
-import model.Group;
-import model.Issue;
-import model.Machine;
 import model.Message;
-import model.Repair;
-import model.User;
-import model.WorkOrder;
-import model.WorkZone;
+import new_classes.*;
 
 public class Manager implements Database {
 
@@ -21,7 +15,7 @@ public class Manager implements Database {
 
 	public Object manageMessages(Message msg) {
 		Object objectToReturn = null;
-
+		dbm.setLanguage(msg.getLanguage());
 		try{
 			switch (msg.getAction()) {
 			case Message.ADD:
@@ -54,25 +48,25 @@ public class Manager implements Database {
 		switch (msg.getObject()) {
 
 		case Message.USER:
-			resultOfTheOperation = addUser( (User) msg.getContent());
+			//resultOfTheOperation = addUser( (User) msg.getContent());
 			break;
 		case Message.GROUP:
-			resultOfTheOperation = addGroup( (Group) msg.getContent());
+			//resultOfTheOperation = addGroup( (Group) msg.getContent());
 			break;
 		case Message.ISSUE:
-			resultOfTheOperation = addIssue( (Issue) msg.getContent());
+			resultOfTheOperation = addBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
-			resultOfTheOperation = addWorkOrder( (WorkOrder) msg.getContent());
+			//resultOfTheOperation = addWorkOrder( (WorkOrder) msg.getContent());
 			break;
 		case Message.REPAIR:
 			resultOfTheOperation = addRepair( (WorkOrder) msg.getContent());
 			break;
 		case Message.MACHINE:
-			resultOfTheOperation = addMachine( (Machine) msg.getContent());
+			//resultOfTheOperation = addMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = addWorkZone( (WorkZone) msg.getContent());
+			//resultOfTheOperation = addLocalization( (Localization) msg.getContent());
 			break;
 		default:
 			break;
@@ -86,25 +80,25 @@ public class Manager implements Database {
 		switch (msg.getObject()) {
 
 		case Message.USER:
-			resultOfTheOperation = modUser( (User) msg.getContent());
+			//resultOfTheOperation = modUser( (User) msg.getContent());
 			break;
 		case Message.GROUP:
-			resultOfTheOperation = modGroup( (Group) msg.getContent());
+			//resultOfTheOperation = modGroup( (Group) msg.getContent());
 			break;
 		case Message.ISSUE:
-			resultOfTheOperation = modIssue( (Issue) msg.getContent());
+			//resultOfTheOperation = modBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
-			resultOfTheOperation = modWorkOrder( (WorkOrder) msg.getContent());
+			//resultOfTheOperation = modWorkOrder( (WorkOrder) msg.getContent());
 			break;
 		case Message.REPAIR:
-			resultOfTheOperation = modRepair( (WorkOrder) msg.getContent());
+			//resultOfTheOperation = modRepair( (WorkOrder) msg.getContent());
 			break;
 		case Message.MACHINE:
-			resultOfTheOperation = modMachine( (Machine) msg.getContent());
+			//resultOfTheOperation = modMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = modWorkZone( (WorkZone) msg.getContent());
+			//resultOfTheOperation = modLocalization( (Localization) msg.getContent());
 			break;
 		default:
 			break;
@@ -118,25 +112,25 @@ public class Manager implements Database {
 		switch (msg.getObject()) {
 
 		case Message.USER:
-			resultOfTheOperation = delUser( (User) msg.getContent());
+			//resultOfTheOperation = delUser( (User) msg.getContent());
 			break;
 		case Message.GROUP:
-			resultOfTheOperation = delGroup( (Group) msg.getContent());
+			//resultOfTheOperation = delGroup( (Group) msg.getContent());
 			break;
 		case Message.ISSUE:
-			resultOfTheOperation = delIssue( (Issue) msg.getContent());
+			//resultOfTheOperation = delBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
-			resultOfTheOperation = delWorkOrder( (WorkOrder) msg.getContent());
+			//resultOfTheOperation = delWorkOrder( (WorkOrder) msg.getContent());
 			break;
 		case Message.REPAIR:
-			resultOfTheOperation = delRepair( (WorkOrder) msg.getContent());
+			//resultOfTheOperation = delRepair( (WorkOrder) msg.getContent());
 			break;
 		case Message.MACHINE:
-			resultOfTheOperation = delMachine( (Machine) msg.getContent());
+			//resultOfTheOperation = delMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = delWorkZone( (WorkZone) msg.getContent());
+			//resultOfTheOperation = delLocalization( (Localization) msg.getContent());
 			break;
 		default:
 			break;
@@ -156,19 +150,19 @@ public class Manager implements Database {
 			resultOfTheOperation = (Group) getGroup( (Group) msg.getContent());
 			break;
 		case Message.ISSUE:
-			resultOfTheOperation = (Issue) getIssue( (Issue) msg.getContent());
+			resultOfTheOperation = (Breakdown) getBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
 			resultOfTheOperation = (WorkOrder) getWorkOrder( (WorkOrder) msg.getContent());
 			break;
 		case Message.REPAIR:
-			resultOfTheOperation = (Repair) getRepair( (WorkOrder) msg.getContent());
+			resultOfTheOperation = (WorkOrder) getRepair( (WorkOrder) msg.getContent());
 			break;
 		case Message.MACHINE:
 			resultOfTheOperation = (Machine) getMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = (WorkZone) getWorkZone( (WorkZone) msg.getContent());
+			resultOfTheOperation = (Localization) getLocalization( (Localization) msg.getContent());
 			break;
 		default:
 			break;
@@ -185,7 +179,7 @@ public class Manager implements Database {
 	public User login(User user) throws Exception {
 		return dbm.login(user);
 	}
-
+/*
 	@Override
 	public boolean addGroup(Group group) throws Exception {
 		return dbm.addGroup(group);
@@ -200,20 +194,20 @@ public class Manager implements Database {
 	public boolean delGroup(Group group) throws Exception {
 		return dbm.delGroup(group);
 	}
-
+*/
 	@Override
-	public boolean addIssue(Issue issue) throws Exception {
-		return dbm.addIssue(issue);
+	public boolean addBreakdown(Breakdown breakdown) throws Exception {
+		return dbm.addBreakdown(breakdown);
+	}
+/*
+	@Override
+	public boolean modBreakdown(Breakdown breakdown) throws Exception {
+		return dbm.modBreakdown(breakdown);
 	}
 
 	@Override
-	public boolean modIssue(Issue issue) throws Exception {
-		return dbm.modIssue(issue);
-	}
-
-	@Override
-	public boolean delIssue(Issue issue) throws Exception {
-		return dbm.delIssue(issue);
+	public boolean delBreakdown(Breakdown breakdown) throws Exception {
+		return dbm.delBreakdown(breakdown);
 	}
 
 	@Override
@@ -230,12 +224,12 @@ public class Manager implements Database {
 	public boolean delMachine(Machine machine) throws Exception {
 		return dbm.delMachine(machine);
 	}
-
+*/
 	@Override
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
 		return dbm.addRepair(workOrder);
 	}
-
+/*
 	@Override
 	public boolean modRepair(WorkOrder workOrder) throws Exception {
 		return dbm.modRepair(workOrder);
@@ -277,28 +271,28 @@ public class Manager implements Database {
 	}
 
 	@Override
-	public boolean addWorkZone(WorkZone workZone) throws Exception {
-		return dbm.addWorkZone(workZone);
+	public boolean addLocalization(Localization localization) throws Exception {
+		return dbm.addLocalization(localization);
 	}
 
 	@Override
-	public boolean modWorkZone(WorkZone workZone) throws Exception {
-		return dbm.modWorkZone(workZone);
+	public boolean modLocalization(Localization localization) throws Exception {
+		return dbm.modLocalization(localization);
 	}
 
 	@Override
-	public boolean delWorkZone(WorkZone workZone) throws Exception {
-		return dbm.delWorkZone(workZone);
+	public boolean delLocalization(Localization localization) throws Exception {
+		return dbm.delLocalization(localization);
 	}
-
+*/
 	@Override
 	public Group getGroup(Group group) throws Exception {
 		return dbm.getGroup(group);
 	}
 
 	@Override
-	public Issue getIssue(Issue issue) throws Exception {
-		return dbm.getIssue(issue);
+	public Breakdown getBreakdown(Breakdown breakdown) throws Exception {
+		return dbm.getBreakdown(breakdown);
 	}
 
 	@Override
@@ -307,7 +301,7 @@ public class Manager implements Database {
 	}
 
 	@Override
-	public Repair getRepair(WorkOrder workOrder) throws Exception {
+	public WorkOrder getRepair(WorkOrder workOrder) throws Exception {
 		return dbm.getRepair(workOrder);
 	}
 
@@ -322,7 +316,7 @@ public class Manager implements Database {
 	}
 
 	@Override
-	public WorkZone getWorkZone(WorkZone workZone) throws Exception {
-		return dbm.getWorkZone(workZone);
+	public Localization getLocalization(Localization localization) throws Exception {
+		return dbm.getLocalization(localization);
 	}
 }

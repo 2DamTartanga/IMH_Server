@@ -22,9 +22,14 @@ public class Machine {
 	private String workingPressure;
 	private String manufacturer;
 	private String fileSearch;
-	public Machine(int code, MachineType type, int status, Localization localization, int importance) {
-		super();
+	
+	
+	
+	public Machine(int code) {
 		this.code = code;
+	}
+	public Machine(int code, MachineType type, int status, Localization localization, int importance) {
+		this(code);
 		this.type = type;
 		this.status = status;
 		this.localization = localization;

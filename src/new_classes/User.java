@@ -11,8 +11,12 @@ public class User {
 	private char type;
 	private Group group;
 	
-	public User(String username, String password) {
+	public User(String username) {
 		this.username = username;
+	}
+	
+	public User(String username, String password) {
+		this(username);
 		this.password = password;
 	}
 
@@ -66,6 +70,10 @@ public class User {
 
 	public Group getGroup() {
 		return group;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

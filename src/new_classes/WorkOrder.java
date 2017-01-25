@@ -45,6 +45,13 @@ public class WorkOrder {
 	public ArrayList<Repair> getRepairs() {
 		return repairs;
 	}
+	public int getId(){
+		return breakdown.getId();
+	}
+	public void setRepair(Repair repair) {
+		repairs = new ArrayList<>();
+		repairs.add(repair);
+	}
 	
 	
 	
