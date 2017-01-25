@@ -39,24 +39,7 @@ public class ThreadClient extends Thread {
 				Message msgToParse;
 				msgToParse = (Message) in.readObject();
 				
-				switch(msgToParse.getAction()){
-				
-				case Message.ADD:
-					manageAdds(msgToParse, man);
-					break;
-				case Message.DEL:
-					manageDeletes(msgToParse, man);
-					break;
-				case Message.MOD:
-					manageMods(msgToParse, man);
-					break;
-				case Message.GET:
-					manageGets(msgToParse, man);
-				
-				default:
-					break;
-				}
-				
+				man.manageMessages(msgToParse);
 				
 			}catch(ClassNotFoundException e){
 				e.printStackTrace();
@@ -69,122 +52,6 @@ public class ThreadClient extends Thread {
 				}
 			}
 			
-		}
-	}
-	
-	private void manageAdds(Message msg, Manager man){
-		switch(msg.getObject()){
-		
-		case Message.ISSUE:
-			
-			break;
-		case Message.WORK_ORDER:
-			
-			break;
-		case Message.REPAIR:
-			
-			break;
-		case Message.USER:
-			
-			break;
-		case Message.GROUP:
-			
-			break;
-		case Message.MACHINE:
-			
-			break;
-		case Message.WORK_ZONE:
-			
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private void manageMods(Message msg, Manager man){
-		switch(msg.getObject()){
-		
-		case Message.ISSUE:
-			
-			break;
-		case Message.WORK_ORDER:
-			
-			break;
-		case Message.REPAIR:
-			
-			break;
-		case Message.USER:
-			
-			break;
-		case Message.GROUP:
-			
-			break;
-		case Message.MACHINE:
-			
-			break;
-		case Message.WORK_ZONE:
-			
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private void manageDeletes(Message msg, Manager man){
-		switch(msg.getObject()){
-		
-		case Message.ISSUE:
-			
-			break;
-		case Message.WORK_ORDER:
-			
-			break;
-		case Message.REPAIR:
-			
-			break;
-		case Message.USER:
-			
-			break;
-		case Message.GROUP:
-			
-			break;
-		case Message.MACHINE:
-			
-			break;
-		case Message.WORK_ZONE:
-			
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private void manageGets(Message msg, Manager man){
-		switch(msg.getObject()){
-		
-		case Message.ISSUE:
-			
-			break;
-		case Message.WORK_ORDER:
-			
-			break;
-		case Message.REPAIR:
-			
-			break;
-		case Message.USER:
-			
-			break;
-		case Message.GROUP:
-			
-			break;
-		case Message.MACHINE:
-			
-			break;
-		case Message.WORK_ZONE:
-			
-			break;
-		default:
-			break;
 		}
 	}
 }
