@@ -1,5 +1,6 @@
 package new_calsses;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class WorkOrder {
@@ -9,7 +10,7 @@ public class WorkOrder {
 	private Date date;
 	private String others;
 	private int typeOfMaintenance;
-	private Repair[] repairs;
+	private ArrayList<Repair> repairs;
 	
 	public WorkOrder(Breakdown breakdown, int severity, Date date, String others, int typeOfMaintenance) {
 		this.breakdown = breakdown;
@@ -19,7 +20,7 @@ public class WorkOrder {
 		this.typeOfMaintenance = typeOfMaintenance;
 	}
 	public WorkOrder(Breakdown breakdown, int severity, Date date, String others, int typeOfMaintenance,
-			Repair[] repairs) {
+			ArrayList<Repair> repairs) {
 		this.breakdown = breakdown;
 		this.severity = severity;
 		this.date = date;
@@ -43,7 +44,7 @@ public class WorkOrder {
 	public int getTypeOfMaintenance() {
 		return typeOfMaintenance;
 	}
-	public Repair[] getRepairs() {
+	public ArrayList<Repair> getRepairs() {
 		return repairs;
 	}
 	

@@ -1,16 +1,18 @@
 package new_calsses;
 
+import java.util.ArrayList;
+
 public class Group {
 	private int id;
 	private char role;
-	private User[] users;
+	private ArrayList<User> users;
 	
 	public Group(int id, char role) {
 		this.id = id;
 		this.role = role;
 	}
 
-	public Group(int id, char role, User[] users) {
+	public Group(int id, char role, ArrayList<User> users) {
 		this.id = id;
 		this.role = role;
 		this.users = users;
@@ -24,7 +26,7 @@ public class Group {
 		return role;
 	}
 
-	public User[] getUsers() {
+	public ArrayList<User> getUsers() {
 		return users;
 	}
 	
