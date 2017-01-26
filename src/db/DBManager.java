@@ -134,10 +134,10 @@ public class DBManager implements Database {
 					+ "WHERE LOWER(username) LIKE LOWER('"+name+"');";
 			rs = stmt.executeQuery(sql);
 			if(rs.next()){
-				sql = "UPDATE maintenance SET group_id = "+groupId+" "
+				sql = "UPDATE maintenance SET groupId = "+groupId+" "
 						+ "WHERE LOWER(username) LIKE LOWER('"+name+"');";
 			}else{
-				sql = "INSERT INTO maintenance(username, group_id)"
+				sql = "INSERT INTO maintenance(username, groupId)"
 						+ " VALUES('"+name+"', "+groupId+")";
 			}
 			if(stmt.executeUpdate(sql) == 0){
@@ -165,7 +165,7 @@ public class DBManager implements Database {
 		int equipmentAvailable = breakdown.getEquipmentAvailable();
 		this.connect();
 
-		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failure_type, subject, description, machine, equipment_available) "
+		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failureType, subject, description, machine, equipmentAvailable) "
 				+ "VALUES('" + date + "','" + name + "','" + failureType + "','" + subject + "','" + description + "','" + machineCode + "','" + equipmentAvailable + "')";
 		ok = stmt.executeUpdate(sql) == 1;
 		
@@ -188,28 +188,22 @@ public class DBManager implements Database {
 		String repairProcess = repair.getRepairProcess();
 		boolean hasInstructions = repair.isHasInstructions();
 		boolean needsInstructions = repair.isNeedsInstructions();
-		boolean subnormality = repair.isSubnormality();
-		boolean notEnoughMaterials = repair.isNotEnoughMaterial();
-		boolean notEnoughTime = repair.isNotEnoughTime();
 		
 		boolean ok;
 		this.connect();
 		
-		sql = "INSERT INTO assignated_groups("
-				+ "work_order,"
+		sql = "INSERT INTO repairs("
+				+ "workOrder,"
 				+ "group,"
-				+ "repair_date,"
-				+ "time_spent,"
-				+ "failure_localization,"
-				+ "failure_repaired,"
+				+ "repairDate,"
+				+ "timeSpent,"
+				+ "failureLocalization,"
+				+ "failureRepaired,"
 				+ "replacements,"
 				+ "tools,"
-				+ "repair_process,"
-				+ "has_instructions,"
-				+ "needs_instructions,"
-				+ "subnormality,"
-				+ "not_enough_material,"
-				+ "not_enough_time)"
+				+ "repairProcess,"
+				+ "hasInstructions,"
+				+ "needsInstructions)"
 				+ " VALUES("
 				+ ""+workOrderId+","
 				+ ""+repairDate+","
@@ -220,10 +214,7 @@ public class DBManager implements Database {
 				+ ""+tools+","
 				+ ""+repairProcess+","
 				+ ""+hasInstructions+","
-				+ ""+needsInstructions+","
-				+ ""+subnormality+","
-				+ ""+notEnoughMaterials+","
-				+ ""+notEnoughTime+","
+				+ ""+needsInstructions+""
 				+ ");";
 		
 		ok = stmt.executeUpdate(sql) == 1;
@@ -253,7 +244,7 @@ public class DBManager implements Database {
 				if(stmt.executeUpdate(sql) == 0) ok = false;
 				else if(group != null){
 					int groupId = group.getId();
-					sql = "INSERT INTO maintenance(username, group_id)"
+					sql = "INSERT INTO maintenance(username, groupId)"
 							+ " VALUES('"+uname+"', "+groupId+")";
 					System.out.println(sql);
 					if(stmt.executeUpdate(sql) == 0) ok = false;
@@ -282,7 +273,7 @@ public class DBManager implements Database {
 		int groupId = group.getId();
 		char role = '.';
 		this.connect();
-		sql = "SELECT group_id, role FROM groups WHERE group_id = "+groupId+";";
+		sql = "SELECT groupId, role FROM groups WHERE groupId = "+groupId+";";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			role = rs.getString("role").charAt(0);
@@ -304,7 +295,7 @@ public class DBManager implements Database {
 				+ "FROM users JOIN others USING(username) "
 				+ "JOIN maintenance USING(username) "
 				+ "JOIN groups ON(maintenance.group = groups.id) "
-				+ "WHERE group_id LIKE '"+groupId+"';";
+				+ "WHERE groupId LIKE '"+groupId+"';";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			users.add(
@@ -347,11 +338,11 @@ public class DBManager implements Database {
 			date = format.parse(rs.getString("date"));
 			reporterUsername = rs.getString("reporter");
 			username = rs.getString("username");
-			failureType = getFailureType(rs.getInt("failure_type"));
+			failureType = getFailureType(rs.getInt("failureType"));
 			subject = rs.getString("subject");
 			description = rs.getString("description");
 			machineCode = rs.getInt("machine");
-			equipmentAvailable = rs.getInt("equipment_available");
+			equipmentAvailable = rs.getInt("equipmentAvailable");
 		}
 		this.close();
 		if(ok){
@@ -370,7 +361,7 @@ public class DBManager implements Database {
 		ResultSet rs = null;
 		
 		FailureType failureType = null;
-		sql = "SELECT * FROM failure_types WHERE id = "+id+";";
+		sql = "SELECT * FROM failureTypes WHERE id = "+id+";";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			failureType = new FailureType(
@@ -410,35 +401,29 @@ public class DBManager implements Database {
 		String repairProcess = null;
 		boolean hasInstructions = false;
 		boolean needsInstructions = false;
-		boolean subnormality = false;
-		boolean notEnoughMaterial = false;
-		boolean notEnoughTime = false;
 		this.connect();
-		sql = "SELECT * FROM assignated_groups "
-				+ "JOIN groups ON(groups.id = assignated_groups.group_id) "
-				+ "JOIN failure_localizations ON(assignated_groups.failure_localization = failure_localizations.id) "
-				+ "WHERE work_order = "+id+" AND groups.id = "+groupId+";";
+		sql = "SELECT * FROM repairs "
+				+ "JOIN groups ON(groups.id = repairs.groupId) "
+				+ "JOIN failureLocalizations ON(repairs.failureLocalization = failureLocalizations.id) "
+				+ "WHERE workOrder = "+id+" AND groups.id = "+groupId+";";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			group = new Group(
 					rs.getInt("groups.id"), 
 					Character.toUpperCase(rs.getString("role").charAt(0))
 					);
-			repairDate = format.parse(rs.getString("repair_date"));
+			repairDate = format.parse(rs.getString("repairDate"));
 			timeSpent = rs.getFloat("timeSpent");
 			failureLocalization = new FailureLocalization(
-					rs.getInt("failure_localizations.id"),
-					rs.getString("failure_localizations.name")
+					rs.getInt("failureLocalizations.id"),
+					rs.getString("failureLocalizations.name")
 					);
-			failureRepaired = rs.getBoolean("failure_repaired");
+			failureRepaired = rs.getBoolean("failureRepaired");
 			replacements = rs.getString("replacements");
 			tools = rs.getString("tools");
-			repairProcess = rs.getString("repair_process");
-			hasInstructions = rs.getBoolean("has_instructions");
-			needsInstructions = rs.getBoolean("needs_instructions");
-			subnormality = rs.getBoolean("subnormality");
-			notEnoughMaterial = rs.getBoolean("not_enough_material");
-			notEnoughTime = rs.getBoolean("not_enough_time");
+			repairProcess = rs.getString("repairProcess");
+			hasInstructions = rs.getBoolean("hasInstructions");
+			needsInstructions = rs.getBoolean("needsInstructions");
 			repair = new Repair(group, 
 					repairDate, 
 					timeSpent, 
@@ -448,10 +433,7 @@ public class DBManager implements Database {
 					tools, 
 					repairProcess, 
 					hasInstructions, 
-					needsInstructions, 
-					subnormality, 
-					notEnoughMaterial, 
-					notEnoughTime
+					needsInstructions
 					);
 		}
 		workOrder.setRepair(repair);
@@ -504,7 +486,7 @@ public class DBManager implements Database {
 		this.connect();
 		String subselect = "SELECT id FROM breakdowns WHERE id = "+id+";";
 		
-		sql = "SELECT * FROM work_orders "
+		sql = "SELECT * FROM workOrders "
 				+ "USING(id) WHERE ("+subselect+") = '"+id+"'";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
@@ -536,35 +518,29 @@ public class DBManager implements Database {
 		String repairProcess = null;
 		boolean hasInstructions = false;
 		boolean needsInstructions = false;
-		boolean subnormality = false;
-		boolean notEnoughMaterial = false;
-		boolean notEnoughTime = false;
 		this.connect();
-		sql = "SELECT * FROM assignated_groups "
-				+ "JOIN groups ON(groups.id = assignated_groups.group_id) "
-				+ "JOIN failure_localizations ON(assignated_groups.failure_localization = failure_localizations.id) "
-				+ "WHERE work_order = "+id+" ORDER BY repair_date DESC;";
+		sql = "SELECT * FROM repairs "
+				+ "JOIN groups ON(groups.id = repairs.groupId) "
+				+ "JOIN failureLocalizations ON(repairs.failureLocalization = failureLocalizations.id) "
+				+ "WHERE workOrder = "+id+" ORDER BY repairDate DESC;";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			group = new Group(
 					rs.getInt("groups.id"), 
 					Character.toUpperCase(rs.getString("role").charAt(0))
 					);
-			repairDate = format.parse(rs.getString("repair_date"));
+			repairDate = format.parse(rs.getString("repairDate"));
 			timeSpent = rs.getFloat("timeSpent");
 			failureLocalization = new FailureLocalization(
-					rs.getInt("failure_localizations.id"),
-					rs.getString("failure_localizations.name")
+					rs.getInt("failureLocalizations.id"),
+					rs.getString("failureLocalizations.name")
 					);
-			failureRepaired = rs.getBoolean("failure_repaired");
+			failureRepaired = rs.getBoolean("failureRepaired");
 			replacements = rs.getString("replacements");
 			tools = rs.getString("tools");
-			repairProcess = rs.getString("repair_process");
-			hasInstructions = rs.getBoolean("has_instructions");
-			needsInstructions = rs.getBoolean("needs_instructions");
-			subnormality = rs.getBoolean("subnormality");
-			notEnoughMaterial = rs.getBoolean("not_enough_material");
-			notEnoughTime = rs.getBoolean("not_enough_time");
+			repairProcess = rs.getString("repairProcess");
+			hasInstructions = rs.getBoolean("hasInstructions");
+			needsInstructions = rs.getBoolean("needsInstructions");
 			
 			repairs.add(new Repair(group, 
 						repairDate, 
@@ -575,10 +551,7 @@ public class DBManager implements Database {
 						tools, 
 						repairProcess, 
 						hasInstructions, 
-						needsInstructions, 
-						subnormality, 
-						notEnoughMaterial, 
-						notEnoughTime
+						needsInstructions
 						)
 					);
 		}
