@@ -184,9 +184,9 @@ public class NewDBManager1{
 		this.close();
 		return users;
 	}
-/*
-	public Issue getIssue(Issue breakdown) throws Exception {
-		int id = 1;
+
+	public Issue getIssue(Issue issue) throws Exception {
+		int id = 3;//TODO
 		Issue returnIssue = null;;
 		String date = null;
 		User reporter = null;
@@ -200,40 +200,44 @@ public class NewDBManager1{
 		int equipmentAvailable = -1;
 		boolean ok;
 		this.connect();
-		sql = "SELECT * FROM breakdowns WHERE id = "+id+";";
+		sql = "SELECT * FROM breakdowns WHERE codBreakdown = "+id+";";
 		rs = stmt.executeQuery(sql);
 		if(ok = rs.next()){
 			date = rs.getString("date");
 			reporterUsername = rs.getString("reporter");
-			username = rs.getString("username");
+			//username = rs.getString("username");//TODO
 			failureType = rs.getString("failureType");
 			subject = rs.getString("subject");
 			description = rs.getString("description");
-			machineCode = rs.getString("machine");
-			equipmentAvailable = rs.getInt("equipmentAvailable");
+			machineCode = rs.getString("codMachine");
+			equipmentAvailable = rs.getInt("equipmentAvaiable");
 		}
 		this.close();
 		if(ok){
 			User user = new User();
 			user.setUserName(reporterUsername);
-			reporter = getUser(user);
-			if(reporter.getName() == null || reporter.getName().isEmpty()){
-				reporter.setName(username);
+			
+			//reporter = getUser(user);//Descomentar cuando se junte con la otra mitad
+			if(reporter != null){
+				if(reporter.getName() == null || reporter.getName().isEmpty()){
+					reporter.setName(username);
+				}
 			}
 			MachineAndroid am = new MachineAndroid();
 			am.setId(machineCode);
-			machine = getMachine(am);
+			//machine = getMachine(am);//Descomentar cuando se junte con la otra mitad
 			Issue is = new Issue();
 			is.setDate(date);
 			is.setDescription(description);
 			is.setFailureType(failureType);
 			is.setMachine(machine);
 			is.setReporter(reporter);
+			is.setSeverity(String.valueOf(equipmentAvailable));
 			returnIssue =is;
 		}
 		return returnIssue;
 	}
-
+/*
 	public Localization getLocalization(Localization localization) throws Exception {
 		// TODO 
 		Localization returnLocalization = null;
