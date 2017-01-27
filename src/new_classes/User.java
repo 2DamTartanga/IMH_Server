@@ -11,31 +11,32 @@ public class User {
 	private char type;
 	private Group group;
 	
-	public User(String username, String password) {
+	public User(String username) {
 		this.username = username;
+	}
+	
+	public User(String username, String password) {
+		this(username);
 		this.password = password;
 	}
 
 	public User(String username, String password, String name, String surname, String email, String course,
 			char type) {
-		this.username = username;
-		this.password = password;
+		this(username, password);
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.course = course;
 		this.type = type;
+		if(this.name.isEmpty()) this.name = null;
+		if(this.surname.isEmpty()) this.surname = null;
+		if(this.email.isEmpty()) this.email = null;
+		if(this.course.isEmpty()) this.course = null;
 	}
 
 	public User(String username, String password, String name, String surname, String email, String course, char type,
 			Group group) {
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.course = course;
-		this.type = type;
+		this(username, password, name, surname, email, course, type);
 		this.group = group;
 	}
 
@@ -69,6 +70,10 @@ public class User {
 
 	public Group getGroup() {
 		return group;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

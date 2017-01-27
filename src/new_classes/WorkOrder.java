@@ -12,17 +12,15 @@ public class WorkOrder {
 	private int typeOfMaintenance;
 	private ArrayList<Repair> repairs;
 	
-	public WorkOrder(Breakdown breakdown, int severity, Date date, String others, int typeOfMaintenance) {
+	public WorkOrder(Breakdown breakdown, Date date, String others, int typeOfMaintenance) {
 		this.breakdown = breakdown;
-		this.severity = severity;
 		this.date = date;
 		this.others = others;
 		this.typeOfMaintenance = typeOfMaintenance;
 	}
-	public WorkOrder(Breakdown breakdown, int severity, Date date, String others, int typeOfMaintenance,
+	public WorkOrder(Breakdown breakdown, Date date, String others, int typeOfMaintenance,
 			ArrayList<Repair> repairs) {
 		this.breakdown = breakdown;
-		this.severity = severity;
 		this.date = date;
 		this.others = others;
 		this.typeOfMaintenance = typeOfMaintenance;
@@ -46,6 +44,13 @@ public class WorkOrder {
 	}
 	public ArrayList<Repair> getRepairs() {
 		return repairs;
+	}
+	public int getId(){
+		return breakdown.getId();
+	}
+	public void setRepair(Repair repair) {
+		repairs = new ArrayList<>();
+		repairs.add(repair);
 	}
 	
 	
