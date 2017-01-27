@@ -7,7 +7,7 @@ public class Issue {
 	private String description;
 	private String date;
 	private User reporter;
-	private Machine machine;
+	private MachineAndroid machine;
 	  
 	public String getFailureType() {
 		return failureType;
@@ -24,7 +24,7 @@ public class Issue {
 	public User getReporter() {
 		return reporter;
 	}
-	public Machine getMachine() {
+	public MachineAndroid getMachine() {
 		return machine;
 	}
 	public void setFailureType(String failureType) {
@@ -42,7 +42,7 @@ public class Issue {
 	public void setReporter(User reporter) {
 		this.reporter = reporter;
 	}
-	public void setMachine(Machine machine) {
+	public void setMachine(MachineAndroid machine) {
 		this.machine = machine;
 	}
 	  
