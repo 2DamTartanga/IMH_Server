@@ -133,7 +133,7 @@ public class NewDBManager1{
 		this.close();
 		return ok;
 	}
-/*
+
 	public TechnicianGroup getGroup(TechnicianGroup group) throws Exception {
 		//TODO
 		TechnicianGroup returnGroup = null;
@@ -141,7 +141,7 @@ public class NewDBManager1{
 		String groupId = group.getId();
 		char role = '.';
 		this.connect();
-		sql = "SELECT groupId, role FROM groups WHERE groupId = "+groupId+";";
+		sql = "SELECT id, role FROM groups WHERE id LIKE '"+groupId+"' AND UPPER(role) LIKE 'T';";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			role = rs.getString("role").charAt(0);
@@ -158,6 +158,33 @@ public class NewDBManager1{
 		return returnGroup;
 	}
 
+	private ArrayList<User> getUsersFromGroup(TechnicianGroup group) throws Exception {
+		ArrayList<User> users = new ArrayList<>();
+		String id = group.getId();
+		this.connect();
+		String sub = "SELECT id FROM groups WHERE id LIKE '"+id+"'";
+		sql = "SELECT * "
+				+ "FROM users JOIN others USING(username) "
+				+ "JOIN maintenance USING(username)"
+				+ "WHERE maintenance.idGroup LIKE ("+sub+") ;";
+		System.out.println(sql);
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			User user = new User();
+			user.setCourse(rs.getString("course"));
+			//user.setCycle(rs.getString("cycle"));
+			user.setEmail(rs.getString("email"));
+			user.setName(rs.getString("name"));
+			user.setPassword(rs.getString("password"));
+			user.setSurName(rs.getString("surname"));
+			user.setUserName(rs.getString("username"));
+			users.add(user);
+		}
+		if(users.size() == 0) users = null;
+		this.close();
+		return users;
+	}
+/*
 	public Issue getIssue(Issue breakdown) throws Exception {
 		int id = 1;
 		Issue returnIssue = null;;
