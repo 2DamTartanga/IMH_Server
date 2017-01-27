@@ -28,6 +28,6 @@ public interface Database {
 	
 	public WorkOrder getWorkOrder(WorkOrder order) throws Exception;
 	
-	public Localization getLocalization(Localization localization) throws Exception;
+	public Section getLocalization(Section localization) throws Exception;
 	
 }

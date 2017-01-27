@@ -7,7 +7,7 @@ public class Machine {
 	private String serialNumber;
 	private int status;
 	private String year;
-	private Localization localization; //??
+	private Section localization; //??
 	private int importance;
 	
 	private String phoneNumber;
@@ -28,7 +28,7 @@ public class Machine {
 	public Machine(int code) {
 		this.code = code;
 	}
-	public Machine(int code, MachineType type, int status, Localization localization, int importance) {
+	public Machine(int code, MachineType type, int status, Section localization, int importance) {
 		this(code);
 		this.type = type;
 		this.status = status;
@@ -50,7 +50,7 @@ public class Machine {
 	public String getYear() {
 		return year;
 	}
-	public Localization getLocalization() {
+	public Section getLocalization() {
 		return localization;
 	}
 	public int getImportance() {

@@ -162,7 +162,7 @@ public class Manager implements Database {
 			resultOfTheOperation = (Machine) getMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = (Localization) getLocalization( (Localization) msg.getContent());
+			resultOfTheOperation = (Section) getLocalization( (Section) msg.getContent());
 			break;
 		default:
 			break;
@@ -316,7 +316,7 @@ public class Manager implements Database {
 	}
 
 	@Override
-	public Localization getLocalization(Localization localization) throws Exception {
+	public Section getLocalization(Section localization) throws Exception {
 		return dbm.getLocalization(localization);
 	}
 }
