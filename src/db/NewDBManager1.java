@@ -237,32 +237,46 @@ public class NewDBManager1{
 		}
 		return returnIssue;
 	}
-/*
-	public Localization getLocalization(Localization localization) throws Exception {
+
+	public WorkZone getWorkZone(WorkZone workZone) throws Exception {
 		// TODO 
-		Localization returnLocalization = null;
-		ArrayList<Machine> machines;
-		int id = localization.getId();
+		WorkZone returnWorkZone = null;
+		ArrayList<MachineAndroid> machines;
+		String id = workZone.getId();
 		this.connect();
-		sql = "SELECT * FROM localizations WHERE id = "+id+";";
+		sql = "SELECT * FROM sections WHERE UPPEr(idSection) LIKE UPPER('"+id+"');";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
-			returnLocalization = new Localization(
-					rs.getInt("id"), 
-					rs.getString("name_"+language));
+			returnWorkZone = new WorkZone();
+			returnWorkZone.setId(rs.getString("idSection"));
+			returnWorkZone.setName("nameSection");
 		}
 		this.close();
-		if(returnLocalization != null){
-			machines = getLocalizationMachines(localization);
-			returnLocalization.setMachines(machines);
+		if(returnWorkZone != null){
+			machines = getWorkZoneMachines(workZone);
+			returnWorkZone.setMachines(machines);
 		}
-		return returnLocalization;
+		return returnWorkZone;
 	}
 
-	private ArrayList<Machine> getLocalizationMachines(Localization localization) {
-		// TODO Auto-generated method stub
-		return null;
+	private ArrayList<MachineAndroid> getWorkZoneMachines(WorkZone workZone) throws Exception {
+		ArrayList<MachineAndroid> machines = new ArrayList<>();
+		MachineAndroid machine = null;
+		String id = workZone.getId();
+		this.connect();
+		String sub = "SELECT idSection FROM sections WHERE UPPER(idSection) LIKE UPPER('"+id+"')";
+		sql = "SELECT * FROM machines WHERE idSection LIKE ("+sub+");";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			machine = new MachineAndroid();
+			machine.setId(rs.getString("codMachine"));
+			machine.setState(Integer.parseInt(rs.getString("status")));
+			machines.add(machine);
+		}
+		this.close();
+		if(machines.size() == 0) machines = null;
+		return machines;
 	}
-*/
+
 	
 }
