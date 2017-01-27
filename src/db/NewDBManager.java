@@ -9,22 +9,23 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import com.mysql.jdbc.MysqlDataTruncation;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import interfaces.Database;
-import new_classes.*;
+import new_classes.Breakdown;
+import clases.*;
 
 
-public class NewDBManager implements Database {
+public class NewDBManager{
 
 	private Connection con;
 	private Statement stmt;
 	private ResultSet rs;
 	private String sql;
 	private SimpleDateFormat format;
-	private String language;
 	
 	public NewDBManager(){
 		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -45,9 +46,6 @@ public class NewDBManager implements Database {
 		}
 	}
 	
-	public void setLanguage(String language){
-		this.language = language;
-	}
 	
 	/**
 	 * Cierra la conexion
@@ -67,8 +65,8 @@ public class NewDBManager implements Database {
 	public User login(User user) throws Exception {//TODO esto!!
 		connect();
 		User loggedUser = null;
-		Group group = null;
-		String name = user.getUsername();
+		TechnicianGroup group = null;
+		String name = user.getUserName();
 		String pass = user.getPassword();
 		sql = "SELECT * "
 				+ "FROM users JOIN others USING(username) "
@@ -151,43 +149,37 @@ public class NewDBManager implements Database {
 	}
 */
 
-	@Override
-	public boolean addBreakdown(Breakdown breakdown) throws Exception {
+	public boolean addBreakdown(Issue issue) throws Exception {
 		//TODO
 		boolean ok;
-		boolean isOther = breakdown.getReporter().getSurname() == null;
-		String date = format.format(breakdown.getDate());
-		String name = (isOther)? breakdown.getReporter().getName() : breakdown.getReporter().getUsername();
-		int failureType = breakdown.getFailureType().getId();
-		String subject = breakdown.getSubject();
-		int machineCode =  breakdown.getMachine().getCode();
-		String description = breakdown.getDescription();
-		int equipmentAvailable = breakdown.getEquipmentAvailable();
+		boolean isOther = issue.getReporter().getSurName() == null;
+		String date = format.format(issue.getDate());
+		String name = (isOther)? issue.getReporter().getName() : issue.getReporter().getUserName();
+		String failureType = issue.getFailureType();
+		String machineCode =  issue.getMachine().getId();
+		String description = issue.getDescription();
 		this.connect();
 
-		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failureType, subject, description, machine, equipmentAvailable) "
-				+ "VALUES('" + date + "','" + name + "','" + failureType + "','" + subject + "','" + description + "','" + machineCode + "','" + equipmentAvailable + "')";
+		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failureType, description, codMachine) "
+				+ "VALUES('" + date + "','" + name + "','" + failureType + "','" + description + "','" + machineCode + ");";
 		ok = stmt.executeUpdate(sql) == 1;
 		
 		this.close();
 		return ok;
 	}
 
-	@Override
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
 		// TODO 
 		//TODO pillar la repair mas nueva
-		Repair repair = workOrder.getRepairs().get(0);
-		int workOrderId = workOrder.getBreakdown().getId();
-		String repairDate = format.format(repair.getRepairDate());
+		Repair repair = workOrder.getRepair().get(0);
+		String workOrderId = workOrder.getId();
+		String repairDate = format.format(repair.getFinishDate());
 		float timeSpent = repair.getTimeSpent();
-		int failureLocalization = repair.getFailureLocalization().getId();
-		boolean failureRepaired = repair.isFailureRepaired();
+		String failureLocalization = repair.getFailureLocalization();
+		boolean failureRepaired = repair.isSolved();
 		String replacements = repair.getReplacements();
 		String tools = repair.getTools();
 		String repairProcess = repair.getRepairProcess();
-		boolean hasInstructions = repair.isHasInstructions();
-		boolean needsInstructions = repair.isNeedsInstructions();
 		
 		boolean ok;
 		this.connect();
@@ -201,9 +193,7 @@ public class NewDBManager implements Database {
 				+ "failureRepaired,"
 				+ "replacements,"
 				+ "tools,"
-				+ "repairProcess,"
-				+ "hasInstructions,"
-				+ "needsInstructions)"
+				+ "repairProcess)"
 				+ " VALUES("
 				+ ""+workOrderId+","
 				+ ""+repairDate+","
@@ -212,9 +202,7 @@ public class NewDBManager implements Database {
 				+ ""+failureRepaired+","
 				+ ""+replacements+","
 				+ ""+tools+","
-				+ ""+repairProcess+","
-				+ ""+hasInstructions+","
-				+ ""+needsInstructions+""
+				+ ""+repairProcess+""
 				+ ");";
 		
 		ok = stmt.executeUpdate(sql) == 1;
@@ -265,12 +253,11 @@ public class NewDBManager implements Database {
 
 
 
-	@Override
-	public Group getGroup(Group group) throws Exception {
+	public TechnicianGroup getGroup(TechnicianGroup group) throws Exception {
 		//TODO
-		Group returnGroup = null;
+		TechnicianGroup returnGroup = null;
 		ArrayList<User> users;
-		int groupId = group.getId();
+		String groupId = group.getId();
 		char role = '.';
 		this.connect();
 		sql = "SELECT groupId, role FROM groups WHERE groupId = "+groupId+";";
@@ -281,14 +268,18 @@ public class NewDBManager implements Database {
 		this.close();
 		if(group != null){
 			users = getUsersFromGroup(group);
-			returnGroup = new Group(groupId, role, users);
+			TechnicianGroup tg = new TechnicianGroup();
+			tg.setId(groupId);
+			tg.setTechnicians(users);
+			tg.setWorkOrders(new ArrayList<WorkOrder>());
+			returnGroup = tg;
 		}
 		return returnGroup;
 	}
 
-	private ArrayList<User> getUsersFromGroup(Group group) throws Exception{
+	private ArrayList<User> getUsersFromGroup(TechnicianGroup group) throws Exception{
 		//TODO
-		int groupId = group.getId();
+		String groupId = group.getId();
 		ArrayList<User> users = new ArrayList<>();
 		this.connect();
 		sql = "SELECT * "
@@ -298,17 +289,17 @@ public class NewDBManager implements Database {
 				+ "WHERE groupId LIKE '"+groupId+"';";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
-			users.add(
-					new User(
-						rs.getString("username"), 
-						rs.getString("password"), 
-						rs.getString("name"), 
-						rs.getString("surname"), 
-						rs.getString("email"), 
-						rs.getString("course"), 
-						Character.toUpperCase(rs.getString("type").charAt(0))
-						)
-					);
+			TechnicianGroup tg = new TechnicianGroup();
+			User user = new User();
+			user.setCourse(rs.getString("course"));
+			user.setCycle("");
+			user.setEmail(rs.getString("email"));
+			user.setGroup(tg);
+			user.setName(rs.getString("name"));
+			user.setPassword(rs.getString("password"));
+			user.setSurName(rs.getString("surname"));
+			user.setUserName(rs.getString("username"));
+			users.add(user);
 		}
 		this.close();
 		if(users.size() == 0) users = null;
@@ -316,44 +307,53 @@ public class NewDBManager implements Database {
 		return users;
 	}
 	
-	@Override
-	public Breakdown getBreakdown(Breakdown breakdown) throws Exception {
-		int id = breakdown.getId();
-		Breakdown returnBreakdown = null;;
-		Date date = null;
+	public Issue getIssue(Issue breakdown) throws Exception {
+		int id = 1;
+		Issue returnIssue = null;;
+		String date = null;
 		User reporter = null;
 		String reporterUsername = null;
 		String username = null;
-		FailureType failureType = null;
+		String failureType = null;
 		String subject = null;
 		String description = null;
-		Machine machine = null;
-		int machineCode = -1;
+		MachineAndroid machine = null;
+		String machineCode = null;
 		int equipmentAvailable = -1;
 		boolean ok;
 		this.connect();
 		sql = "SELECT * FROM breakdowns WHERE id = "+id+";";
 		rs = stmt.executeQuery(sql);
 		if(ok = rs.next()){
-			date = format.parse(rs.getString("date"));
+			date = rs.getString("date");
 			reporterUsername = rs.getString("reporter");
 			username = rs.getString("username");
-			failureType = getFailureType(rs.getInt("failureType"));
+			failureType = rs.getString("failureType");
 			subject = rs.getString("subject");
 			description = rs.getString("description");
-			machineCode = rs.getInt("machine");
+			machineCode = rs.getString("machine");
 			equipmentAvailable = rs.getInt("equipmentAvailable");
 		}
 		this.close();
 		if(ok){
-			reporter = getUser(new User(reporterUsername));
+			User user = new User();
+			user.setUserName(reporterUsername);
+			reporter = getUser(user);
 			if(reporter.getName() == null || reporter.getName().isEmpty()){
 				reporter.setName(username);
 			}
-			machine = getMachine(new Machine(machineCode));
-			returnBreakdown = new Breakdown(id, date, reporter, failureType, subject, description, machine, equipmentAvailable);
+			MachineAndroid am = new MachineAndroid();
+			am.setId(machineCode);
+			machine = getMachine(am);
+			Issue is = new Issue();
+			is.setDate(date);
+			is.setDescription(description);
+			is.setFailureType(failureType);
+			is.setMachine(machine);
+			is.setReporter(reporter);
+			returnIssue =is;
 		}
-		return returnBreakdown;
+		return returnIssue;
 	}
 
 	private FailureType getFailureType(int id) throws Exception {
@@ -372,7 +372,6 @@ public class NewDBManager implements Database {
 		return failureType;
 	}
 
-	@Override
 	public Machine getMachine(Machine machine) throws Exception {
 		// TODO 
 		this.connect();
@@ -384,7 +383,6 @@ public class NewDBManager implements Database {
 	/**
 	 * Datos necesarios: id de breakdown y id de grupo
 	 */
-	@Override
 	public WorkOrder getRepair(WorkOrder workOrder) throws Exception {
 		// TODO
 		Repair repair = null;
@@ -440,13 +438,12 @@ public class NewDBManager implements Database {
 		return workOrder;
 	}
 
-	@Override
 	public User getUser(User user) throws Exception {
 		// TODO 
 		this.connect();
 		User returnUser = null;
 		Group group = null;
-		String name = user.getUsername();
+		String name = user.getUserName();
 		sql = "SELECT * "
 				+ "FROM users JOIN others USING(username) "
 				+ "JOIN maintenance USING(username) "
@@ -473,7 +470,6 @@ public class NewDBManager implements Database {
 		return returnUser;
 	}
 
-	@Override
 	public WorkOrder getWorkOrder(WorkOrder order) throws Exception {
 		// TODO 
 		int id = order.getBreakdown().getId();
@@ -560,7 +556,6 @@ public class NewDBManager implements Database {
 		return repairs;
 	}
 
-	@Override
 	public Localization getLocalization(Localization localization) throws Exception {
 		// TODO 
 		Localization returnLocalization = null;
