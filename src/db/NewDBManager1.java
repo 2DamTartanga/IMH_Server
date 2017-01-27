@@ -88,49 +88,52 @@ public class NewDBManager1{
 		this.close();
 		return id;
 	}
-/*
+
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
 		// TODO 
 		//TODO pillar la repair mas nueva
 		Repair repair = workOrder.getRepair().get(0);
 		String workOrderId = workOrder.getId();
-		String repairDate = format.format(repair.getFinishDate());
+		//String repairDate = format.format(repair.getFinishDate());//TODO
 		float timeSpent = repair.getTimeSpent();
 		String failureLocalization = repair.getFailureLocalization();
 		boolean failureRepaired = repair.isSolved();
 		String replacements = repair.getReplacements();
 		String tools = repair.getTools();
 		String repairProcess = repair.getRepairProcess();
-		
+		int availabilityAfterRepair = 1;
 		boolean ok;
 		this.connect();
 		
 		sql = "INSERT INTO repairs("
-				+ "workOrder,"
-				+ "group,"
+				+ "codBreakdown,"
+				+ "idGroup,"
 				+ "repairDate,"
-				+ "timeSpent,"
-				+ "failureLocalization,"
-				+ "failureRepaired,"
+				+ "time,"
+				+ "idLocalization,"
+				+ "isRepaired,"
 				+ "replacements,"
 				+ "tools,"
-				+ "repairProcess)"
+				+ "repairProcess,"
+				+ "avaiabilityAfter)"
 				+ " VALUES("
 				+ ""+workOrderId+","
-				+ ""+repairDate+","
+				+ "'1',"//TODO
+				+ "NOW(),"
 				+ ""+timeSpent+","
-				+ ""+failureLocalization+","
+				+ "'"+failureLocalization+"',"
 				+ ""+failureRepaired+","
-				+ ""+replacements+","
-				+ ""+tools+","
-				+ ""+repairProcess+""
+				+ "'"+replacements+"',"
+				+ "'"+tools+"',"
+				+ "'"+repairProcess+"',"
+				+ ""+availabilityAfterRepair+""
 				+ ");";
 		
 		ok = stmt.executeUpdate(sql) == 1;
 		this.close();
 		return ok;
 	}
-
+/*
 	public TechnicianGroup getGroup(TechnicianGroup group) throws Exception {
 		//TODO
 		TechnicianGroup returnGroup = null;
