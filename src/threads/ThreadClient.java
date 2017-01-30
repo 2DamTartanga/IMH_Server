@@ -1,19 +1,19 @@
 package threads;
 
+import control.Manager;
+import model.Message;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import control.Manager;
-import model.Message;
-
 public class ThreadClient extends Thread {
-	
+
 	private Socket clientSocket;
 	private ObjectOutputStream out;
-	private Manager man;
-	
+	private Manager manager;
+
 	public ThreadClient(Socket clientSocket, ObjectOutputStream out){
 		this.clientSocket = clientSocket;
 		this.out = out;
@@ -21,38 +21,22 @@ public class ThreadClient extends Thread {
 
 	@Override
 	public void run(){
-		
-		ObjectInputStream in = null;
-
-		man = new Manager();
-		
+		Object input;
+		ObjectInputStream in;
+		Object output;
+		manager = new Manager();
 		try{
 			in = new ObjectInputStream(clientSocket.getInputStream());
+			input = in.readObject();
+			if(input instanceof Message){
+				output = manager.manageMessages((Message) input);
+				out.writeObject(output);
+			}
+
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
-		}
-		
-		while(true){
-			
-			try{
-				Message msgToParse;
-				msgToParse = (Message) in.readObject();
-				
-				Object objectToSend = man.manageMessages(msgToParse);
-				
-				out.writeObject(objectToSend);
-				
-			}catch(ClassNotFoundException e){
-				e.printStackTrace();
-			}catch(IOException e){
-				try{
-					// server disconnected
-					if(out != null) out.close();
-				}catch(IOException ioE){
-					ioE.printStackTrace();
-				}
-			}
-			
 		}
 	}
 }
