@@ -1,15 +1,17 @@
 package tester;
-import control.Manager;
-import model.*;
-import other.Message;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Date;
 
-/**
- * Created by Dani on 29/01/2017.
- */
+import control.Manager;
+import model.Breakdown;
+import model.Group;
+import model.Machine;
+import model.Message;
+import model.Repair;
+import model.User;
+import model.WorkOrder;
+
 public class MainClient implements MessageListener {
 
     private final int PORT = 8008;
