@@ -53,6 +53,10 @@ public class WorkOrder implements Serializable {
 		return repairs;
 	}
 	
+	public int getId(){
+		return this.getBreakdown().getId();
+	}
+	
 	
 	
 }
