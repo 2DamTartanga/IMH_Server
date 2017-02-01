@@ -11,14 +11,14 @@ import model.WorkOrder;
 
 public class DBRepair extends NewDBManager {
 	
-	public ArrayList<Repair> getRepairs(WorkOrder workOrder) throws Exception{
+	public ArrayList<Repair> getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
 		ArrayList<Repair> rRepairs = new ArrayList<>();
 		Repair r = null;
 		int id = workOrder.getId();
 		this.connect();
 		sql = "SELECT * FROM repairs WHERE id = "+id+";";
 		while(rs.next()){
-			r = getRepairFromResultSet();
+			r = getRepairFromResultSet(needsGroup);
 			r.setTools(new DBTools().getToolsFromRepair(rs.getString("tools")));
 		}
 		this.close();
@@ -61,7 +61,7 @@ public class DBRepair extends NewDBManager {
 		return result;
 	}
 	
-	private Repair getRepairFromResultSet() throws Exception{
+	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{
 		String id = rs.getString("id");
 		Repair rRepair = null;
 		while(rs.getString("id") == id && rs.next()){
