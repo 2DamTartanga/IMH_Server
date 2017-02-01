@@ -21,11 +21,11 @@ import clases.*;
 
 public class NewDBManager{
 
-	private Connection con;
-	private Statement stmt;
-	private ResultSet rs;
-	private String sql;
-	private SimpleDateFormat format;
+	protected Connection con;
+	protected Statement stmt;
+	protected ResultSet rs;
+	protected String sql;
+	protected SimpleDateFormat format;
 	
 	public NewDBManager(){
 		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
