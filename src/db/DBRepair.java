@@ -1,11 +1,14 @@
 package db;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.Group;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import com.sun.javafx.scene.control.skin.ToolBarSkin;
-
 import model.Repair;
 import model.WorkOrder;
 
@@ -25,7 +28,38 @@ public class DBRepair extends NewDBManager {
 		return rRepairs;
 	}
 	
-	public WorkOrder addRepair(WorkOrder workOrder){
+	public boolean addRepair(WorkOrder workOrder) throws SQLException{
+		boolean result = false;
+		
+		this.connect();
+		Repair r = workOrder.getRepairs().get(workOrder.getRepairs().size() - 1);
+		sql = "INSERT INTO repairs (codBreakdonw, idGroup, "
+				+ "repairDate, time, availabilityAfter, tools, repairProcess, "
+				+ "idLocalization, isRepaired, replacements) "
+				+ "VALUES ('" + workOrder.getBreakdown().getId() + "', '"
+				+ r.getGroup().getId() + "', '"
+				+ r.getDate() + "', '"
+				+ r.getTime() + "', '"
+				+ r.getRepairProcess() + "', '"
+				+ r.getFailureLocalization() + "', '"
+				+ r.isRepaired() + "', '"
+				+ r.getReplacements() + "', '"
+				+ "')";
+				
+		result = stmt.execute(sql);
+		
+		this.close();
+		
+		return result;
+	}
+	
+	public ArrayList<Repair> getRepairsFromGroup(Group group){
+		ArrayList<Repair> result = new ArrayList<>();
+		
+		this.connect();
+		sql = "SELECT * FROM repairs WHERE idGroup='"
+				+ group.getId() + "'";
+		ResultSet rs = stmt.executeQuery(sql);
 		
 	}
 	

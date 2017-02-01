@@ -30,6 +30,9 @@ public class Breakdown implements Serializable {
 		this.equipmentAvailable = equipmentAvailable;
 	}
 
+	public Breakdown() {
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -61,8 +64,37 @@ public class Breakdown implements Serializable {
 	public String getEquipmentAvailable() {
 		return equipmentAvailable;
 	}
-	
-	
-	
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public void setFailureType(String failureType) {
+		this.failureType = failureType;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setEquipmentAvailable(String equipmentAvailable) {
+		this.equipmentAvailable = equipmentAvailable;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setMachine(Machine machine) {
+		this.machine = machine;
+	}
+
+	public void setReporter(User reporter) {
+		this.reporter = reporter;
+	}
 	
 }

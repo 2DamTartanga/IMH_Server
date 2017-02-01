@@ -29,6 +29,10 @@ public class Machine implements Serializable {
 	private String serialNumber;
 	private String year;
 	private Section section; //??
+	
+	public Machine(String id) {
+		this.id = id;
+	}
 	public String getId() {
 		return id;
 	}

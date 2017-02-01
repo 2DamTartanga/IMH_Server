@@ -10,12 +10,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.mysql.jdbc.MysqlDataTruncation;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
+import interfaces.Database;
 import model.Breakdown;
 import model.Group;
 import model.Machine;
 import model.Repair;
 import model.User;
 import model.WorkOrder;
+
 
 
 public class NewDBManager{
