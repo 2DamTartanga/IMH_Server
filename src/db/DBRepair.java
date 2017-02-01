@@ -1,17 +1,14 @@
 package db;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.util.ArrayList;
 
 import model.Group;
-=======
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import com.sun.javafx.scene.control.skin.ToolBarSkin;
-
->>>>>>> 9d0917a76e40004b1687ff6e565788f40cd98bbd
 import model.Repair;
 import model.WorkOrder;
 
@@ -57,6 +54,12 @@ public class DBRepair extends NewDBManager {
 	}
 	
 	public ArrayList<Repair> getRepairsFromGroup(Group group){
+		ArrayList<Repair> result = new ArrayList<>();
+		
+		this.connect();
+		sql = "SELECT * FROM repairs WHERE idGroup='"
+				+ group.getId() + "'";
+		ResultSet rs = stmt.executeQuery(sql);
 		
 	}
 	
