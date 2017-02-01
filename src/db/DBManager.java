@@ -10,11 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.mysql.jdbc.MysqlDataTruncation;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
 import interfaces.Database;
-import new_classes.*;
+import model.Breakdown;
+import model.Group;
+import model.Machine;
+import model.Repair;
+import model.User;
+import model.WorkOrder;
 
 
 public class DBManager implements Database {
@@ -158,11 +160,11 @@ public class DBManager implements Database {
 		boolean isOther = breakdown.getReporter().getSurname() == null;
 		String date = format.format(breakdown.getDate());
 		String name = (isOther)? breakdown.getReporter().getName() : breakdown.getReporter().getUsername();
-		int failureType = breakdown.getFailureType().getId();
+		String failureType = breakdown.getFailureType();
 		String subject = breakdown.getSubject();
-		int machineCode =  breakdown.getMachine().getCode();
+		String machineCode =  breakdown.getMachine().getId();
 		String description = breakdown.getDescription();
-		int equipmentAvailable = breakdown.getEquipmentAvailable();
+		String equipmentAvailable = breakdown.getEquipmentAvailable();
 		this.connect();
 
 		sql = "INSERT INTO breakdowns(date," +( (isOther)? "reporter" : "username") + ", failureType, subject, description, machine, equipmentAvailable) "
@@ -179,8 +181,8 @@ public class DBManager implements Database {
 		//TODO pillar la repair mas nueva
 		Repair repair = workOrder.getRepairs().get(0);
 		int workOrderId = workOrder.getBreakdown().getId();
-		String repairDate = format.format(repair.getRepairDate());
-		float timeSpent = repair.getTimeSpent();
+		String repairDate = format.format(repair.getDate());
+		float timeSpent = repair.getTime();
 		int failureLocalization = repair.getFailureLocalization().getId();
 		boolean failureRepaired = repair.isFailureRepaired();
 		String replacements = repair.getReplacements();

@@ -1,44 +1,58 @@
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class WorkOrder {
+public class WorkOrder implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int severity;
+	private String others;
+	private String typeOfMaintenance;
+	private Date creationDate;
+	private ArrayList<Repair> repairs;
+	private Breakdown breakdown;
 	
-	private String workOrderId;
-	private int requiresTool;
+	public WorkOrder(Breakdown breakdown, int severity, Date date, String others, String typeOfMaintenance) {
+		this.breakdown = breakdown;
+		this.severity = severity;
+		this.creationDate = date;
+		this.others = others;
+		this.typeOfMaintenance = typeOfMaintenance;
+	}
+	public WorkOrder(Breakdown breakdown, int severity, Date date, String others, String typeOfMaintenance,
+			ArrayList<Repair> repairs) {
+		this.breakdown = breakdown;
+		this.severity = severity;
+		this.creationDate = date;
+		this.others = others;
+		this.typeOfMaintenance = typeOfMaintenance;
+		this.repairs = repairs;
+	}
 	
-	// FIXME
-	private String instructionsUrl;
-	private boolean isValidated;
-	private Date date;
-	
-	public WorkOrder(String workOrderId, int requiresTool, String instructionsUrl, boolean isValidated, Date date){
-		this.workOrderId = workOrderId;
-		this.requiresTool = requiresTool;
-		this.instructionsUrl = instructionsUrl;
-		this.isValidated = isValidated;
-		this.date = date;
+	public Breakdown getBreakdown() {
+		return breakdown;
 	}
-
-	public String getWorkOrderId() {
-		return workOrderId;
+	public int getSeverity() {
+		return severity;
 	}
-
-	public int getRequiresTool() {
-		return requiresTool;
-	}
-
-	public String getInstructionsUrl() {
-		return instructionsUrl;
-	}
-
-	public boolean isValidated() {
-		return isValidated;
-	}
-
 	public Date getDate() {
-		return date;
+		return creationDate;
 	}
-
+	public String getOthers() {
+		return others;
+	}
+	public String getTypeOfMaintenance() {
+		return typeOfMaintenance;
+	}
+	public ArrayList<Repair> getRepairs() {
+		return repairs;
+	}
+	
+	
 	
 }

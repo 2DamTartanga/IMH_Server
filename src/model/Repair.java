@@ -1,55 +1,84 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Repair {
+import java.io.Serializable;
+public class Repair implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Date date;
+	private int failureLocalization;
+	private float time;
+	private String availabilityAfterRepair;
+	private ArrayList<String> tools;
+	private String repairProcess;
+	private boolean isRepaired;
+	private String replacements;
+	private Group group;
 	
-	private Date finishDate;
-	private float timeSpent;
-	private boolean isSolved;
-	private String difficulty;
-	private boolean hasEnoughKnowledge;
-	private boolean hasEnoughMaterial;
-	private String instructionsFilledUrl;
+	public Date getDate() {
+		return date;
+	}
+	public int getFailureLocalization() {
+		return failureLocalization;
+	}
+	public float getTime() {
+		return time;
+	}
+	public String getAvailabilityAfterRepair() {
+		return availabilityAfterRepair;
+	}
+	public ArrayList<String> getTools() {
+		return tools;
+	}
+	public String getRepairProcess() {
+		return repairProcess;
+	}
+	public boolean isRepaired() {
+		return isRepaired;
+	}
+	public String getReplacements() {
+		return replacements;
+	}
 	
-	public Repair(Date finishDate, float timeSpent, boolean isSolved, String difficulty, boolean hasEnoughKnowledge,
-			boolean hasEnoughMaterial, String instructionsFilledUrl) {
-		this.finishDate = finishDate;
-		this.timeSpent = timeSpent;
-		this.isSolved = isSolved;
-		this.difficulty = difficulty;
-		this.hasEnoughKnowledge = hasEnoughKnowledge;
-		this.hasEnoughMaterial = hasEnoughMaterial;
-		this.instructionsFilledUrl = instructionsFilledUrl;
+	
+	public void setDate(Date date) {
+		this.date = date;
 	}
-
-	public Date getFinishDate() {
-		return finishDate;
+	public void setFailureLocalization(int failureLocalization) {
+		this.failureLocalization = failureLocalization;
 	}
-
-	public float getTimeSpent() {
-		return timeSpent;
+	public void setTime(float time) {
+		this.time = time;
 	}
-
-	public boolean isSolved() {
-		return isSolved;
+	public void setAvailabilityAfterRepair(String availabilityAfterRepair) {
+		this.availabilityAfterRepair = availabilityAfterRepair;
 	}
-
-	public String getDifficulty() {
-		return difficulty;
+	public void setTools(ArrayList<String> tools) {
+		this.tools = tools;
 	}
-
-	public boolean isHasEnoughKnowledge() {
-		return hasEnoughKnowledge;
+	public void setRepairProcess(String repairProcess) {
+		this.repairProcess = repairProcess;
 	}
-
-	public boolean isHasEnoughMaterial() {
-		return hasEnoughMaterial;
+	public void setRepaired(boolean isRepaired) {
+		this.isRepaired = isRepaired;
 	}
-
-	public String getInstructionsFilledUrl() {
-		return instructionsFilledUrl;
+	public void setReplacements(String replacements) {
+		this.replacements = replacements;
 	}
+	public Group getGroup() {
+		return group;
+	}
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+	
+	
+	
 	
 	
 }

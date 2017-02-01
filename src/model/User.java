@@ -1,46 +1,48 @@
 package model;
 
-public class User {
-	
-	private String userName;
-	private String name;
-	private String surname;
+import java.io.Serializable;
+
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String username;
 	private String password;
 	private String email;
+	private String name;
+	private String surname;
 	private String course;
-	private char type;
 	private Group group;
 	
-	public User(String name, String surname, String userName, String password, String email, String course, char type, Group group){
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+	public User(String username, String password, String name, String surname, String email, String course) {
+		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
-		this.userName = userName;
-		this.password = password;
 		this.email = email;
 		this.course = course;
-		this.type = type;
-		this.group = group;
 	}
-	
-	public User(String name, String surname, String userName, String password, String email, String course, String type){
+
+	public User(String username, String password, String name, String surname, String email, String course,
+			Group group) {
+		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
-		this.userName = userName;
-		this.password = password;
 		this.email = email;
 		this.course = course;
-		if(type != null){
-			this.type = type.charAt(0);
-		}
-		
-	}
-	
-	public void setGroup(Group group){
 		this.group = group;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getPassword() {
@@ -63,22 +65,13 @@ public class User {
 		return course;
 	}
 
-	public char getType() {
-		return type;
-	}
 
 	public Group getGroup() {
 		return group;
 	}
-
-	@Override
-	public String toString() {
-		return "User [\nuserName = " + userName + ", \nname = " + name + ", \nsurname = " + surname + ", \npassword = " + password
-				 +  ", \nemail = " + email + ", \ncourse = " + course + ", \ntype = " + type + ", \ngroup = [" + group + "\n]\n]";
-	}
 	
 	
 	
 	
-
+	
 }
