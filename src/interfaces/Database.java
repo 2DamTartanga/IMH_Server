@@ -1,7 +1,7 @@
 package interfaces;
 
 
-import new_classes.*;
+import model.*;
 
 public interface Database {
 
