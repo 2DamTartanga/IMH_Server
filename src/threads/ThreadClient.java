@@ -22,7 +22,7 @@ public class ThreadClient extends Thread {
 	@Override
 	public void run(){
 		Object input;
-		ObjectInputStream in;
+		ObjectInputStream in = null;
 		Object output;
 		manager = new Manager();
 		try{
@@ -32,11 +32,18 @@ public class ThreadClient extends Thread {
 				output = manager.manageMessages((Message) input);
 				out.writeObject(output);
 			}
-
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
+		}finally{
+			try {
+				if(in != null) in.close();
+				if(out != null) out.close();
+				if(clientSocket != null) clientSocket.close();
+			}catch(IOException ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 }

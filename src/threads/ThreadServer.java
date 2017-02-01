@@ -28,7 +28,6 @@ public class ThreadServer extends Thread{
 				{
 					examineRequest();
 				}
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
