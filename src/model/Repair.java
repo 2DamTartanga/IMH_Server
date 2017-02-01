@@ -45,7 +45,6 @@ public class Repair implements Serializable {
 		return replacements;
 	}
 	
-	
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -75,10 +74,5 @@ public class Repair implements Serializable {
 	}
 	public void setGroup(Group group) {
 		this.group = group;
-	}
-	
-	
-	
-	
-	
+	}	
 }

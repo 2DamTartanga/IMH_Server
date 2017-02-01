@@ -34,6 +34,8 @@ public class WorkOrder implements Serializable {
 		this.repairs = repairs;
 	}
 	
+	public WorkOrder() {
+	}
 	public Breakdown getBreakdown() {
 		return breakdown;
 	}
@@ -56,7 +58,25 @@ public class WorkOrder implements Serializable {
 	public int getId(){
 		return this.getBreakdown().getId();
 	}
-	
-	
-	
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	public void setSeverity(int severity) {
+		this.severity = severity;
+	}
+	public void setOthers(String others) {
+		this.others = others;
+	}
+	public void setTypeOfMaintenance(String typeOfMaintenance) {
+		this.typeOfMaintenance = typeOfMaintenance;
+	}
+	public void setRepairs(ArrayList<Repair> repairs) {
+		this.repairs = repairs;
+	}
+	public void setBreakdown(Breakdown breakdown) {
+		this.breakdown = breakdown;
+	}
 }
