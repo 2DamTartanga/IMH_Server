@@ -9,14 +9,13 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
-import com.mysql.jdbc.MysqlDataTruncation;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
-import interfaces.Database;
-import new_classes.Breakdown;
-import clases.*;
+import model.Breakdown;
+import model.Group;
+import model.Machine;
+import model.Repair;
+import model.User;
+import model.WorkOrder;
 
 
 public class NewDBManager{
@@ -34,7 +33,7 @@ public class NewDBManager{
 	/**
 	 * Abre la conexion
 	 */
-	private void connect()
+	protected void connect()
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -52,7 +51,7 @@ public class NewDBManager{
 	 * 
 	 * @throws SQLException Excepcion sql
 	 */
-	private void close() throws SQLException {
+	protected void close() throws SQLException {
 		stmt.close();
 		if(rs != null) rs.close();
 		con.close();
