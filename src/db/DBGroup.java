@@ -1,5 +1,10 @@
 package db;
 
-public class DBGroup {
+import model.Group;
 
+public class DBGroup extends NewDBManager {
+
+	public Group getGroup(Group group, boolean needsUsers){
+		
+	}
 }
