@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
 import model.Group;
 import java.text.ParseException;
-import java.util.ArrayList;
-
-import com.sun.javafx.scene.control.skin.ToolBarSkin;
 import model.Repair;
 import model.WorkOrder;
 
@@ -53,7 +50,7 @@ public class DBRepair extends NewDBManager {
 		return result;
 	}
 	
-	public ArrayList<Repair> getRepairsFromGroup(Group group){
+	public ArrayList<Repair> getRepairsFromGroup(Group group) throws SQLException{
 		ArrayList<Repair> result = new ArrayList<>();
 		
 		this.connect();
@@ -61,6 +58,7 @@ public class DBRepair extends NewDBManager {
 				+ group.getId() + "'";
 		ResultSet rs = stmt.executeQuery(sql);
 		
+		return result;
 	}
 	
 	private Repair getRepairFromResultSet() throws Exception{

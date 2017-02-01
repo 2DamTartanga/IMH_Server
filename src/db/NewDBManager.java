@@ -22,7 +22,6 @@ import model.User;
 import model.WorkOrder;
 
 
-
 public class NewDBManager{
 
 	protected Connection con;
