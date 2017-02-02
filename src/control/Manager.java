@@ -1,21 +1,26 @@
 package control;
 
-import db.DBManager;
+import db.NewDBManager;
+import db.Section;
 import interfaces.Database;
+import model.Breakdown;
+import model.Group;
+import model.Machine;
 import model.Message;
-import new_classes.*;
+import model.User;
+import model.WorkOrder;
 
 public class Manager implements Database {
 
-	private DBManager dbm;
+	private NewDBManager dbm;
 
 	public Manager() {
-		dbm = new DBManager();
+		dbm = new NewDBManager();
 	}
 
 	public Object manageMessages(Message msg) {
 		Object objectToReturn = null;
-		dbm.setLanguage(msg.getLanguage());
+		//dbm.setLanguage(msg.getLanguage());
 		try{
 			switch (msg.getAction()) {
 			case Message.ADD:

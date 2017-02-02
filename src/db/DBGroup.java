@@ -1,9 +1,6 @@
 package db;
 
-import java.sql.SQLException;
-
 import model.Group;
-import model.User;
 
 public class DBGroup extends NewDBManager {
 
@@ -21,6 +18,7 @@ public class DBGroup extends NewDBManager {
 		
 		return rGroup;
 	}
+	
 	public Group getGroup(Group group) throws Exception{
 		return this.getGroup(group, true, true);
 	}

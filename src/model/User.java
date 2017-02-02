@@ -74,6 +74,12 @@ public class User implements Serializable {
 		this.group = group;
 		
 	}
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name
+				+ ", surname=" + surname + ", course=" + course + ", group=" + group + "]";
+	}
 	
 	
 	
