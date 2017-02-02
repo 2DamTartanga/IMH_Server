@@ -29,7 +29,14 @@ public class Machine implements Serializable {
 	private String serialNumber;
 	private String year;
 	private Section section; //??
+<<<<<<< HEAD
 	private ArrayList<Breakdown> breakdowns;
+=======
+	
+	public Machine(String id) {
+		this.id = id;
+	}
+>>>>>>> 26e089900218d4b80a6936497e98b57d682f8f18
 	public String getId() {
 		return id;
 	}

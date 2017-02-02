@@ -9,14 +9,18 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 import com.mysql.jdbc.MysqlDataTruncation;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import interfaces.Database;
-import new_classes.Breakdown;
-import clases.*;
+import model.Breakdown;
+import model.Group;
+import model.Machine;
+import model.Repair;
+import model.User;
+import model.WorkOrder;
+
 
 
 public class NewDBManager{
