@@ -22,7 +22,6 @@ import model.User;
 import model.WorkOrder;
 
 
-
 public class NewDBManager{
 
 	protected Connection con;
@@ -42,7 +41,7 @@ public class NewDBManager{
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/imh","root","");//TODO esto!
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaimh","root","");//TODO esto!
 			stmt = con.createStatement();
 			sql = "";
 		} catch (Exception e) {
@@ -66,35 +65,8 @@ public class NewDBManager{
 	/**
 	 * Me la he jugado mucho
 	 */
-	public User login(User user) throws Exception {//TODO esto!!
-		connect();
-		User loggedUser = null;
-		TechnicianGroup group = null;
-		String name = user.getUserName();
-		String pass = user.getPassword();
-		sql = "SELECT * "
-				+ "FROM users JOIN others USING(username) "
-				+ "JOIN maintenance USING(username) "
-				+ "JOIN groups ON(maintenance.group = groups.id) "
-				+ "WHERE LOWER(username) LIKE LOWER('"+name+"') AND password LIKE '"+pass+"';";
-		System.out.println(sql);
-		rs = stmt.executeQuery(sql);
-		if(rs.next()){
-			short groupId = rs.getShort("group");
-			char role = rs.getString("role").charAt(0);
-			role = Character.toUpperCase(role);
-			group = new Group(groupId, role);
-			loggedUser = new User(
-					rs.getString("username"), 
-					rs.getString("password"), 
-					rs.getString("name"), 
-					rs.getString("surname"), 
-					rs.getString("email"), 
-					rs.getString("course"), 
-					Character.toUpperCase(rs.getString("type").charAt(0)),
-					group);
-		}
-		close();
+	public User login(User user) throws Exception {
+		User loggedUser = new DBUser().login(user);
 		return loggedUser;
 	}
 /*
@@ -257,9 +229,9 @@ public class NewDBManager{
 
 
 
-	public TechnicianGroup getGroup(TechnicianGroup group) throws Exception {
+	public Group getGroup(Group group) throws Exception {
 		//TODO
-		TechnicianGroup returnGroup = null;
+		Group returnGroup = null;
 		ArrayList<User> users;
 		String groupId = group.getId();
 		char role = '.';

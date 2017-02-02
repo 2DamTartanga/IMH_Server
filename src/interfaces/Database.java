@@ -1,16 +1,10 @@
 package interfaces;
 
 
-<<<<<<< HEAD
+
 import model.*;
-=======
+
 import db.Section;
-import model.Breakdown;
-import model.Group;
-import model.Machine;
-import model.User;
-import model.WorkOrder;
->>>>>>> 9d0917a76e40004b1687ff6e565788f40cd98bbd
 
 public interface Database {
 
