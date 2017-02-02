@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
 import model.Group;
 import java.text.ParseException;
-import java.util.ArrayList;
-
-import com.sun.javafx.scene.control.skin.ToolBarSkin;
 import model.Repair;
 import model.WorkOrder;
 
@@ -65,6 +62,7 @@ public class DBRepair extends NewDBManager {
 		}
 		return rRepairs;
 		
+		return result;
 	}
 	
 	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{
