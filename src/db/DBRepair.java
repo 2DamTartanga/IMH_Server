@@ -50,13 +50,17 @@ public class DBRepair extends NewDBManager {
 		return result;
 	}
 	
-	public ArrayList<Repair> getRepairsFromGroup(Group group) throws SQLException{
-		ArrayList<Repair> result = new ArrayList<>();
+	public ArrayList<Repair> getRepairsFromGroup(Group group) throws Exception{
+		ArrayList<Repair> rRepairs = new ArrayList<>();
 		
 		this.connect();
 		sql = "SELECT * FROM repairs WHERE idGroup='"
 				+ group.getId() + "'";
 		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			rRepairs.add(getRepairFromResultSet(false));
+		}
+		return rRepairs;
 		
 		return result;
 	}

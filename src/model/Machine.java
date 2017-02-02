@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Machine implements Serializable {
 
@@ -8,7 +9,6 @@ public class Machine implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//TODO esto es seguramente va a cambiar
 	private String id;
 	private char status;
 	private int importance;
@@ -29,10 +29,14 @@ public class Machine implements Serializable {
 	private String serialNumber;
 	private String year;
 	private Section section; //??
+<<<<<<< HEAD
+	private ArrayList<Breakdown> breakdowns;
+=======
 	
 	public Machine(String id) {
 		this.id = id;
 	}
+>>>>>>> 26e089900218d4b80a6936497e98b57d682f8f18
 	public String getId() {
 		return id;
 	}
@@ -152,6 +156,12 @@ public class Machine implements Serializable {
 	}
 	public void setSection(Section section) {
 		this.section = section;
+	}
+	public ArrayList<Breakdown> getBreakdowns() {
+		return breakdowns;
+	}
+	public void setBreakdowns(ArrayList<Breakdown> breakdowns) {
+		this.breakdowns = breakdowns;
 	}
 	
 	
