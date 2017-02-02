@@ -12,6 +12,9 @@ public class Section implements Serializable {
 	private String id;
 	private String name;
 	private ArrayList<Machine> machines;
+	public Section(){
+		
+	}
 	public Section(String id, ArrayList<Machine> machines) {
 		this.id = id;
 		this.machines = machines;
@@ -22,6 +25,15 @@ public class Section implements Serializable {
 	}
 	public ArrayList<Machine> getMachines() {
 		return machines;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

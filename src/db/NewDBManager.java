@@ -34,7 +34,7 @@ public class NewDBManager{
 	/**
 	 * Abre la conexion
 	 */
-	private void connect()
+	protected void connect()
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -52,7 +52,7 @@ public class NewDBManager{
 	 * 
 	 * @throws SQLException Excepcion sql
 	 */
-	private void close() throws SQLException {
+	protected void close() throws SQLException {
 		stmt.close();
 		if(rs != null) rs.close();
 		con.close();
