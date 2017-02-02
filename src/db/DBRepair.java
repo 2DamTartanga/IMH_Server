@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Group;
-import java.text.ParseException;
 import model.Repair;
 import model.WorkOrder;
 
@@ -25,25 +24,30 @@ public class DBRepair extends NewDBManager {
 		return rRepairs;
 	}
 	
-	public boolean addRepair(WorkOrder workOrder) throws SQLException{
-		boolean result = false;
+	public ArrayList<Repair> getRepairs(WorkOrder workOrder) throws Exception{
+		return this.getRepairs(workOrder,true);
+	}
+	
+	public int addRepair(WorkOrder workOrder) throws SQLException{//TODO acabar
+		int result;
 		
 		this.connect();
 		Repair r = workOrder.getRepairs().get(workOrder.getRepairs().size() - 1);
-		sql = "INSERT INTO repairs (codBreakdonw, idGroup, "
-				+ "repairDate, time, availabilityAfter, tools, repairProcess, "
-				+ "idLocalization, isRepaired, replacements) "
-				+ "VALUES ('" + workOrder.getBreakdown().getId() + "', '"
-				+ r.getGroup().getId() + "', '"
-				+ r.getDate() + "', '"
-				+ r.getTime() + "', '"
-				+ r.getRepairProcess() + "', '"
-				+ r.getFailureLocalization() + "', '"
-				+ r.isRepaired() + "', '"
-				+ r.getReplacements() + "', '"
-				+ "')";
-				
-		result = stmt.execute(sql);
+		
+		
+		sql = "UPDATE repairs SET("
+				+ "repairDate = '"+format.format(r.getDate())+"' "
+				+ "time = "+r.getTime()+" "
+				+ "availablilityAfter = '"+r.getAvailabilityAfterRepair()+"' "
+				+ "tools "//TODO esto es trabajo de Ismael Trueba
+				+ "repairProcess = '"+r.getRepairProcess()+"' "
+				+ "idLocalization = "+r.getFailureLocalization()+" "
+				+ "isRepaired = "+r.isRepaired()+" "
+				+ "replacements = '"+r.getReplacements()+"' "
+				+ ") "
+				+ "WHERE codBreakdown = "+workOrder.getId()+" "
+				+ "AND idGroup = "+r.getGroup().getId()+" ;";
+		result = stmt.executeUpdate(sql);
 		
 		this.close();
 		
@@ -55,30 +59,37 @@ public class DBRepair extends NewDBManager {
 		
 		this.connect();
 		sql = "SELECT * FROM repairs WHERE idGroup='"
-				+ group.getId() + "'";
-		ResultSet rs = stmt.executeQuery(sql);
+				+ group.getId() + "';";
+		System.out.println(sql);
+		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rRepairs.add(getRepairFromResultSet(false));
 		}
+		System.out.println("size = " + rRepairs.size());
 		return rRepairs;
-		
-		return result;
 	}
 	
 	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{
-		String id = rs.getString("id");
+		String id = String.valueOf(rs.getInt("codBreakdown"));
+		System.out.println("post");
 		Repair rRepair = null;
-		while(rs.getString("id") == id && rs.next()){
+		boolean next = true;
+		while(rs.getString("codBreakdown") == id && next){
+		try{
 		rRepair = new Repair(
-				format.parse(rs.getDate("date").toString()),
-				rs.getInt("failureLocalization"),
+				rs.getDate("repairDate"),
+				rs.getInt("idLocalization"),
 				rs.getFloat("time"),
-				rs.getString("availabilityAfterRepair"),
+				rs.getString("availabilityAfter"),
 				rs.getString("repairProcess"),
 				rs.getBoolean("isRepaired"),
 				rs.getString("replacements")
 				);
+		}catch(SQLException e){
 		}
+		next = rs.next();
+		}
+		//rs.previous();
 		return rRepair;
 	}
 }

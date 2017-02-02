@@ -11,11 +11,9 @@ public class DBGroup extends NewDBManager {
 			rGroup.setUsers(dbUser.getUsersFromGroup(rGroup));
 		}
 		if(needsRepairs){
-			DBRepair dbRepair = new DBRepair();
-			rGroup.setRepairs(dbRepair.getRepairsFromGroup(rGroup));
+			DBWorkOrder dbWorkOrder = new DBWorkOrder();
+			rGroup.setWorkOrders(dbWorkOrder.getWorkOrdersFromGroup(rGroup));
 		}
-		
-		
 		return rGroup;
 	}
 	
