@@ -35,6 +35,9 @@ public class Section implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public void setMachines(ArrayList<Machine> machines) {
+		this.machines = machines;
+	}
 	
 	
 	

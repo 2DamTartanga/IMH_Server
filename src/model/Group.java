@@ -10,7 +10,7 @@ public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private ArrayList<User> users;
-	private ArrayList<Repair> repairs;
+	private ArrayList<WorkOrder> workOrders;
 	
 	public Group(int id) {
 		this.id = id;
@@ -33,9 +33,7 @@ public class Group implements Serializable {
 		this.users = users;
 	}
 
-	public void setRepairs(ArrayList<Repair> repairs) {
-		this.repairs = repairs;
-	}
+	
 	
 	
 	
