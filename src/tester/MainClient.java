@@ -109,7 +109,7 @@ public class MainClient implements MessageListener {
     }
 
     private void getGroup() {
-        Group gr = new Group(1,'T');
+        Group gr = new Group(1);
         try {
             gr = manager.getGroup(gr);
             System.out.println(gr);
@@ -127,7 +127,7 @@ public class MainClient implements MessageListener {
     private void addRepair() {
         Breakdown br = new Breakdown(12);
         Repair repair = new Repair(
-                new Group(1, ' '),
+                new Group(1),
                 new Date(),
                 4.5f,
                 new FailureLocalization(1, null),

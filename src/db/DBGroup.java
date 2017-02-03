@@ -2,7 +2,7 @@ package db;
 
 import model.Group;
 
-public class DBGroup extends NewDBManager {
+public class DBGroup extends DBConn {
 
 	public Group getGroup(Group group, boolean needsUsers, boolean needsRepairs) throws Exception{
 		Group rGroup = new Group(group.getId());
