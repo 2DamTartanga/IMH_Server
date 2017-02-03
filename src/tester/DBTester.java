@@ -15,10 +15,10 @@ public class DBTester {
 		
 			switch (2) {
 			case 1:
-					login();
+					//login();
 				break;
 			case 2:
-				addUser();
+				//addUser();
 				break;
 			default:
 				break;
@@ -29,7 +29,7 @@ public class DBTester {
 		}
 
 	}
-
+/*
 	private static void addUser() throws Exception {
 		User user = new User("nuevo", "nuevo", "nuevo", "123", "nuevo@mail", "nuevo", 'A', new Group("T-234",false));
 		System.out.println(manager.addUser(user));
@@ -40,5 +40,5 @@ public class DBTester {
 		
 		System.out.println(manager.login(user));
 		
-	}
+	}*/
 }

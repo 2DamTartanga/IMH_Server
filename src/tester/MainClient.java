@@ -43,10 +43,10 @@ public class MainClient implements MessageListener {
         try {
             switch (opc) {
                 case 1:
-                    login();
+                    //login();
                     break;
                 case 2:
-                    addBreakDown();
+                    //addBreakDown();
                     break;
                 case 3:
                     addRepair();
@@ -109,7 +109,7 @@ public class MainClient implements MessageListener {
     }
 
     private void getGroup() {
-        Group gr = new Group(1,'T');
+        Group gr = new Group(1);
         try {
             gr = manager.getGroup(gr);
             System.out.println(gr);
@@ -126,7 +126,7 @@ public class MainClient implements MessageListener {
 
     private void addRepair() {
     }
-
+/*
     private void addBreakDown() {
         User user = new User("IMH");
         user.setName("Manolete");
@@ -147,7 +147,7 @@ public class MainClient implements MessageListener {
         ThreadSender ts = new ThreadSender(this,cs,msg);
         ts.start();
     }
-
+*/
 
     @Override
     public void messageReceived(Object obj) {
