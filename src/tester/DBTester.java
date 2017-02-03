@@ -1,9 +1,6 @@
 package tester;
 
 import control.Manager;
-import db.DBManager;
-import model.Group;
-import model.User;
 
 public class DBTester {
 
