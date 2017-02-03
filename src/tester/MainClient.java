@@ -109,7 +109,7 @@ public class MainClient implements MessageListener {
     }
 
     private void getGroup() {
-        Group gr = new Group(1);
+        Group gr = new Group(1,'T');
         try {
             gr = manager.getGroup(gr);
             System.out.println(gr);
