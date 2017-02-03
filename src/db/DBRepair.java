@@ -8,7 +8,7 @@ import model.WorkOrder;
 
 public class DBRepair extends DBConn {
 	
-	public Repair getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
+	public WorkOrder getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
 		Repair rRepair = null;
 		Repair r = null;
 		int id = workOrder.getId();
@@ -21,11 +21,12 @@ public class DBRepair extends DBConn {
 			r = getRepairFromResultSet(needsGroup);
 			r.setTools(new DBTools().getToolsFromRepair(rs.getString("tools")));
 		}
+		workOrder.setRepairs(rRepair);
 		this.close();
-		return rRepair;
+		return workOrder;
 	}
 	
-	public Repair getRepairs(WorkOrder workOrder) throws Exception{
+	public WorkOrder getRepairs(WorkOrder workOrder) throws Exception{
 		return this.getRepairs(workOrder,true);
 	}
 	
