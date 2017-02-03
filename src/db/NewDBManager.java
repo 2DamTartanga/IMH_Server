@@ -311,11 +311,7 @@ public class NewDBManager{
 	}
 
 	public Machine getMachine(Machine machine) throws Exception {
-		// TODO 
-		this.connect();
-		
-		this.close();
-		return null;
+		return new DBMachine().getMachine(machine);
 	}
 
 	/**
