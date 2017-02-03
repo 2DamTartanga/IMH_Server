@@ -10,7 +10,7 @@ import model.Machine;
 import model.Repair;
 import model.WorkOrder;
 
-public class DBWorkOrder extends NewDBManager {
+public class DBWorkOrder extends DBConn {
 
 	public WorkOrder getWorkOrder(WorkOrder workOrder) throws Exception{
 		WorkOrder workOrderFromDatabase = new WorkOrder();

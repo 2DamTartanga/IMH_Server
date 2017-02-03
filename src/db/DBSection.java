@@ -2,7 +2,7 @@ package db;
 
 import model.Section;
 
-public class DBSection extends NewDBManager {
+public class DBSection extends DBConn {
 
 	public Section getSection(Section section, boolean needsMachines)throws Exception{
 		Section sect1=new Section();

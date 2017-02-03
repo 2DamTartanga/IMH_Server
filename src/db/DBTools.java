@@ -1,11 +1,12 @@
 package db;
 
-import java.sql.Date;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
-public class DBTools extends NewDBManager{
+import model.WorkOrder;
+
+public class DBTools extends DBConn{
 
 	public HashMap<Integer, String> getToolsFromRepair(String name) throws Exception{
 		HashMap<Integer, String> rTools = new HashMap<>();
@@ -16,10 +17,24 @@ public class DBTools extends NewDBManager{
 		return rTools;
 	}
 	
-	public int insertTootls(HashMap<Integer, String> tools) throws Exception{//TODO cambiar tools de arrayList a hashMap?
+	public int insertTootls(WorkOrder workOrder) throws Exception{//TODO cambiar tools de arrayList a hashMap?
 		int rowsInserted = 0;
+		HashMap<Integer, String> tools = workOrder.getRepair().getTools();
+		int id = workOrder.getId();
+		int idGroup = workOrder.getRepair().getGroup().getId();
+		Date date = workOrder.getRepair().getDate();
+		String fDate = format.format(date);
 		this.connect();
-		sql = "INSERT INTO ";
+		for (Map.Entry<Integer, String> tool : tools.entrySet()) {
+			try{
+				sql = "INSERT INTO repairTools(codBreakdown,idGroup,repairDate, idTool) "
+						+ "VALUES("+id+","+idGroup+",'"+fDate+"',"+tool.getKey()+") ";
+				stmt.executeUpdate(sql);
+				rowsInserted++;
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 		
 		
 		this.close();

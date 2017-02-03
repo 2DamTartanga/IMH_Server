@@ -1,13 +1,12 @@
 package db;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Group;
 import model.Repair;
 import model.WorkOrder;
 
-public class DBRepair extends NewDBManager {
+public class DBRepair extends DBConn {
 	
 	public Repair getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
 		Repair rRepair = null;
@@ -30,7 +29,7 @@ public class DBRepair extends NewDBManager {
 		return this.getRepairs(workOrder,true);
 	}
 	
-	public int addRepair(WorkOrder workOrder) throws SQLException{//TODO acabar
+	public int addRepair(WorkOrder workOrder) throws Exception{//TODO acabar
 		int result;
 		
 		this.connect();
@@ -49,6 +48,7 @@ public class DBRepair extends NewDBManager {
 				+ "WHERE codBreakdown = "+workOrder.getId()+" "
 				+ "AND idGroup = "+r.getGroup().getId()+" ;";
 		result = stmt.executeUpdate(sql);
+		new DBTools().insertTootls(workOrder);
 		
 		this.close();
 		

@@ -6,7 +6,7 @@ import model.Machine;
 import model.Section;
 import model.Machine;
 
-public class DBMachine extends NewDBManager {
+public class DBMachine extends DBConn {
 
 	public Machine getMachine(Machine machine) throws Exception{
 		Machine mach1=new Machine();

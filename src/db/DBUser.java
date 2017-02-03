@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.Group;
 import model.User;
 
-public class DBUser extends NewDBManager {
+public class DBUser extends DBConn {
 
 	public User login(User user) throws Exception{
 		User rUser = null;

@@ -4,7 +4,7 @@ import model.Breakdown;
 import model.Machine;
 import model.User;
 
-public class DBBrekadown extends NewDBManager {
+public class DBBrekadown extends DBConn {
 
 	public boolean addBreakdown(Breakdown breakdown) throws Exception{
 		this.connect();

@@ -125,27 +125,6 @@ public class MainClient implements MessageListener {
     }
 
     private void addRepair() {
-        Breakdown br = new Breakdown(12);
-        Repair repair = new Repair(
-                new Group(1),
-                new Date(),
-                4.5f,
-                new FailureLocalization(1, null),
-                true,
-                "Replacements",
-                "tools",
-                "RepairProcess",
-                false,
-                false);
-        WorkOrder wo = new WorkOrder(br, null, null, 0);
-        wo.setRepair(repair);
-        try {
-            System.out.println(manager.addRepair(wo));
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
 
     private void addBreakDown() {
