@@ -163,13 +163,8 @@ public class MainClient implements MessageListener {
     }
 
     private void login() throws Exception {
-        User user = new User("bbb", "222");
+        User user = new User("1mi", "1mi");
         Message msg = new Message(Message.LOGIN,null,user);
-        //System.out.println(manager.login(user));
-        //user = new User("ik2", "123", null, null, null, null, 'c', null);
-        //System.out.println(manager.login(user));
-        //user = new User("ik1", "123", null, null, null, null, 'c', null);
-        //System.out.println(manager.login(user));
         ThreadSender ts = new ThreadSender(this,cs,msg);
         ts.start();
     }

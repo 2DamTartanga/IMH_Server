@@ -33,6 +33,14 @@ public class Group implements Serializable {
 		this.users = users;
 	}
 
+	public void setWorkOrders(ArrayList<WorkOrder> workOrders) {
+		this.workOrders = workOrders;
+	}
+
+	@Override
+	public String toString() {
+		return "Group [\n\tid=" + id + ", \n\tusers=" + users + ", \n\tworkOrders=" + workOrders + "\n]";
+	}
 	
 	
 	

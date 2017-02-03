@@ -41,7 +41,7 @@ public class NewDBManager{
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdaimh","root","");//TODO esto!
+			con = DriverManager.getConnection("jdbc:mysql://10.22.82.173:3306/bdaimh","tartanga","tartanga");//TODO esto!
 			stmt = con.createStatement();
 			sql = "";
 		} catch (Exception e) {
@@ -144,46 +144,8 @@ public class NewDBManager{
 		return ok;
 	}
 
-	public boolean addRepair(WorkOrder workOrder) throws Exception {
-		// TODO 
-		//TODO pillar la repair mas nueva
-		Repair repair = workOrder.getRepair().get(0);
-		String workOrderId = workOrder.getId();
-		String repairDate = format.format(repair.getFinishDate());
-		float timeSpent = repair.getTimeSpent();
-		String failureLocalization = repair.getFailureLocalization();
-		boolean failureRepaired = repair.isSolved();
-		String replacements = repair.getReplacements();
-		String tools = repair.getTools();
-		String repairProcess = repair.getRepairProcess();
-		
-		boolean ok;
-		this.connect();
-		
-		sql = "INSERT INTO repairs("
-				+ "workOrder,"
-				+ "group,"
-				+ "repairDate,"
-				+ "timeSpent,"
-				+ "failureLocalization,"
-				+ "failureRepaired,"
-				+ "replacements,"
-				+ "tools,"
-				+ "repairProcess)"
-				+ " VALUES("
-				+ ""+workOrderId+","
-				+ ""+repairDate+","
-				+ ""+timeSpent+","
-				+ ""+failureLocalization+","
-				+ ""+failureRepaired+","
-				+ ""+replacements+","
-				+ ""+tools+","
-				+ ""+repairProcess+""
-				+ ");";
-		
-		ok = stmt.executeUpdate(sql) == 1;
-		this.close();
-		return ok;
+	public int addRepair(WorkOrder workOrder) throws Exception {
+		return new DBRepair().addRepair(workOrder);
 	}
 
 /*

@@ -35,6 +35,7 @@ public class ThreadSender extends Thread {
             out.writeObject(msg);
             input = in.readObject();
             listener.messageReceived(input);
+            cs.close();
         }catch (SocketException | EOFException e) {
             connectionLost();
         } catch (IOException e) {
