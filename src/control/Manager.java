@@ -1,12 +1,12 @@
 package control;
 
 import db.NewDBManager;
-import db.Section;
 import interfaces.Database;
 import model.Breakdown;
 import model.Group;
 import model.Machine;
 import model.Message;
+import model.Section;
 import model.User;
 import model.WorkOrder;
 
