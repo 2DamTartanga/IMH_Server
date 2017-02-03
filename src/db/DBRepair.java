@@ -75,19 +75,19 @@ public class DBRepair extends NewDBManager {
 		Repair rRepair = null;
 		boolean next = true;
 		while(rs.getString("codBreakdown") == id && next){
-		try{
-		rRepair = new Repair(
-				rs.getDate("repairDate"),
-				rs.getInt("idLocalization"),
-				rs.getFloat("time"),
-				rs.getString("availabilityAfter"),
-				rs.getString("repairProcess"),
-				rs.getBoolean("isRepaired"),
-				rs.getString("replacements")
+			try{
+				rRepair = new Repair(
+						rs.getDate("repairDate"),
+						rs.getInt("idLocalization"),
+						rs.getFloat("time"),
+						rs.getString("availabilityAfter"),
+						rs.getString("repairProcess"),
+						rs.getBoolean("isRepaired"),
+						rs.getString("replacements")
 				);
-		}catch(SQLException e){
-		}
-		next = rs.next();
+			}catch(SQLException e){
+			}
+			next = rs.next();
 		}
 		//rs.previous();
 		return rRepair;

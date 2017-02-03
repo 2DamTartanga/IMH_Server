@@ -13,4 +13,17 @@ public class DBTools extends NewDBManager{
 		this.close();
 		return rTools;
 	}
+	
+	public int insertTootls(ArrayList<String> toolNames) throws Exception{//TODO cambiar tools de arrayList a hashMap?
+		int rowsInserted = 0;
+		ArrayList<Integer> toolIds = new ArrayList<>(); 
+		this.connect();
+		sql = "";
+		
+		
+		this.close();
+		
+		
+		return rowsInserted;
+	}
 }

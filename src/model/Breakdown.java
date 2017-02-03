@@ -18,6 +18,11 @@ public class Breakdown implements Serializable {
 	private Machine machine;
 	private User reporter;
 	
+	
+	public Breakdown(int id) {
+		this.id = id;
+	}
+
 	public Breakdown(int id, Date date, User reporter, String failureType, String subject, String description,
 			Machine machine, String equipmentAvailable) {
 		this.id = id;

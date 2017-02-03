@@ -5,13 +5,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Breakdown;
+import model.Group;
 import model.Machine;
 import model.Repair;
 import model.WorkOrder;
 
 public class DBWorkOrder extends NewDBManager {
 
-	public WorkOrder getWorkOrder(WorkOrder workOrder) throws SQLException{
+	public WorkOrder getWorkOrder(WorkOrder workOrder) throws Exception{
 		WorkOrder workOrderFromDatabase = new WorkOrder();
 		
 		this.connect();
@@ -47,5 +48,27 @@ public class DBWorkOrder extends NewDBManager {
 		}
 		
 		return workOrderFromDatabase;
+	}
+
+	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception {
+		ArrayList<WorkOrder> rWorkOrders = new ArrayList<>();
+		int id = group.getId();
+		this.connect();
+		
+		sql = "SELECT * FROM workorders "
+				+ "WHERE LOWER(idGroup) LIKE LOWER('"+id+"') ";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			rWorkOrders.add(getWorkOrderFromResult());
+		}
+		this.close();
+		
+		if(rWorkOrders.size() == 0) rWorkOrders = null;
+		return rWorkOrders;
+	}
+	
+	private WorkOrder getWorkOrderFromResult(){
+		WorkOrder rWorkOrder = null;
+		return rWorkOrder;
 	}
 }

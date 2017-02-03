@@ -75,7 +75,7 @@ public class User implements Serializable {
 		this.group = group;
 		
 	}
-<<<<<<< HEAD
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -98,7 +98,7 @@ public class User implements Serializable {
 	
 	public void setCourse(String course) {
 		this.course = course;
-=======
+	}
 
 	@Override
 	public String toString() {
