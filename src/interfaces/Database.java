@@ -2,9 +2,12 @@ package interfaces;
 
 
 
-import model.*;
-
-import db.Section;
+import model.Breakdown;
+import model.Group;
+import model.Machine;
+import model.Section;
+import model.User;
+import model.WorkOrder;
 
 public interface Database {
 
