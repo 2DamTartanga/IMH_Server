@@ -1,6 +1,6 @@
 package control;
 
-import db.NewDBManager;
+import db.DBManager;
 import interfaces.Database;
 import model.Breakdown;
 import model.Group;
@@ -12,10 +12,10 @@ import model.WorkOrder;
 
 public class Manager implements Database {
 
-	private NewDBManager dbm;
+	private DBManager dbm;
 
 	public Manager() {
-		dbm = new NewDBManager();
+		dbm = new DBManager();
 	}
 
 	public Object manageMessages(Message msg) {

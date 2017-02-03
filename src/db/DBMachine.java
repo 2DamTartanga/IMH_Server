@@ -2,7 +2,6 @@ package db;
 
 import java.util.ArrayList;
 
-import model.Breakdown;
 import model.Machine;
 import model.Section;
 
@@ -23,7 +22,6 @@ public class DBMachine extends DBConn {
 			mach1=getMachineFromResultSet();
 			section.setId(rs.getString("idSection"));
 			section.setName(rs.getString("nameSection"));
-			System.out.println("MAch1= " + mach1);
 			mach1.setBreakdowns(new DBBrekadown().getBreakdownsFromMachine(mach1));
 		}
 		mach1.setSection(section);

@@ -10,7 +10,7 @@ import model.User;
 import model.WorkOrder;
 
 
-public class NewDBManager implements Database{
+public class DBManager implements Database{
 	
 	private DBBrekadown dbBreakdown=new DBBrekadown();
 	private DBGroup dbGroup=new DBGroup();
