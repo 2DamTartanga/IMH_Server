@@ -1,7 +1,5 @@
 package db;
 
-import java.util.ArrayList;
-
 import model.Group;
 import model.Repair;
 import model.WorkOrder;
@@ -56,8 +54,8 @@ public class DBRepair extends DBConn {
 		return result;
 	}
 	
-	public ArrayList<Repair> getRepairsFromGroup(Group group) throws Exception{
-		ArrayList<Repair> rRepairs = new ArrayList<>();
+	public Repair getRepairsFromGroup(Group group) throws Exception{
+		Repair rRepair = null;
 		
 		this.connect();
 		sql = "SELECT * FROM repairs "
@@ -66,10 +64,13 @@ public class DBRepair extends DBConn {
 		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
-			rRepairs.add(getRepairFromResultSet(false));
+			rRepair = getRepairFromResultSet(false);
 		}
-		System.out.println("size = " + rRepairs.size());
-		return rRepairs;
+		return rRepair;
+	}
+	
+	public Repair getRepairsFromWorkOrder(WorkOrder workOrder) throws Exception{
+		return getRepairs(workOrder,false).getRepair();
 	}
 	
 	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{

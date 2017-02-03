@@ -1,16 +1,17 @@
 package db;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Breakdown;
+import model.Group;
 import model.Machine;
 import model.Repair;
 import model.WorkOrder;
 
 public class DBWorkOrder extends DBConn {
 
-	public WorkOrder getWorkOrder(WorkOrder workOrder) throws SQLException{
+	public WorkOrder getWorkOrder(WorkOrder workOrder) throws Exception{
 		WorkOrder workOrderFromDatabase = new WorkOrder();
 		
 		this.connect();
@@ -39,12 +40,17 @@ public class DBWorkOrder extends DBConn {
 			workOrderFromDatabase.setSeverity(rs.getInt("severity"));
 			workOrderFromDatabase.setTypeOfMaintenance(String.valueOf(rs.getInt("typeMaintenance")));
 			
-			Repair repairToAdd = new DBRepair().getRepairs(workOrder);
+			Repair repairToAdd = new DBRepair().getRepairsFromWorkOrder(workOrder);
 			workOrderFromDatabase.setRepairs(repairToAdd);
 			
 			this.close();
 		}
 		
 		return workOrderFromDatabase;
+	}
+	
+	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group){
+		ArrayList<WorkOrder> workOrders = new ArrayList<>();
+		return workOrders;
 	}
 }
