@@ -48,9 +48,26 @@ public class DBWorkOrder extends DBConn {
 		
 		return workOrderFromDatabase;
 	}
+
+	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception {
+		ArrayList<WorkOrder> rWorkOrders = new ArrayList<>();
+		int id = group.getId();
+		this.connect();
+		
+		sql = "SELECT * FROM workorders "
+				+ "WHERE LOWER(idGroup) LIKE LOWER('"+id+"') ";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			rWorkOrders.add(getWorkOrderFromResult());
+		}
+		this.close();
+		
+		if(rWorkOrders.size() == 0) rWorkOrders = null;
+		return rWorkOrders;
+	}
 	
-	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group){
-		ArrayList<WorkOrder> workOrders = new ArrayList<>();
-		return workOrders;
+	private WorkOrder getWorkOrderFromResult(){
+		WorkOrder rWorkOrder = null;
+		return rWorkOrder;
 	}
 }

@@ -25,4 +25,16 @@ public class DBSection extends DBConn {
 		return getSection(section,true);
 	}
 	
+	public int returnMachinesByStatus(Section section, String status) throws Exception{
+		int n=0;
+		this.connect();
+		sql="SELECT COUNT * FROM MACHINES WHERE lower(status) LIKE lower('"+status+"');";
+		rs = stmt.executeQuery(sql);
+		if(rs.next()){
+			n=rs.getInt(1);
+		}
+		this.close();
+		return n;
+	}
+	
 }
