@@ -1,9 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 public class Repair implements Serializable {
 
 	/**
@@ -14,17 +13,14 @@ public class Repair implements Serializable {
 	private int failureLocalization;
 	private float time;
 	private String availabilityAfterRepair;
-	private ArrayList<String> tools;
+	private HashMap<Integer, String> tools;
 	private String repairProcess;
 	private boolean isRepaired;
 	private String replacements;
 	private Group group;
 	
-	
-	
 	public Repair(Date date, int failureLocalization, float time, String availabilityAfterRepair, String repairProcess,
 			boolean isRepaired, String replacements) {
-		super();
 		this.date = date;
 		this.failureLocalization = failureLocalization;
 		this.time = time;
@@ -45,7 +41,7 @@ public class Repair implements Serializable {
 	public String getAvailabilityAfterRepair() {
 		return availabilityAfterRepair;
 	}
-	public ArrayList<String> getTools() {
+	public HashMap<Integer,String> getTools() {
 		return tools;
 	}
 	public String getRepairProcess() {
@@ -70,7 +66,7 @@ public class Repair implements Serializable {
 	public void setAvailabilityAfterRepair(String availabilityAfterRepair) {
 		this.availabilityAfterRepair = availabilityAfterRepair;
 	}
-	public void setTools(ArrayList<String> tools) {
+	public void setTools(HashMap<Integer, String> tools) {
 		this.tools = tools;
 	}
 	public void setRepairProcess(String repairProcess) {

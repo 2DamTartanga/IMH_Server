@@ -322,7 +322,7 @@ public class NewDBManager{
 		Repair repair = null;
 		
 		int id = workOrder.getId();
-		Group group = workOrder.getRepairs().get(0).getGroup();
+		Group group = workOrder.getRepair().get(0).getGroup();
 		int groupId = group.getId();
 		Date repairDate = null;
 		float timeSpent = -1;

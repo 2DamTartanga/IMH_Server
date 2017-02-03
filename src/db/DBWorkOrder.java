@@ -41,8 +41,8 @@ public class DBWorkOrder extends NewDBManager {
 			workOrderFromDatabase.setSeverity(rs.getInt("severity"));
 			workOrderFromDatabase.setTypeOfMaintenance(String.valueOf(rs.getInt("typeMaintenance")));
 			
-			ArrayList<Repair> repairsToAdd = new DBRepair().getRepairs(workOrder);
-			workOrderFromDatabase.setRepairs(repairsToAdd);
+			Repair repairToAdd = new DBRepair().getRepairs(workOrder);
+			workOrderFromDatabase.setRepairs(repairToAdd);
 			
 			this.close();
 		}

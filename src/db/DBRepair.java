@@ -1,6 +1,5 @@
 package db;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -10,21 +9,24 @@ import model.WorkOrder;
 
 public class DBRepair extends NewDBManager {
 	
-	public ArrayList<Repair> getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
-		ArrayList<Repair> rRepairs = new ArrayList<>();
+	public Repair getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
+		Repair rRepair = null;
 		Repair r = null;
 		int id = workOrder.getId();
+		int idGroup = workOrder.getRepair().getGroup().getId();
 		this.connect();
-		sql = "SELECT * FROM repairs WHERE id = "+id+";";
-		while(rs.next()){
+		sql = "SELECT * FROM repairs "
+			+ "WHERE id = "+id+" "
+			+ "AND idGroup LIKE "+idGroup+";";
+		if(rs.next()){
 			r = getRepairFromResultSet(needsGroup);
 			r.setTools(new DBTools().getToolsFromRepair(rs.getString("tools")));
 		}
 		this.close();
-		return rRepairs;
+		return rRepair;
 	}
 	
-	public ArrayList<Repair> getRepairs(WorkOrder workOrder) throws Exception{
+	public Repair getRepairs(WorkOrder workOrder) throws Exception{
 		return this.getRepairs(workOrder,true);
 	}
 	
@@ -32,14 +34,13 @@ public class DBRepair extends NewDBManager {
 		int result;
 		
 		this.connect();
-		Repair r = workOrder.getRepairs().get(workOrder.getRepairs().size() - 1);
+		Repair r = workOrder.getRepair();
 		
 		
 		sql = "UPDATE repairs SET("
 				+ "repairDate = '"+format.format(r.getDate())+"' "
 				+ "time = "+r.getTime()+" "
 				+ "availablilityAfter = '"+r.getAvailabilityAfterRepair()+"' "
-				+ "tools "//TODO esto es trabajo de Ismael Trueba
 				+ "repairProcess = '"+r.getRepairProcess()+"' "
 				+ "idLocalization = "+r.getFailureLocalization()+" "
 				+ "isRepaired = "+r.isRepaired()+" "
@@ -58,7 +59,8 @@ public class DBRepair extends NewDBManager {
 		ArrayList<Repair> rRepairs = new ArrayList<>();
 		
 		this.connect();
-		sql = "SELECT * FROM repairs WHERE idGroup='"
+		sql = "SELECT * FROM repairs "
+				+ "WHERE idGroup='"
 				+ group.getId() + "';";
 		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
@@ -70,26 +72,20 @@ public class DBRepair extends NewDBManager {
 	}
 	
 	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{
-		String id = String.valueOf(rs.getInt("codBreakdown"));
-		System.out.println("post");
 		Repair rRepair = null;
-		boolean next = true;
-		while(rs.getString("codBreakdown") == id && next){
-			try{
-				rRepair = new Repair(
-						rs.getDate("repairDate"),
-						rs.getInt("idLocalization"),
-						rs.getFloat("time"),
-						rs.getString("availabilityAfter"),
-						rs.getString("repairProcess"),
-						rs.getBoolean("isRepaired"),
-						rs.getString("replacements")
-				);
-			}catch(SQLException e){
-			}
-			next = rs.next();
-		}
-		//rs.previous();
+		rRepair = new Repair(
+				rs.getDate("repairDate"),
+				rs.getInt("idLocalization"),
+				rs.getFloat("time"),
+				rs.getString("availabilityAfter"),
+				rs.getString("repairProcess"),
+				rs.getBoolean("isRepaired"),
+				rs.getString("replacements")
+		);
+		rRepair.setTools(new DBTools().getToolsFromRepair(
+				rs.getInt("codBreakdown"), 
+				rs.getString("idGroup"), 
+				rs.getDate("repairDate")));
 		return rRepair;
 	}
 }
