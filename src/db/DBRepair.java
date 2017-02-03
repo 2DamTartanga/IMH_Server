@@ -7,19 +7,20 @@ import model.WorkOrder;
 public class DBRepair extends DBConn {
 	
 	public WorkOrder getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
-		Repair rRepair = null;
 		Repair r = null;
 		int id = workOrder.getId();
 		int idGroup = workOrder.getRepair().getGroup().getId();
 		this.connect();
 		sql = "SELECT * FROM repairs "
-			+ "WHERE id = "+id+" "
+			+ "WHERE codBreakdown = "+id+" "
 			+ "AND idGroup LIKE "+idGroup+";";
+		System.out.println(sql);
+		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			r = getRepairFromResultSet(needsGroup);
-			r.setTools(new DBTools().getToolsFromRepair(rs.getString("tools")));
+			//r.setTools(new DBTools().getToolsFromRepair(workOrder));//TODO ESTO!!
 		}
-		workOrder.setRepairs(rRepair);
+		workOrder.setRepairs(r);
 		this.close();
 		return workOrder;
 	}
@@ -28,30 +29,31 @@ public class DBRepair extends DBConn {
 		return this.getRepairs(workOrder,true);
 	}
 	
-	public int addRepair(WorkOrder workOrder) throws Exception{//TODO acabar
+	public boolean addRepair(WorkOrder workOrder) throws Exception{//TODO acabar
 		int result;
 		
 		this.connect();
 		Repair r = workOrder.getRepair();
 		
 		
-		sql = "UPDATE repairs SET("
-				+ "repairDate = '"+format.format(r.getDate())+"' "
-				+ "time = "+r.getTime()+" "
-				+ "availablilityAfter = '"+r.getAvailabilityAfterRepair()+"' "
-				+ "repairProcess = '"+r.getRepairProcess()+"' "
-				+ "idLocalization = "+r.getFailureLocalization()+" "
-				+ "isRepaired = "+r.isRepaired()+" "
+		sql = "UPDATE repairs SET "
+				+ "repairDate = '"+format.format(r.getDate())+"', "
+				+ "time = "+r.getTime()+", "
+				+ "availabilityAfter = '"+Integer.parseInt(r.getAvailabilityAfterRepair())+"', "
+				+ "repairProcess = '"+r.getRepairProcess()+"', "
+				+ "idLocalization = "+r.getFailureLocalization()+", "
+				+ "isRepaired = "+r.isRepaired()+", "
 				+ "replacements = '"+r.getReplacements()+"' "
-				+ ") "
+				+ " "
 				+ "WHERE codBreakdown = "+workOrder.getId()+" "
 				+ "AND idGroup = "+r.getGroup().getId()+" ;";
+		System.out.println(sql);
 		result = stmt.executeUpdate(sql);
 		new DBTools().insertTootls(workOrder);
 		
 		this.close();
 		
-		return result;
+		return result == 1;
 	}
 	
 	public Repair getRepairsFromGroup(Group group) throws Exception{

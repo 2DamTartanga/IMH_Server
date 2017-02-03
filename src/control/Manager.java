@@ -58,7 +58,8 @@ public class Manager implements Database {
 		case Message.GROUP:
 			//resultOfTheOperation = addGroup( (Group) msg.getContent());
 			break;
-		case Message.ISSUE:
+		case Message.BREAKDOWN:
+			System.out.println((Breakdown)msg.getContent());
 			resultOfTheOperation = addBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
@@ -90,7 +91,7 @@ public class Manager implements Database {
 		case Message.GROUP:
 			//resultOfTheOperation = modGroup( (Group) msg.getContent());
 			break;
-		case Message.ISSUE:
+		case Message.BREAKDOWN:
 			//resultOfTheOperation = modBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
@@ -122,7 +123,7 @@ public class Manager implements Database {
 		case Message.GROUP:
 			//resultOfTheOperation = delGroup( (Group) msg.getContent());
 			break;
-		case Message.ISSUE:
+		case Message.BREAKDOWN:
 			//resultOfTheOperation = delBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:
@@ -154,7 +155,7 @@ public class Manager implements Database {
 		case Message.GROUP:
 			resultOfTheOperation = (Group) getGroup( (Group) msg.getContent());
 			break;
-		case Message.ISSUE:
+		case Message.BREAKDOWN:
 			resultOfTheOperation = (Breakdown) getBreakdown( (Breakdown) msg.getContent());
 			break;
 		case Message.WORK_ORDER:

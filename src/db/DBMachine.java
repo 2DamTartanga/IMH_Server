@@ -23,7 +23,8 @@ public class DBMachine extends DBConn {
 			mach1=getMachineFromResultSet();
 			section.setId(rs.getString("idSection"));
 			section.setName(rs.getString("nameSection"));
-			//machine.setBreakdowns(new DBBrekadown().getBreakdownsFromMachine(mach1));
+			System.out.println("MAch1= " + mach1);
+			mach1.setBreakdowns(new DBBrekadown().getBreakdownsFromMachine(mach1));
 		}
 		mach1.setSection(section);
 		this.close();
@@ -34,10 +35,10 @@ public class DBMachine extends DBConn {
 		ArrayList<Machine> machines=new ArrayList<>();
 		Machine m=new Machine();
 		this.connect();
-		sql="SELECT * FROM machines"+
-		"INNER JOIN sections USING(idSection)"+
-		"INNER JOIN models USING (model)"+
-		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id)"+
+		sql="SELECT * FROM machines "+
+		"INNER JOIN sections USING(idSection) "+
+		"INNER JOIN models USING (model) "+
+		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
 		"WHERE idSection='"+section.getId()+"';";
 		rs=stmt.executeQuery(sql);
 		while(rs.next()){
@@ -50,6 +51,7 @@ public class DBMachine extends DBConn {
 	}
 	private Machine getMachineFromResultSet() throws Exception{
 		Machine mach1=new Machine();
+		mach1.setId(rs.getString("codMachine"));
 		mach1.setDimmensions(rs.getString("dimensions"));
 		mach1.setElectricConnection(rs.getString("electricConnection"));
 		mach1.setFileSearch(rs.getString("fileSearch"));

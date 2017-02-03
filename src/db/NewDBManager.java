@@ -23,7 +23,7 @@ public class NewDBManager implements Database{
 	
 	
 	public User login(User user) throws Exception {
-		return new DBUser().login(user);
+		return new DBUser().login(user);//TODO workorders
 	}
 
 	public boolean addBreakdown(Breakdown breakdown) throws Exception{
@@ -35,7 +35,7 @@ public class NewDBManager implements Database{
 	}
 	@Override
 	public Group getGroup(Group group) throws Exception {
-		return dbGroup.getGroup(group);
+		return dbGroup.getGroup(group);//TODO workOrders
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class NewDBManager implements Database{
 
 	@Override
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
-		return false;
+		return dbRepair.addRepair(workOrder);//TODO tools
 	}
 
 	@Override

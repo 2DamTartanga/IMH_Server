@@ -15,22 +15,19 @@ public class DBWorkOrder extends DBConn {
 		WorkOrder workOrderFromDatabase = new WorkOrder();
 		
 		this.connect();
-		sql = "SELECT * FROM workorder w" +
+		sql = "SELECT * FROM workorders w" +
 				"INNER JOIN breakdowns " + 
 				"ON " + workOrder.getId() + "=breakdowns.codBreakdown";
 		
 		ResultSet rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			
-			Breakdown breakdownToAdd = new Breakdown();
-			breakdownToAdd.setDate(rs.getDate(""));
-			breakdownToAdd.setDescription(rs.getString(""));
-			breakdownToAdd.setEquipmentAvailable(rs.getString(""));
-			breakdownToAdd.setFailureType(rs.getString(""));
-			breakdownToAdd.setId(rs.getInt(""));
+			Breakdown breakdownToAdd = 
+					new DBBrekadown().getBreakdown(
+							new Breakdown(rs.getInt("codBreakdown")));
 			
 			DBMachine dbMachine = new DBMachine();
-			Machine m = dbMachine.getMachine(new Machine(rs.getString("codeMachine")));
+			Machine m = dbMachine.getMachine(new Machine(rs.getString("codMachine")));
 			breakdownToAdd.setMachine(m);
 			
 			workOrderFromDatabase.setBreakdown(breakdownToAdd);
@@ -39,7 +36,6 @@ public class DBWorkOrder extends DBConn {
 			workOrderFromDatabase.setOthers(rs.getString("others"));
 			workOrderFromDatabase.setSeverity(rs.getInt("severity"));
 			workOrderFromDatabase.setTypeOfMaintenance(String.valueOf(rs.getInt("typeMaintenance")));
-			
 			Repair repairToAdd = new DBRepair().getRepairsFromWorkOrder(workOrder);
 			workOrderFromDatabase.setRepairs(repairToAdd);
 			

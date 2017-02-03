@@ -79,4 +79,11 @@ public class WorkOrder implements Serializable {
 	public void setBreakdown(Breakdown breakdown) {
 		this.breakdown = breakdown;
 	}
+	@Override
+	public String toString() {
+		return "WorkOrder [severity=" + severity + ", others=" + others + ", typeOfMaintenance=" + typeOfMaintenance
+				+ ", creationDate=" + creationDate + ", repair=" + repair + ", breakdown=" + breakdown + "]";
+	}
+	
+	
 }

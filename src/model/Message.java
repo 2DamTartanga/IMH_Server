@@ -16,7 +16,6 @@ public class Message implements Serializable{
 	public static final String GET = "get";
 	public static final String LOGIN = "login";
 
-	public static final String ISSUE = "issue";
 	public static final String WORK_ORDER= "work order";
 	public static final String REPAIR = "repair";
 	public static final String USER = "user";

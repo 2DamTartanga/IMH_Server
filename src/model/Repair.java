@@ -19,6 +19,7 @@ public class Repair implements Serializable {
 	private String replacements;
 	private Group group;
 	
+	public Repair(){};
 	public Repair(Date date, int failureLocalization, float time, String availabilityAfterRepair, String repairProcess,
 			boolean isRepaired, String replacements) {
 		this.date = date;
@@ -83,5 +84,13 @@ public class Repair implements Serializable {
 	}
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+	@Override
+	public String toString() {
+		return "Repair [date=" + date + ", failureLocalization=" + failureLocalization + ", time=" + time
+				+ ", availabilityAfterRepair=" + availabilityAfterRepair + ", tools=" + tools + ", repairProcess="
+				+ repairProcess + ", isRepaired=" + isRepaired + ", replacements=" + replacements + ", group=" + group
+				+ "]";
 	}	
+	
 }

@@ -20,6 +20,7 @@ public class DBTools extends DBConn{
 	public int insertTootls(WorkOrder workOrder) throws Exception{//TODO cambiar tools de arrayList a hashMap?
 		int rowsInserted = 0;
 		HashMap<Integer, String> tools = workOrder.getRepair().getTools();
+		if(tools != null){
 		int id = workOrder.getId();
 		int idGroup = workOrder.getRepair().getGroup().getId();
 		Date date = workOrder.getRepair().getDate();
@@ -38,7 +39,7 @@ public class DBTools extends DBConn{
 		
 		
 		this.close();
-		
+		}
 		
 		return rowsInserted;
 	}
@@ -48,8 +49,8 @@ public class DBTools extends DBConn{
 		this.connect();
 		String sub = "SELECT idTool FROM repairTools "
 				+ "WHERE codBreakdown = "+id+" "
-				+ "AND LOWER(idGroup) LIKE LOWER('"+group+"');";//TODO date
-		sql = "SELECT * FROM tools WHERE idTools = ("+sub+")";
+				+ "AND LOWER(idGroup) LIKE LOWER('"+group+"')";//TODO date
+		sql = "SELECT * FROM tools WHERE idTools = ("+sub+");";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rTools.put(rs.getInt("idTools"), rs.getString("name"));

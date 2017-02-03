@@ -38,10 +38,6 @@ public class Breakdown implements Serializable {
 	public Breakdown() {
 	}
 
-	public Breakdown(int id) {
-		this.id = id;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -105,5 +101,14 @@ public class Breakdown implements Serializable {
 	public void setReporter(User reporter) {
 		this.reporter = reporter;
 	}
+
+	@Override
+	public String toString() {
+		return "Breakdown [id=" + id + ", date=" + date + ", failureType=" + failureType + ", description="
+				+ description + ", equipmentAvailable=" + equipmentAvailable + ", subject=" + subject + ", machine="
+				+ machine + ", reporter=" + reporter + "]";
+	}
+	
+	
 	
 }

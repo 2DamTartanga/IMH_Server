@@ -10,7 +10,7 @@ public class DBGroup extends DBConn {
 			DBUser dbUser = new DBUser();
 			rGroup.setUsers(dbUser.getUsersFromGroup(rGroup));
 		}
-		if(needsRepairs){
+		if(false){//TODO
 			DBWorkOrder dbWorkOrder = new DBWorkOrder();
 			rGroup.setWorkOrders(dbWorkOrder.getWorkOrdersFromGroup(rGroup));
 		}
@@ -18,7 +18,7 @@ public class DBGroup extends DBConn {
 	}
 	
 	public Group getGroup(Group group) throws Exception{
-		return this.getGroup(group, true, true);
+		return this.getGroup(group, true, false);
 	}
 	
 	
