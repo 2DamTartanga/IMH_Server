@@ -2,9 +2,9 @@ package db;
 
 import java.util.ArrayList;
 
+import model.Breakdown;
 import model.Machine;
 import model.Section;
-import model.Machine;
 
 public class DBMachine extends DBConn {
 
@@ -13,16 +13,17 @@ public class DBMachine extends DBConn {
 		mach1.setId(machine.getId());
 		Section section=new Section();
 		this.connect();
-		sql="SELECT * FROM machines"+
-		"INNER JOIN sections USING(idSection)"+
-		"INNER JOIN models USING (model)"+
-		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id)"+
+		sql="SELECT * FROM machines "+
+		"INNER JOIN sections USING(idSection) "+
+		"INNER JOIN models USING (model) "+
+		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
 		"WHERE codMachine='"+machine.getId()+"';";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			mach1=getMachineFromResultSet();
 			section.setId(rs.getString("idSection"));
 			section.setName(rs.getString("nameSection"));
+			//machine.setBreakdowns(new DBBrekadown().getBreakdownsFromMachine(mach1));
 		}
 		mach1.setSection(section);
 		this.close();

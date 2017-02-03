@@ -23,8 +23,7 @@ public class NewDBManager implements Database{
 	
 	
 	public User login(User user) throws Exception {
-		User loggedUser = new DBUser().login(user);
-		return loggedUser;
+		return new DBUser().login(user);
 	}
 
 	public boolean addBreakdown(Breakdown breakdown) throws Exception{

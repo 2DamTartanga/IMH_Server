@@ -8,9 +8,7 @@ import model.Breakdown;
 import model.Group;
 import model.Machine;
 import model.Message;
-import model.Repair;
 import model.User;
-import model.WorkOrder;
 
 public class MainClient implements MessageListener {
 
@@ -43,10 +41,10 @@ public class MainClient implements MessageListener {
         try {
             switch (opc) {
                 case 1:
-                    //login();
+                    login();
                     break;
                 case 2:
-                    //addBreakDown();
+                    addBreakDown();
                     break;
                 case 3:
                     addRepair();
@@ -72,6 +70,9 @@ public class MainClient implements MessageListener {
                 case 10:
                     getWorkOrder();
                     break;
+                case 11:
+                	getMachine();
+                	break;
                 default:
                     break;
             }
@@ -99,8 +100,10 @@ public class MainClient implements MessageListener {
     }
 
     private void getMachine() {
-        // TODO Auto-generated method stub
-
+    	Machine m = new Machine("CF 1");
+        Message msg = new Message(Message.GET, Message.MACHINE, m);
+        ThreadSender ts = new ThreadSender(this, cs, msg);
+        ts.start();
     }
 
     private void getLocalization() {
@@ -120,34 +123,62 @@ public class MainClient implements MessageListener {
     }
 
     private void getBreakdown() {
-        // TODO Auto-generated method stub
-
+    	Breakdown br = new Breakdown(1);
+        Message msg = new Message(Message.GET, Message.BREAKDOWN, br);
+        ThreadSender ts = new ThreadSender(this, cs, msg);
+        ts.start();
     }
 
     private void addRepair() {
     }
-/*
+
     private void addBreakDown() {
-        User user = new User("IMH");
-        user.setName("Manolete");
-        //user.setSurname("w");
-        Breakdown br = new Breakdown(0, new Date(),user, new FailureType(1, null), "Broken screw", "The main screw is broken", new Machine(1), 1);
-        try {
-            System.out.println(manager.addBreakdown(br));
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        User user = new User("1dfm");
+        Breakdown br = new Breakdown(
+        		0, 
+        		new Date(),
+        		user, 
+        		"Mechanical" , 
+        		"Broken screw", 
+        		"The main screw is broken", 
+        		new Machine("CF 1"), 
+        		"R");;
+        Message msg = new Message(Message.ADD, Message.BREAKDOWN, br);
+        ThreadSender ts = new ThreadSender(this, cs, msg);
+        ts.start();
 
     }
 
     private void login() throws Exception {
-        User user = new User("1mi", "1mi");
+    	//General
+    	/*
+        User user = new User("1dfm", "1dfm");
+        Message msg = new Message(Message.LOGIN,null,user);
+        ThreadSender ts = new ThreadSender(this,cs,msg);
+        ts.start();*/
+        //Admin
+    	/*
+        User user = new User("admin", "admin");
         Message msg = new Message(Message.LOGIN,null,user);
         ThreadSender ts = new ThreadSender(this,cs,msg);
         ts.start();
+        */
+        //Maintenance con grupo
+    	
+        User user = new User("unaisainz", "unaisainz");
+        Message msg = new Message(Message.LOGIN,null,user);
+        ThreadSender ts = new ThreadSender(this,cs,msg);
+        ts.start();
+        
+        //Maintenance sin grupo
+    	/*
+        User user = new User("tek1", "tek1");
+        Message msg = new Message(Message.LOGIN,null,user);
+        ThreadSender ts = new ThreadSender(this,cs,msg);
+        ts.start();
+        */
     }
-*/
+
 
     @Override
     public void messageReceived(Object obj) {

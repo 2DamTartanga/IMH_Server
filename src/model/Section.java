@@ -38,6 +38,10 @@ public class Section implements Serializable {
 	public void setMachines(ArrayList<Machine> machines) {
 		this.machines = machines;
 	}
+	@Override
+	public String toString() {
+		return "Section [id=" + id + ", name=" + name + ", machines=" + machines + "]";
+	}
 	
 	
 	

@@ -36,7 +36,6 @@ public class Machine implements Serializable {
 	public Machine(String id) {
 		this.id = id;
 	}
-
 	public String getId() {
 		return id;
 	}
@@ -162,6 +161,16 @@ public class Machine implements Serializable {
 	}
 	public void setBreakdowns(ArrayList<Breakdown> breakdowns) {
 		this.breakdowns = breakdowns;
+	}
+	@Override
+	public String toString() {
+		return "Machine [\n\tid=" + id + ", \n\t status=" + status + ", \n\t importance=" + importance + ", \n\t model=" + model
+				+ ", \n\t manufacturer=" + manufacturer + ", \n\t hydraulicConnection=" + hydraulicConnection
+				+ ", \n\t pneumaticConnection=" + pneumaticConnection + ", \n\t dimmensions=" + dimmensions + ", \n\t powerSource="
+				+ powerSource + ", \n\t electricConnection=" + electricConnection + ", \n\t workingPressure=" + workingPressure
+				+ ", \n\t machineFamilly=" + machineFamilly + ", \n\t fileSearch=" + fileSearch + ", \n\t telephone=" + telephone
+				+ ", \n\t responsable=" + responsable + ", \n\t weight=" + weight + ", \n\t typeOfOil=" + typeOfOil + ", \n\t serialNumber="
+				+ serialNumber + ", \n\t year=" + year + ", \n\t section=" + section + ", \n\t breakdowns=" + breakdowns + "\n]";
 	}
 	
 	

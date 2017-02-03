@@ -1,7 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class Breakdown implements Serializable {
 
@@ -31,6 +31,10 @@ public class Breakdown implements Serializable {
 	}
 
 	public Breakdown() {
+	}
+
+	public Breakdown(int id) {
+		this.id = id;
 	}
 
 	public int getId() {
