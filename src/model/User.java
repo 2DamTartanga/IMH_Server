@@ -75,7 +75,6 @@ public class User implements Serializable {
 		this.group = group;
 		
 	}
-<<<<<<< HEAD
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -98,17 +97,12 @@ public class User implements Serializable {
 	
 	public void setCourse(String course) {
 		this.course = course;
-=======
-
+	}
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name
 				+ ", surname=" + surname + ", course=" + course + ", group=" + group + "]";
->>>>>>> 97edb6d5dc7fdf440418682705ea137cec09271a
-	}
+
 	
-	
-	
-	
-	
+	}	
 }
