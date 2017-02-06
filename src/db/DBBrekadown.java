@@ -76,4 +76,30 @@ public class DBBrekadown extends DBConn {
 		this.close();
 		return breakdowns;
 	}
+	public ArrayList<Breakdown> getOpenBreakdownsFromMachine(Machine machine) throws Exception{
+		ArrayList<Breakdown> breakdowns= new ArrayList<>();
+		Breakdown break1=null;
+		this.connect();
+		sql="SELECT * FROM breakdowns "+
+		"INNER JOIN repairs USING(codBreakdown)"+
+		"WHERE codMachine = '"+machine.getId()+
+		"AND isRrpaired = false';";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			break1=new Breakdown();
+			break1.setId(rs.getInt("codBreakdown"));
+			break1.setDate(rs.getDate("date"));
+			break1.setDescription(rs.getString("description"));
+			break1.setEquipmentAvailable(rs.getString("equipmentAvailable"));
+			break1.setFailureType(rs.getString("failureType"));
+			break1.setSubject(rs.getString("subject"));
+			DBUser dbU=new DBUser();
+			User us1=dbU.getUser(new User(rs.getString("reporter")));
+			break1.setReporter(us1);
+			breakdowns.add(break1);
+		}
+		this.close();
+		return breakdowns;
+	}
+	
 }
