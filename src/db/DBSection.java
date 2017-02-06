@@ -1,5 +1,7 @@
 package db;
 
+import java.util.ArrayList;
+
 import model.Section;
 
 public class DBSection extends DBConn {
@@ -19,6 +21,22 @@ public class DBSection extends DBConn {
 		}
 		this.close();
 		return sect1;
+	}
+	
+	public ArrayList<Section> getSections() throws Exception {
+		ArrayList<Section> sections = new ArrayList<>();
+		this.connect();
+		sql = "SELECT * FROM sections";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			Section sec = new Section();
+			sec.setId(rs.getString(0));
+			sec.setName(rs.getString(1));
+			sec.setMachines(new DBMachine().getMachinesFromSection(sec));
+			sections.add(sec);
+		}
+		this.close();
+		return sections;
 	}
 	
 	public Section getSection(Section section)throws Exception{
