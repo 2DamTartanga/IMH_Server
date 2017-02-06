@@ -70,4 +70,43 @@ public class DBSection extends DBConn {
 		return machines;
 	}
 	
+	public ArrayList<Machine> getMachinesFromTypeAndSection(Section sec) throws Exception {
+		ArrayList<Machine> machines = new ArrayList<>();
+		this.connect();
+		sql = "SELECT *"
+				+ "FROM machines m INNER JOIN models USING(model) "
+				+ "WHERE m.idSection = " + sec.getId();
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			Machine m = getMachineFromResultSet();
+			machines.add(m);
+		}
+		this.close();
+		return machines;
+	}
+	
+	private Machine getMachineFromResultSet() throws Exception{
+		Machine mach1=new Machine();
+		mach1.setId(rs.getString("codMachine"));
+		mach1.setDimmensions(rs.getString("dimensions"));
+		mach1.setElectricConnection(rs.getString("electricConnection"));
+		mach1.setFileSearch(rs.getString("fileSearch"));
+		mach1.setHydraulicConnection(rs.getString("hydraulicSystem"));
+		mach1.setImportance(rs.getInt("importance"));
+		mach1.setMachineFamilly(rs.getString("machine"));
+		mach1.setManufacturer(rs.getString("models.manufacturer"));
+		mach1.setModel(rs.getString("model"));
+		mach1.setPneumaticConnection(rs.getString("pneumaticConnection"));
+		mach1.setPowerSource(rs.getString("powerSource"));
+		mach1.setResponsable(rs.getString("responsable"));
+		mach1.setSerialNumber(rs.getString("serialNumber"));
+		mach1.setStatus(rs.getString("status").charAt(0));
+		mach1.setTelephone(rs.getString("telephone"));
+		mach1.setTypeOfOil(rs.getString("typeOil"));
+		mach1.setWeight(rs.getString("weight"));
+		mach1.setWorkingPressure(rs.getString("workingPressure"));
+		mach1.setYear(rs.getString("year"));
+		return mach1;
+	}
+	
 }
