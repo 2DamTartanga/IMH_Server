@@ -12,7 +12,7 @@ public class DBGroup extends DBConn {
 		}
 		if(false){//TODO
 			DBWorkOrder dbWorkOrder = new DBWorkOrder();
-			rGroup.setWorkOrders(dbWorkOrder.getWorkOrdersFromGroup(rGroup));
+			rGroup.setWorkOrders(dbWorkOrder.getPendingWorkOrdersFromGroup(rGroup));
 		}
 		return rGroup;
 	}

@@ -23,7 +23,7 @@ public class DBRepair extends DBConn {
 			r = getRepairFromResultSet(needsGroup);
 			//r.setTools(new DBTools().getToolsFromRepair(workOrder));//TODO ESTO!!
 		}
-		workOrder.setRepairs(r);
+		workOrder.setRepair(r);
 		this.close();
 		return workOrder;
 	}
@@ -101,9 +101,17 @@ public class DBRepair extends DBConn {
 		return rRepair;
 	}
 
-	public static void getPendingRepairsFromGroup(WorkOrder rWorkOrder) {
-		// TODO Auto-generated method stub
-		
+	public Repair getPendingRepairsFromGroup(WorkOrder workOrder) throws Exception {
+		Repair rRepair = null;
+		int id = workOrder.getId();
+		int group = workOrder.getRepair().getGroup().getId();
+		this.connect();
+		sql = "SELECT * FROM repairs WHERE codBreakdown = "+id+" AND isRepaired = 0 AND idGroup = "+group+";";
+		while(rs.next()){
+			rRepair = getRepairFromResultSet(false);
+		}
+		this.close();
+		return rRepair;
 	}
 	
 }

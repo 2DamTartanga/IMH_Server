@@ -73,7 +73,7 @@ public class WorkOrder implements Serializable {
 	public void setTypeOfMaintenance(String typeOfMaintenance) {
 		this.typeOfMaintenance = typeOfMaintenance;
 	}
-	public void setRepairs(Repair repairsToAdd) {
+	public void setRepair(Repair repairsToAdd) {
 		this.repair = repairsToAdd;
 	}
 	public void setBreakdown(Breakdown breakdown) {

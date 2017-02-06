@@ -72,7 +72,7 @@ public class DBManager implements Database{
 
 	@Override
 	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception {
-		return dbWorkOrder.getWorkOrdersFromGroup(group);
+		return dbWorkOrder.getPendingWorkOrdersFromGroup(group);
 	}
 
 	

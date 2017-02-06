@@ -40,7 +40,7 @@ public class DBWorkOrder extends DBConn {
 			workOrderFromDatabase.setSeverity(rs.getInt("severity"));
 			workOrderFromDatabase.setTypeOfMaintenance(String.valueOf(rs.getInt("typeMaintenance")));
 			Repair repairToAdd = new DBRepair().getRepairsFromWorkOrder(workOrder);
-			workOrderFromDatabase.setRepairs(repairToAdd);
+			workOrderFromDatabase.setRepair(repairToAdd);
 			
 			this.close();
 		}
@@ -48,16 +48,17 @@ public class DBWorkOrder extends DBConn {
 		return workOrderFromDatabase;
 	}
 
-	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception {
+	public ArrayList<WorkOrder> getPendingWorkOrdersFromGroup(Group group) throws Exception {
 		ArrayList<WorkOrder> rWorkOrders = new ArrayList<>();
 		int id = group.getId();
 		this.connect();
-		
+		String sub = "SELECT codBreakdown FROM repairs WHERE time IS NULL AND LOWER(idGroup) LIKE LOWER('"+id+"')";
 		sql = "SELECT * FROM workorders "
-				+ "WHERE LOWER(idGroup) LIKE LOWER('"+id+"') ";
+				+ "WHERE idBreakdown IN ("+sub+")";//TODO AND repairDate(subselect) = 1990-01-01
+		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
-			rWorkOrders.add(getWorkOrderFromResult());
+			rWorkOrders.add(getWorkOrderFromResult(group));
 		}
 		this.close();
 		
@@ -65,7 +66,7 @@ public class DBWorkOrder extends DBConn {
 		return rWorkOrders;
 	}
 	
-	private WorkOrder getWorkOrderFromResult() throws Exception{
+	private WorkOrder getWorkOrderFromResult(Group group) throws Exception{
 		Breakdown br = 
 				new DBBrekadown().getBreakdown(
 						new Breakdown(rs.getInt("idBreakdown")
@@ -80,8 +81,13 @@ public class DBWorkOrder extends DBConn {
 				rs.getInt("severity"), 
 				date, 
 				rs.getString("others"), 
-				String.valueOf(rs.getInt("typeOfMaintenance")));
-		DBRepair.getPendingRepairsFromGroup(rWorkOrder);
+				String.valueOf(rs.getInt("typeMaintenance")));
+		if(group != null){
+			Repair r = new Repair();
+			r.setGroup(group);
+			rWorkOrder.setRepair(r);
+		}
+		rWorkOrder.setRepair(new DBRepair().getPendingRepairsFromGroup(rWorkOrder));
 		return rWorkOrder;
 	}
 }

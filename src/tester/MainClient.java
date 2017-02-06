@@ -93,7 +93,7 @@ public class MainClient implements MessageListener {
     }
 
     private void getWotkOrdersFromGroup() {
-		Group g = new Group(8);
+		Group g = new Group(1);
 		Message msg = new Message(Message.GET,Message.WORK_ORDER,g);
         ThreadSender ts = new ThreadSender(this,cs,msg);
         ts.start();
@@ -105,7 +105,7 @@ public class MainClient implements MessageListener {
         Repair rep = new Repair();
         Group gr=new Group(8);
         rep.setGroup(gr);
-        wo.setRepairs(rep);
+        wo.setRepair(rep);
         
         
         Breakdown br = new Breakdown(1);
@@ -136,7 +136,7 @@ public class MainClient implements MessageListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-   		wo.setRepairs(rep);
+   		wo.setRepair(rep);
         Message msg = new Message(Message.GET, Message.REPAIR, wo);
        
         ThreadSender ts = new ThreadSender(this, cs, msg);
@@ -185,7 +185,7 @@ public class MainClient implements MessageListener {
     	wo.setTypeOfMaintenance("e");
     	Repair rep = new Repair(new Date(), 1, 4f, "2", "xDDDD", true, "eee");
     	rep.setGroup(new Group(8));
-        wo.setRepairs(rep);
+        wo.setRepair(rep);
     	Message msg = new Message(Message.ADD, Message.REPAIR, wo);
         ThreadSender ts = new ThreadSender(this, cs, msg);
         ts.start();
