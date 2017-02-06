@@ -81,6 +81,14 @@ public class DBUser extends DBConn {
 		}
 		return rUser;
 	}
+	public boolean updatePassword(User user,String password) throws Exception{
+		this.connect();
+		sql="UPDATE users "+
+		"SET password='"+password+"';";
+		int result = stmt.executeUpdate(sql);
+		this.close();
+		return result==1;
+	}
 	
 	
 	
