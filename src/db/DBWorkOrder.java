@@ -26,7 +26,7 @@ public class DBWorkOrder extends DBConn {
 		if(rs.next()){
 			
 			Breakdown breakdownToAdd = 
-					new DBBrekadown().getBreakdown(
+					new DBBreakdown().getBreakdown(
 							new Breakdown(rs.getInt("codBreakdown")));
 			
 			DBMachine dbMachine = new DBMachine();
@@ -68,7 +68,7 @@ public class DBWorkOrder extends DBConn {
 	
 	private WorkOrder getWorkOrderFromResult(Group group) throws Exception{
 		Breakdown br = 
-				new DBBrekadown().getBreakdown(
+				new DBBreakdown().getBreakdown(
 						new Breakdown(rs.getInt("idBreakdown")
 								)
 						);

@@ -14,7 +14,7 @@ import model.WorkOrder;
 
 public class DBManager implements Database{
 	
-	private DBBrekadown dbBreakdown=new DBBrekadown();
+	private DBBreakdown dbBreakdown=new DBBreakdown();
 	private DBGroup dbGroup=new DBGroup();
 	private DBMachine dbMachine=new DBMachine();
 	private DBRepair dbRepair=new DBRepair();

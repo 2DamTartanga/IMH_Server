@@ -209,33 +209,10 @@ public class MainClient implements MessageListener {
     }
 
     private void login() throws Exception {
-    	//General
-    	/*
-        User user = new User("1dfm", "1dfm");
-        Message msg = new Message(Message.LOGIN,null,user);
-        ThreadSender ts = new ThreadSender(this,cs,msg);
-        ts.start();*/
-        //Admin
-    	/*
-        User user = new User("admin", "admin");
-        Message msg = new Message(Message.LOGIN,null,user);
-        ThreadSender ts = new ThreadSender(this,cs,msg);
-        ts.start();
-        */
-        //Maintenance con grupo
-    	
         User user = new User("unaisainz", "unaisainz");
         Message msg = new Message(Message.LOGIN,null,user);
         ThreadSender ts = new ThreadSender(this,cs,msg);
         ts.start();
-        
-        //Maintenance sin grupo
-    	/*
-        User user = new User("tek1", "tek1");
-        Message msg = new Message(Message.LOGIN,null,user);
-        ThreadSender ts = new ThreadSender(this,cs,msg);
-        ts.start();
-        */
     }
 
 

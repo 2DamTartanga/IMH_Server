@@ -6,7 +6,7 @@ import model.Breakdown;
 import model.Machine;
 import model.User;
 
-public class DBBrekadown extends DBConn {
+public class DBBreakdown extends DBConn {
 
 	public boolean addBreakdown(Breakdown breakdown) throws Exception{
 		this.connect();

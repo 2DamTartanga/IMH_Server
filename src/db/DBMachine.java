@@ -22,7 +22,7 @@ public class DBMachine extends DBConn {
 			mach1=getMachineFromResultSet();
 			section.setId(rs.getString("idSection"));
 			section.setName(rs.getString("nameSection"));
-			mach1.setBreakdowns(new DBBrekadown().getBreakdownsFromMachine(mach1));
+			mach1.setBreakdowns(new DBBreakdown().getBreakdownsFromMachine(mach1));
 		}
 		mach1.setSection(section);
 		this.close();
