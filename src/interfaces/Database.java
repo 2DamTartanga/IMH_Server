@@ -2,6 +2,8 @@ package interfaces;
 
 
 
+import java.util.ArrayList;
+
 import model.Breakdown;
 import model.Group;
 import model.Machine;
@@ -35,5 +37,7 @@ public interface Database {
 	public WorkOrder getWorkOrder(WorkOrder order) throws Exception;
 	
 	public Section getLocalization(Section localization) throws Exception;
+	
+	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception;
 	
 }

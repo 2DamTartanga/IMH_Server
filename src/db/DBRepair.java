@@ -1,5 +1,8 @@
 package db;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import model.Group;
 import model.Repair;
 import model.WorkOrder;
@@ -77,8 +80,13 @@ public class DBRepair extends DBConn {
 	
 	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{
 		Repair rRepair = null;
+		Timestamp timestamp = rs.getTimestamp("repairDate");
+		Date date = null;
+		if (timestamp != null)
+			date = new Date(timestamp.getTime());
+		
 		rRepair = new Repair(
-				rs.getDate("repairDate"),
+				date,
 				rs.getInt("idLocalization"),
 				rs.getFloat("time"),
 				rs.getString("availabilityAfter"),
@@ -89,7 +97,13 @@ public class DBRepair extends DBConn {
 		rRepair.setTools(new DBTools().getToolsFromRepair(
 				rs.getInt("codBreakdown"), 
 				rs.getString("idGroup"), 
-				rs.getDate("repairDate")));
+				date));
 		return rRepair;
 	}
+
+	public static void getPendingRepairsFromGroup(WorkOrder rWorkOrder) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

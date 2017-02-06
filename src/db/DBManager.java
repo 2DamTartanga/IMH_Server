@@ -1,6 +1,8 @@
 package db;
 
 
+import java.util.ArrayList;
+
 import interfaces.Database;
 import model.Breakdown;
 import model.Group;
@@ -68,6 +70,12 @@ public class DBManager implements Database{
 		return dbSection.getSection(localization);
 	}
 
+	@Override
+	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception {
+		return dbWorkOrder.getWorkOrdersFromGroup(group);
+	}
+
+	
 	
 
 

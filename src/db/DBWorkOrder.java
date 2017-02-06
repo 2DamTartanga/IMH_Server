@@ -1,7 +1,10 @@
 package db;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.Breakdown;
 import model.Group;
@@ -62,8 +65,23 @@ public class DBWorkOrder extends DBConn {
 		return rWorkOrders;
 	}
 	
-	private WorkOrder getWorkOrderFromResult(){
-		WorkOrder rWorkOrder = null;
+	private WorkOrder getWorkOrderFromResult() throws Exception{
+		Breakdown br = 
+				new DBBrekadown().getBreakdown(
+						new Breakdown(rs.getInt("idBreakdown")
+								)
+						);
+		Timestamp timestamp = rs.getTimestamp("creationDate");
+		Date date = null;
+		if (timestamp != null)
+			date = new Date(timestamp.getTime());
+		WorkOrder rWorkOrder = new WorkOrder(
+				br, 
+				rs.getInt("severity"), 
+				date, 
+				rs.getString("others"), 
+				String.valueOf(rs.getInt("typeOfMaintenance")));
+		DBRepair.getPendingRepairsFromGroup(rWorkOrder);
 		return rWorkOrder;
 	}
 }

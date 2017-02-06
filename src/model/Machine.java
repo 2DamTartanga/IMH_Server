@@ -30,6 +30,7 @@ public class Machine implements Serializable {
 	private String year;
 	private Section section; //??
 	private ArrayList<Breakdown> breakdowns;
+	
 	public Machine(){
 		
 	}

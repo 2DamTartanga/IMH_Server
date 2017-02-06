@@ -8,16 +8,27 @@ import model.WorkOrder;
 
 public class DBTools extends DBConn{
 
-	public HashMap<Integer, String> getToolsFromRepair(String name) throws Exception{
+	public HashMap<Integer, String> getToolsFromRepair(WorkOrder wo) throws Exception{
 		HashMap<Integer, String> rTools = new HashMap<>();
+		Date date = wo.getRepair().getDate();
+		int idBreakdown = wo.getId();
+		int idGroup = wo.getRepair().getGroup().getId();
 		this.connect();
-		String sub = "SELECT id FROM tools WHERE LOWER(name) LIKE LOWER('"+name+"')";
-		sql = "SELECT name FROM tools WHERE id = ("+sub+");";
+		String sub = "SELECT idTool FROM repairTools WHERE codBreakdown = "+idBreakdown+" AND idGroup = "+idGroup+" AND repairDate = DATE_FORMAT('"+format.format(date)+"','yyyy-MM-dd HH:mm:ss')  ";
+		sql = "SELECT * FROM tools WHERE idTools IN ("+sub+");";
+		System.out.println(sql);
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			rTools.put(rs.getInt("idTools"), rs.getString("name"));
+		}
+		if(rTools.size() == 0)
+			rTools = null;
+		wo.getRepair().setTools(rTools);
 		this.close();
 		return rTools;
 	}
 	
-	public int insertTootls(WorkOrder workOrder) throws Exception{//TODO cambiar tools de arrayList a hashMap?
+	public int insertTootls(WorkOrder workOrder) throws Exception{
 		int rowsInserted = 0;
 		HashMap<Integer, String> tools = workOrder.getRepair().getTools();
 		if(tools != null){
@@ -47,13 +58,20 @@ public class DBTools extends DBConn{
 	public HashMap<Integer, String> getToolsFromRepair(int id, String group, Date date) throws Exception {
 		HashMap<Integer, String> rTools = new HashMap<>();
 		this.connect();
-		String sub = "SELECT idTool FROM repairTools "
-				+ "WHERE codBreakdown = "+id+" "
-				+ "AND LOWER(idGroup) LIKE LOWER('"+group+"')";//TODO date
-		sql = "SELECT * FROM tools WHERE idTools = ("+sub+");";
+		String sub = "SELECT idTool "
+				+ "FROM repairTools"
+				+ " WHERE codBreakdown = "+id+" "
+				+ "AND idGroup = "+group+" "
+				+ "AND repairDate = "
+					+ "DATE_FORMAT('"+format.format(date)+"','%Y-%m-%d %T')  ";
+		sql = "SELECT * FROM tools WHERE idTools IN ("+sub+");";
+		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
-			rTools.put(rs.getInt("idTools"), rs.getString("name"));
+			rTools.put(
+					rs.getInt("idTools"),
+					rs.getString("name")
+					);
 		}
 		if(rTools.size() == 0) rTools = null;
 		this.close();

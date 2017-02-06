@@ -87,10 +87,10 @@ public class Repair implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Repair [date=" + date + ", failureLocalization=" + failureLocalization + ", time=" + time
-				+ ", availabilityAfterRepair=" + availabilityAfterRepair + ", tools=" + tools + ", repairProcess="
-				+ repairProcess + ", isRepaired=" + isRepaired + ", replacements=" + replacements + ", group=" + group
-				+ "]";
+		return "Repair [\n\tdate=" + date + ",\n\t failureLocalization=" + failureLocalization + ",\n\t time=" + time
+				+ ",\n\t availabilityAfterRepair=" + availabilityAfterRepair + ",\n\t tools=" + tools + ",\n\t repairProcess="
+				+ repairProcess + ",\n\t isRepaired=" + isRepaired + ",\n\t replacements=" + replacements + ",\n\t group=" + group
+				+ "\n]";
 	}	
 	
 }

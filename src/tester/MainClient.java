@@ -78,6 +78,9 @@ public class MainClient implements MessageListener {
                 case 11:
                 	getMachine();
                 	break;
+                case 12:
+                	getWotkOrdersFromGroup();
+                	break;
                 default:
                     break;
             }
@@ -89,7 +92,15 @@ public class MainClient implements MessageListener {
         }
     }
 
-    private void getWorkOrder() {
+    private void getWotkOrdersFromGroup() {
+		Group g = new Group(8);
+		Message msg = new Message(Message.GET,Message.WORK_ORDER,g);
+        ThreadSender ts = new ThreadSender(this,cs,msg);
+        ts.start();
+		
+	}
+
+	private void getWorkOrder() {
         WorkOrder wo = new WorkOrder();
         Repair rep = new Repair();
         Group gr=new Group(8);

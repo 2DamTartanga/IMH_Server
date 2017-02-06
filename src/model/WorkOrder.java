@@ -81,8 +81,8 @@ public class WorkOrder implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "WorkOrder [severity=" + severity + ", others=" + others + ", typeOfMaintenance=" + typeOfMaintenance
-				+ ", creationDate=" + creationDate + ", repair=" + repair + ", breakdown=" + breakdown + "]";
+		return "WorkOrder [\nseverity=" + severity + ",\n\t others=" + others + ",\n\t typeOfMaintenance=" + typeOfMaintenance
+				+ ",\n\t creationDate=" + creationDate + ",\n\t repair=" + repair + ",\n\t breakdown=" + breakdown + "\n]";
 	}
 	
 	
