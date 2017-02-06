@@ -1,5 +1,8 @@
 package db;
 
+import java.util.ArrayList;
+
+import model.Machine;
 import model.Section;
 
 public class DBSection extends DBConn {
@@ -21,6 +24,22 @@ public class DBSection extends DBConn {
 		return sect1;
 	}
 	
+	public ArrayList<Section> getSections() throws Exception {
+		ArrayList<Section> sections = new ArrayList<>();
+		this.connect();
+		sql = "SELECT * FROM sections";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			Section sec = new Section();
+			sec.setId(rs.getString(0));
+			sec.setName(rs.getString(1));
+			sec.setMachines(new DBMachine().getMachinesFromSection(sec));
+			sections.add(sec);
+		}
+		this.close();
+		return sections;
+	}
+	
 	public Section getSection(Section section)throws Exception{
 		return getSection(section,true);
 	}
@@ -35,6 +54,20 @@ public class DBSection extends DBConn {
 		}
 		this.close();
 		return n;
+	}
+	
+	public ArrayList<Machine> getMachineTypesFromSection(Section sec) throws Exception {
+		ArrayList<Machine> machines = new ArrayList<>();
+		this.connect();
+		sql = "SELECT DISTINCT(machine) FROM models INNER JOIN machines USING(model) WHERE idSection = " + sec.getId();
+		stmt.executeQuery(sql);
+		while(rs.next()){
+			Machine m = new Machine();
+			m.setMachineFamilly(rs.getString(0));
+			machines.add(m);
+		}
+		this.close();
+		return machines;
 	}
 	
 }
