@@ -2,6 +2,7 @@ package db;
 
 import java.util.ArrayList;
 
+import model.Machine;
 import model.Section;
 
 public class DBSection extends DBConn {
@@ -53,6 +54,20 @@ public class DBSection extends DBConn {
 		}
 		this.close();
 		return n;
+	}
+	
+	public ArrayList<Machine> getMachineTypesFromSection(Section sec) throws Exception {
+		ArrayList<Machine> machines = new ArrayList<>();
+		this.connect();
+		sql = "SELECT DISTINCT(machine) FROM models INNER JOIN machines USING(model) WHERE idSection = " + sec.getId();
+		stmt.executeQuery(sql);
+		while(rs.next()){
+			Machine m = new Machine();
+			m.setMachineFamilly(rs.getString(0));
+			machines.add(m);
+		}
+		this.close();
+		return machines;
 	}
 	
 }
