@@ -1,6 +1,6 @@
 package db;
 
-import model.Group;
+import com.tartanga.dam.imhandroid.model.Group;
 
 public class DBGroup extends DBConn {
 

@@ -4,12 +4,12 @@ package interfaces;
 
 import java.util.ArrayList;
 
-import model.Breakdown;
-import model.Group;
-import model.Machine;
-import model.Section;
-import model.User;
-import model.WorkOrder;
+import com.tartanga.dam.imhandroid.model.Breakdown;
+import com.tartanga.dam.imhandroid.model.Group;
+import com.tartanga.dam.imhandroid.model.Machine;
+import com.tartanga.dam.imhandroid.model.Section;
+import com.tartanga.dam.imhandroid.model.User;
+import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 public interface Database {
 

@@ -2,8 +2,8 @@ package db;
 
 import java.util.ArrayList;
 
-import model.Group;
-import model.User;
+import com.tartanga.dam.imhandroid.model.Group;
+import com.tartanga.dam.imhandroid.model.User;
 
 public class DBUser extends DBConn {
 

@@ -3,9 +3,9 @@ package db;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import model.Group;
-import model.Repair;
-import model.WorkOrder;
+import com.tartanga.dam.imhandroid.model.Group;
+import com.tartanga.dam.imhandroid.model.Repair;
+import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 public class DBRepair extends DBConn {
 	

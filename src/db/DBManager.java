@@ -3,13 +3,14 @@ package db;
 
 import java.util.ArrayList;
 
+import com.tartanga.dam.imhandroid.model.Breakdown;
+import com.tartanga.dam.imhandroid.model.Group;
+import com.tartanga.dam.imhandroid.model.Machine;
+import com.tartanga.dam.imhandroid.model.Section;
+import com.tartanga.dam.imhandroid.model.User;
+import com.tartanga.dam.imhandroid.model.WorkOrder;
+
 import interfaces.Database;
-import model.Breakdown;
-import model.Group;
-import model.Machine;
-import model.Section;
-import model.User;
-import model.WorkOrder;
 
 
 public class DBManager implements Database{
