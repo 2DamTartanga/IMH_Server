@@ -2,8 +2,8 @@ package db;
 
 import java.util.ArrayList;
 
-import model.Machine;
-import model.Section;
+import com.tartanga.dam.imhandroid.model.Machine;
+import com.tartanga.dam.imhandroid.model.Section;
 
 public class DBSection extends DBConn {
 

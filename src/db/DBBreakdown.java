@@ -2,9 +2,9 @@ package db;
 
 import java.util.ArrayList;
 
-import model.Breakdown;
-import model.Machine;
-import model.User;
+import com.tartanga.dam.imhandroid.model.Breakdown;
+import com.tartanga.dam.imhandroid.model.Machine;
+import com.tartanga.dam.imhandroid.model.User;
 
 public class DBBreakdown extends DBConn {
 

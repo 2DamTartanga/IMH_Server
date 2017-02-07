@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
-import model.Breakdown;
-import model.Group;
-import model.Machine;
-import model.Repair;
-import model.WorkOrder;
+import com.tartanga.dam.imhandroid.model.Breakdown;
+import com.tartanga.dam.imhandroid.model.Group;
+import com.tartanga.dam.imhandroid.model.Machine;
+import com.tartanga.dam.imhandroid.model.Repair;
+import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 public class DBWorkOrder extends DBConn {
 

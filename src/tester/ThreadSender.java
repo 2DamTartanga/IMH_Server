@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
-import model.Message;
+import com.tartanga.dam.imhandroid.model.Message;
 
 
 public class ThreadSender extends Thread {

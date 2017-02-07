@@ -5,15 +5,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.tartanga.dam.imhandroid.model.Breakdown;
+import com.tartanga.dam.imhandroid.model.Group;
+import com.tartanga.dam.imhandroid.model.Machine;
+import com.tartanga.dam.imhandroid.model.Message;
+import com.tartanga.dam.imhandroid.model.Repair;
+import com.tartanga.dam.imhandroid.model.Section;
+import com.tartanga.dam.imhandroid.model.User;
+import com.tartanga.dam.imhandroid.model.WorkOrder;
+
 import control.Manager;
-import model.Breakdown;
-import model.Group;
-import model.Machine;
-import model.Message;
-import model.Repair;
-import model.Section;
-import model.User;
-import model.WorkOrder;
 
 public class MainClient implements MessageListener {
 

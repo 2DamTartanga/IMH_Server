@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.WorkOrder;
+import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 public class DBTools extends DBConn{
 
