@@ -1,14 +1,16 @@
+
 package com.tartanga.dam.imhandroid.model;
+
 import java.io.Serializable;
 
 public class Message implements Serializable{
-
+	
 	/**
-	 *
+	 * 
 	 */
-	private static final long serialVersionUID = 2L;
-
-
+	private static final long serialVersionUID = 1L;
+	
+	
 	public static final String ADD = "add";
 	public static final String MOD = "mod";
 	public static final String DEL = "delete";
@@ -22,10 +24,10 @@ public class Message implements Serializable{
 	public static final String MACHINE = "machine";
 	public static final String WORK_ZONE = "work zone";
 	public static final String BREAKDOWN = "breakdown";
-
+	
 	//public static final String ENGLISH = "en";
 	//public static final String EUSKARA = "eus";
-
+	
 	//private String language;
 	private String action;
 	private String object;
@@ -37,7 +39,7 @@ public class Message implements Serializable{
 		this.object = object;
 		this.content = content;
 	}*/
-
+	
 	public Message(String action, String object, Object content) {
 		//language = ENGLISH;
 		this.action = action;
@@ -60,6 +62,7 @@ public class Message implements Serializable{
 	/*public String getLanguage() {
 		return this.language;
 	}*/
-
+	
 }
+
 

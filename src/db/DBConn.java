@@ -13,7 +13,7 @@ public abstract class DBConn {
 	protected ResultSet rs;
 	protected String sql;
 	protected SimpleDateFormat format;
-	
+	//10.22.87.157
 	public DBConn(){
 		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}

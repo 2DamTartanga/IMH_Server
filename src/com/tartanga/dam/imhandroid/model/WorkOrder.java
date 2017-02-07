@@ -1,3 +1,4 @@
+
 package com.tartanga.dam.imhandroid.model;
 
 import java.io.Serializable;

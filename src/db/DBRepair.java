@@ -107,6 +107,7 @@ public class DBRepair extends DBConn {
 		int group = workOrder.getRepair().getGroup().getId();
 		this.connect();
 		sql = "SELECT * FROM repairs WHERE codBreakdown = "+id+" AND isRepaired = 0 AND idGroup = "+group+";";
+		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rRepair = getRepairFromResultSet(false);
 		}

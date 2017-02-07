@@ -20,6 +20,7 @@ public class DBSection extends DBConn {
 			DBMachine dbM=new DBMachine();
 			sect1.setMachines(dbM.getMachinesFromSection(sect1));
 		}
+		sect1.setStatus(this.returnMachinesByStatus(sect1));
 		this.close();
 		return sect1;
 	}
@@ -27,13 +28,14 @@ public class DBSection extends DBConn {
 	public ArrayList<Section> getSections() throws Exception {
 		ArrayList<Section> sections = new ArrayList<>();
 		this.connect();
-		sql = "SELECT * FROM sections";
+		sql = "SELECT * FROM sections;";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			Section sec = new Section();
-			sec.setId(rs.getString(0));
-			sec.setName(rs.getString(1));
+			sec.setId(rs.getString("idSection"));
+			sec.setName(rs.getString("nameSection"));
 			sec.setMachines(new DBMachine().getMachinesFromSection(sec));
+			sec.setStatus(new DBSection().returnMachinesByStatus(null));
 			sections.add(sec);
 		}
 		this.close();
@@ -44,13 +46,23 @@ public class DBSection extends DBConn {
 		return getSection(section,true);
 	}
 	
-	public int returnMachinesByStatus(Section section, String status) throws Exception{
-		int n=0;
+	public int[] returnMachinesByStatus(Section section) throws Exception{
+		int n[]={0,0,0};
 		this.connect();
-		sql="SELECT COUNT * FROM MACHINES WHERE lower(status) LIKE lower('"+status+"');";
+		if(section!=null){
+			sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status WHERE lower(idSection) LIKE lower('"+section.getId()+"');";
+		}
+		else sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status;";
 		rs = stmt.executeQuery(sql);
-		if(rs.next()){
-			n=rs.getInt(1);
+		while(rs.next()){
+			if(rs.getString("status").equals("V")){
+				n[0]=rs.getInt(1);
+			}
+			else if(rs.getString("status").equals("A")){
+				n[1]=rs.getInt(1);
+			}
+			else if(rs.getString("status").equals("R"))
+				n[2]=rs.getInt(1);
 		}
 		this.close();
 		return n;
