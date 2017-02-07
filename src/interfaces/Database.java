@@ -40,4 +40,6 @@ public interface Database {
 	
 	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception;
 	
+	public ArrayList<Section> getSections() throws Exception;
+	
 }
