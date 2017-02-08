@@ -77,4 +77,20 @@ public class DBTools extends DBConn{
 		this.close();
 		return rTools;
 	}
+
+	public HashMap<Integer, String> getTools() throws Exception {
+		HashMap<Integer, String> rTools = new HashMap<>();
+		this.connect();
+		String sql = "SELECT * FROM tools";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			rTools.put(
+					rs.getInt("idTools"),
+					rs.getString("name")
+					);
+		}
+		if(rTools.size() == 0) rTools = null;
+		this.close();
+		return rTools;
+	}
 }
