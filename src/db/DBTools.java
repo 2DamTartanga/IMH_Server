@@ -81,7 +81,7 @@ public class DBTools extends DBConn{
 	public HashMap<Integer, String> getTools() throws Exception {
 		HashMap<Integer, String> rTools = new HashMap<>();
 		this.connect();
-		String sql = "SELECT * FROM tools";
+		sql = "SELECT * FROM tools";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rTools.put(
@@ -93,4 +93,5 @@ public class DBTools extends DBConn{
 		this.close();
 		return rTools;
 	}
+	
 }

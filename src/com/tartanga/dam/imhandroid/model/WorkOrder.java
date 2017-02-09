@@ -2,7 +2,6 @@
 package com.tartanga.dam.imhandroid.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class WorkOrder implements Serializable {

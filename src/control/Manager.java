@@ -1,6 +1,7 @@
 package control;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.tartanga.dam.imhandroid.model.Breakdown;
 import com.tartanga.dam.imhandroid.model.Group;
@@ -177,6 +178,9 @@ public class Manager implements Database {
 			if(msg.getContent()==null) resultOfTheOperation=(ArrayList<Section>)getSections();
 			else resultOfTheOperation = (Section) getLocalization( (Section) msg.getContent());
 			break;
+		case Message.TOOLS:
+			resultOfTheOperation=(HashMap<Integer,String>)getTools();
+			break;
 		default:
 			break;
 		}
@@ -246,5 +250,10 @@ public class Manager implements Database {
 	@Override
 	public ArrayList<Section> getSections() throws Exception {
 		return dbm.getSections();
+	}
+
+	@Override
+	public HashMap<Integer, String> getTools() throws Exception {
+		return dbm.getTools();
 	}
 }

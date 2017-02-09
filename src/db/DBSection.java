@@ -16,11 +16,12 @@ public class DBSection extends DBConn {
 		if(rs.next()){
 			sect1.setName(rs.getString(1));
 		}
+		System.out.println(needsMachines);
 		if(needsMachines){
 			DBMachine dbM=new DBMachine();
 			sect1.setMachines(dbM.getMachinesFromSection(sect1));
 		}
-		sect1.setStatus(this.returnMachinesByStatus(sect1));
+		//sect1.setStatus(this.returnMachinesByStatus(sect1));
 		this.close();
 		return sect1;
 	}
@@ -49,10 +50,12 @@ public class DBSection extends DBConn {
 	public int[] returnMachinesByStatus(Section section) throws Exception{
 		int n[]={0,0,0};
 		this.connect();
-		if(section!=null){
+		/*if(section!=null){
 			sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status WHERE lower(idSection) LIKE lower('"+section.getId()+"');";
+			System.out.println(sql);//TODO remove
 		}
-		else sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status;";
+		else */
+		sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status;";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			if(rs.getString("status").equals("V")){

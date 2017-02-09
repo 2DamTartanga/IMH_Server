@@ -9,6 +9,8 @@ import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 public class DBRepair extends DBConn {
 	
+	 //static Logger log = Logger.getLogger(DBRepair.class.getName());
+	
 	public WorkOrder getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
 		Repair r = null;
 		int id = workOrder.getId();
@@ -106,7 +108,7 @@ public class DBRepair extends DBConn {
 		int id = workOrder.getId();
 		int group = workOrder.getRepair().getGroup().getId();
 		this.connect();
-		sql = "SELECT * FROM repairs WHERE codBreakdown = "+id+" AND isRepaired IS NULL AND idGroup = "+group+";";
+		sql = "SELECT * FROM repairs WHERE codBreakdown = "+id+" AND isRepaired = 0 AND idGroup = "+group+";";
 		System.out.println(sql); // TODO
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){

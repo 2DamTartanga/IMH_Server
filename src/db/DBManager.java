@@ -2,6 +2,7 @@ package db;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.tartanga.dam.imhandroid.model.Breakdown;
 import com.tartanga.dam.imhandroid.model.Group;
@@ -79,6 +80,11 @@ public class DBManager implements Database{
 	@Override
 	public ArrayList<Section> getSections() throws Exception {
 		return dbSection.getSections();
+	}
+
+	@Override
+	public HashMap<Integer, String> getTools() throws Exception {
+		return new DBTools().getTools();
 	}
 
 	

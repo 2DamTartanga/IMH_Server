@@ -3,6 +3,7 @@ package interfaces;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.tartanga.dam.imhandroid.model.Breakdown;
 import com.tartanga.dam.imhandroid.model.Group;
@@ -41,5 +42,7 @@ public interface Database {
 	public ArrayList<WorkOrder> getWorkOrdersFromGroup(Group group) throws Exception;
 	
 	public ArrayList<Section> getSections() throws Exception;
+	
+	public HashMap<Integer, String> getTools() throws Exception;
 	
 }

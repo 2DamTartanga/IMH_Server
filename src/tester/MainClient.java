@@ -19,7 +19,7 @@ import control.Manager;
 public class MainClient implements MessageListener {
 
     private final int PORT = 8008;
-    private final String IP = "localhost";
+    private final String IP = "10.22.82.173";
     private Socket cs;
 
     Manager manager;
