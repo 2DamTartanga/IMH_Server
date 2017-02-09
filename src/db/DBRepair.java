@@ -3,8 +3,6 @@ package db;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
-
 import com.tartanga.dam.imhandroid.model.Group;
 import com.tartanga.dam.imhandroid.model.Repair;
 import com.tartanga.dam.imhandroid.model.WorkOrder;
