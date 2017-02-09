@@ -21,7 +21,6 @@ public class DBSection extends DBConn {
 			DBMachine dbM=new DBMachine();
 			sect1.setMachines(dbM.getMachinesFromSection(sect1));
 		}
-		//sect1.setStatus(this.returnMachinesByStatus(sect1));
 		this.close();
 		return sect1;
 	}
@@ -35,8 +34,7 @@ public class DBSection extends DBConn {
 			Section sec = new Section();
 			sec.setId(rs.getString("idSection"));
 			sec.setName(rs.getString("nameSection"));
-			sec.setMachines(new DBMachine().getMachinesFromSection(sec));
-			sec.setStatus(new DBSection().returnMachinesByStatus(null));
+			sec.setStatus(new DBSection().returnMachinesByStatus(sec));
 			sections.add(sec);
 		}
 		this.close();
@@ -50,11 +48,11 @@ public class DBSection extends DBConn {
 	public int[] returnMachinesByStatus(Section section) throws Exception{
 		int n[]={0,0,0};
 		this.connect();
-		/*if(section!=null){
-			sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status WHERE lower(idSection) LIKE lower('"+section.getId()+"');";
-			System.out.println(sql);//TODO remove
+		if(section!=null){
+			sql="SELECT COUNT(*), status FROM MACHINES WHERE lower(idSection) LIKE lower('"+section.getId()+"') GROUP BY status;";
+			System.out.println(sql);
 		}
-		else */
+		else 
 		sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status;";
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){

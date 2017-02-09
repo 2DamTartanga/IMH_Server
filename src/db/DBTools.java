@@ -24,6 +24,7 @@ public class DBTools extends DBConn{
 		if(rTools.size() == 0)
 			rTools = null;
 		wo.getRepair().setTools(rTools);
+		System.out.println(rTools);
 		this.close();
 		return rTools;
 	}

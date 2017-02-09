@@ -89,7 +89,7 @@ public class Manager implements Database {
 		switch (msg.getObject()) {
 
 		case Message.USER:
-			//resultOfTheOperation = modUser( (User) msg.getContent());
+			resultOfTheOperation = updatePassword((User) msg.getContent());
 			break;
 		case Message.GROUP:
 			//resultOfTheOperation = modGroup( (Group) msg.getContent());
@@ -256,4 +256,15 @@ public class Manager implements Database {
 	public HashMap<Integer, String> getTools() throws Exception {
 		return dbm.getTools();
 	}
+	
+	@Override
+	public HashMap<Integer, String> getToolsFromRepair(WorkOrder order) throws Exception {
+		return dbm.getToolsFromRepair(order);
+	}
+
+	@Override
+	public boolean updatePassword(User user) throws Exception {
+		return dbm.updatePassword(user);
+	}
+	
 }

@@ -45,4 +45,8 @@ public interface Database {
 	
 	public HashMap<Integer, String> getTools() throws Exception;
 	
+	public HashMap<Integer, String> getToolsFromRepair(WorkOrder order) throws Exception;
+	
+	public boolean updatePassword(User user) throws Exception;
+	
 }

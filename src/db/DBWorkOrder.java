@@ -52,7 +52,7 @@ public class DBWorkOrder extends DBConn {
 		this.connect();
 		String sub = "SELECT codBreakdown FROM repairs WHERE time IS NULL AND LOWER(idGroup) LIKE LOWER('"+id+"')";
 		sql = "SELECT * FROM workorders "
-				+ "WHERE idBreakdown IN ("+sub+")";//TODO AND repairDate(subselect) = 1990-01-01
+				+ "WHERE idBreakdown IN ("+sub+") ORDER BY severity DESC";//TODO AND repairDate(subselect) = 1990-01-01
 		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){

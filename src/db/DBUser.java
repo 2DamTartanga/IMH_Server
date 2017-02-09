@@ -81,10 +81,11 @@ public class DBUser extends DBConn {
 		}
 		return rUser;
 	}
-	public boolean updatePassword(User user,String password) throws Exception{
+	public boolean updatePassword(User user) throws Exception{
 		this.connect();
 		sql="UPDATE users "+
-		"SET password='"+password+"';";
+		"SET password='"+user.getPassword()+
+		"' WHERE username LIKE '"+user.getUsername()+"';";
 		int result = stmt.executeUpdate(sql);
 		this.close();
 		return result==1;

@@ -3,6 +3,7 @@ package com.tartanga.dam.imhandroid.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Section implements Serializable {
 
@@ -48,9 +49,11 @@ public class Section implements Serializable {
 		return this.status;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Section [id=" + id + ", name=" + name + ", machines=" + machines + "]";
+		return "Section [id=" + id + ", name=" + name + ", machines=" + machines + ", status=" + Arrays.toString(status)
+				+ "]";
 	}
 	
 	

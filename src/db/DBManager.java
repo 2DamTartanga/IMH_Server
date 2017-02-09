@@ -27,7 +27,7 @@ public class DBManager implements Database{
 	
 	
 	public User login(User user) throws Exception {
-		return new DBUser().login(user);//TODO workorders
+		return new DBUser().login(user);
 	}
 
 	public boolean addBreakdown(Breakdown breakdown) throws Exception{
@@ -79,6 +79,8 @@ public class DBManager implements Database{
 
 	@Override
 	public ArrayList<Section> getSections() throws Exception {
+		ArrayList<Section> sectionS = dbSection.getSections();
+		System.out.println(sectionS); // TODO remove
 		return dbSection.getSections();
 	}
 
@@ -86,13 +88,17 @@ public class DBManager implements Database{
 	public HashMap<Integer, String> getTools() throws Exception {
 		return new DBTools().getTools();
 	}
+	
+	@Override
+	public HashMap<Integer, String> getToolsFromRepair(WorkOrder order) throws Exception {
+		return new DBTools().getToolsFromRepair(order);
+	}
 
+	@Override
+	public boolean updatePassword(User u) throws Exception {
+		return dbUser.updatePassword(u);
+	}
 	
 	
-
-
-
-	
-
 	
 }
