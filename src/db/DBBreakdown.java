@@ -38,13 +38,11 @@ public class DBBreakdown extends DBConn {
 			DBUser dbU=new DBUser();
 			us1=dbU.getUser(us1);
 			break1.setReporter(us1);
-			if(needsMachine){
-				Machine mach1=new Machine();
-				mach1.setId(rs.getString("codMachine"));
-				DBMachine dbM=new DBMachine();
-				mach1=dbM.getMachine(mach1);
-				break1.setMachine(mach1);
-			}
+			Machine mach1=new Machine();
+			mach1.setId(rs.getString("codMachine"));
+			DBMachine dbM=new DBMachine();
+			mach1=dbM.getMachine(mach1);
+			break1.setMachine(mach1);
 		}
 		this.close();
 		return break1;

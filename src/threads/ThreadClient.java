@@ -2,12 +2,14 @@ package threads;
 
 import control.Manager;
 
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import com.tartanga.dam.imhandroid.model.Message;
+
 
 public class ThreadClient extends Thread {
 

@@ -1,3 +1,4 @@
+
 package com.tartanga.dam.imhandroid.model;
 
 import java.io.Serializable;
@@ -12,6 +13,8 @@ public class Section implements Serializable {
 	private String id;
 	private String name;
 	private ArrayList<Machine> machines;
+	private int[] status;
+	
 	public Section(){
 		
 	}
@@ -38,6 +41,13 @@ public class Section implements Serializable {
 	public void setMachines(ArrayList<Machine> machines) {
 		this.machines = machines;
 	}
+	public void setStatus(int[] status){
+		this.status = status;
+	 }
+	public int[] getStatus(){
+		return this.status;
+	}
+
 	@Override
 	public String toString() {
 		return "Section [id=" + id + ", name=" + name + ", machines=" + machines + "]";
@@ -46,3 +56,4 @@ public class Section implements Serializable {
 	
 	
 }
+

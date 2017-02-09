@@ -174,7 +174,8 @@ public class Manager implements Database {
 			resultOfTheOperation = (Machine) getMachine( (Machine) msg.getContent());
 			break;
 		case Message.WORK_ZONE:
-			resultOfTheOperation = (Section) getLocalization( (Section) msg.getContent());
+			if(msg.getContent()==null) resultOfTheOperation=(ArrayList<Section>)getSections();
+			else resultOfTheOperation = (Section) getLocalization( (Section) msg.getContent());
 			break;
 		default:
 			break;
@@ -240,5 +241,10 @@ public class Manager implements Database {
 	@Override
 	public boolean addRepair(WorkOrder workOrder) throws Exception {
 		return dbm.addRepair(workOrder);
+	}
+
+	@Override
+	public ArrayList<Section> getSections() throws Exception {
+		return dbm.getSections();
 	}
 }

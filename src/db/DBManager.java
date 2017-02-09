@@ -76,6 +76,11 @@ public class DBManager implements Database{
 		return dbWorkOrder.getPendingWorkOrdersFromGroup(group);
 	}
 
+	@Override
+	public ArrayList<Section> getSections() throws Exception {
+		return dbSection.getSections();
+	}
+
 	
 	
 

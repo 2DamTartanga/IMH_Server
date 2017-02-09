@@ -1,3 +1,4 @@
+
 package com.tartanga.dam.imhandroid.model;
 
 import java.io.Serializable;
@@ -63,4 +64,5 @@ public class Message implements Serializable{
 	}*/
 	
 }
+
 
