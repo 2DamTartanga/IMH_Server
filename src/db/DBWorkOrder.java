@@ -27,7 +27,6 @@ public class DBWorkOrder extends DBConn {
 			Breakdown breakdownToAdd = 
 					new DBBreakdown().getBreakdown(
 							new Breakdown(rs.getInt("codBreakdown")));
-			
 			DBMachine dbMachine = new DBMachine();
 			Machine m = dbMachine.getMachine(new Machine(rs.getString("codMachine")));
 			breakdownToAdd.setMachine(m);
@@ -69,7 +68,8 @@ public class DBWorkOrder extends DBConn {
 		Breakdown br = 
 				new DBBreakdown().getBreakdown(
 						new Breakdown(rs.getInt("idBreakdown")
-								)
+								),
+						true
 						);
 		Timestamp timestamp = rs.getTimestamp("creationDate");
 		Date date = null;
@@ -87,6 +87,7 @@ public class DBWorkOrder extends DBConn {
 			rWorkOrder.setRepair(r);
 		}
 		rWorkOrder.setRepair(new DBRepair().getPendingRepairsFromGroup(rWorkOrder));
+		System.out.println(rWorkOrder); // TODO
 		return rWorkOrder;
 	}
 }
