@@ -49,4 +49,5 @@ public interface Database {
 	
 	public boolean updatePassword(User user) throws Exception;
 	
+	public float getTotalPercent() throws Exception;
 }

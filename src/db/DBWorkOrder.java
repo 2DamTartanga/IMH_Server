@@ -15,7 +15,6 @@ public class DBWorkOrder extends DBConn {
 
 	public WorkOrder getWorkOrder(WorkOrder workOrder) throws Exception{
 		WorkOrder workOrderFromDatabase = new WorkOrder();
-		
 		this.connect();
 		sql = "SELECT * FROM workorders w" +
 				"INNER JOIN breakdowns " + 

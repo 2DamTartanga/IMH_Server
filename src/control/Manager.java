@@ -181,6 +181,9 @@ public class Manager implements Database {
 		case Message.TOOLS:
 			resultOfTheOperation=(HashMap<Integer,String>)getTools();
 			break;
+		case Message.PERCENT:
+			resultOfTheOperation=(float)getTotalPercent();
+			break;
 		default:
 			break;
 		}
@@ -265,6 +268,11 @@ public class Manager implements Database {
 	@Override
 	public boolean updatePassword(User user) throws Exception {
 		return dbm.updatePassword(user);
+	}
+
+	@Override
+	public float getTotalPercent() throws Exception {
+		return dbm.getTotalPercent();
 	}
 	
 }

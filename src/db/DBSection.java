@@ -49,7 +49,7 @@ public class DBSection extends DBConn {
 		int n[]={0,0,0};
 		this.connect();
 		if(section!=null){
-			sql="SELECT COUNT(*), status FROM MACHINES WHERE lower(idSection) LIKE lower('"+section.getId()+"') GROUP BY status;";
+			sql="SELECT COUNT(*), upper(status) AS status FROM MACHINES WHERE lower(idSection) LIKE lower('"+section.getId()+"') GROUP BY status;";
 			System.out.println(sql);
 		}
 		else 
@@ -121,5 +121,21 @@ public class DBSection extends DBConn {
 		mach1.setYear(rs.getString("year"));
 		return mach1;
 	}
-	
+	public float getTotalPercent() throws Exception{
+		float percent=0;
+		float acum=0;
+		float total=0;
+		this.connect();
+		sql="SELECT upper(status) AS status, importance FROM machines;";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			int imp=rs.getInt("importance");
+			total=total+imp;
+			if(rs.getString("status").equals("V"))acum=acum+imp;
+			else if(rs.getString("status").equals("A"))acum=acum+imp*0.75f;
+		}
+		this.close();
+		percent=acum/total*100;
+		return percent;
+	}	
 }

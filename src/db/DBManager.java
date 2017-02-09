@@ -98,6 +98,11 @@ public class DBManager implements Database{
 	public boolean updatePassword(User u) throws Exception {
 		return dbUser.updatePassword(u);
 	}
+
+	@Override
+	public float getTotalPercent() throws Exception {
+		return dbSection.getTotalPercent();
+	}
 	
 	
 	
