@@ -37,11 +37,11 @@ public class DBMachine extends DBConn {
 		"INNER JOIN sections USING(idSection) "+
 		"INNER JOIN models USING (model) "+
 		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
-		"WHERE idSection='"+section.getId()+"';";
+		"WHERE idSection='"+section.getId()+"' ORDER BY status DESC;";
 		rs=stmt.executeQuery(sql);
 		while(rs.next()){
 			m=getMachineFromResultSet();
-			m.setId(rs.getString(1));
+			//m.setId(rs.getString(1));
 			machines.add(m);
 		}
 		this.close();

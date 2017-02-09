@@ -3,11 +3,15 @@ package db;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import com.tartanga.dam.imhandroid.model.Group;
 import com.tartanga.dam.imhandroid.model.Repair;
 import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 public class DBRepair extends DBConn {
+	
+	 //static Logger log = Logger.getLogger(DBRepair.class.getName());
 	
 	public WorkOrder getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
 		Repair r = null;
