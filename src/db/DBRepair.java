@@ -44,7 +44,7 @@ public class DBRepair extends DBConn {
 		sql = "UPDATE repairs SET "
 				+ "repairDate = '"+format.format(r.getDate())+"', "
 				+ "time = "+r.getTime()+", "
-				+ "availabilityAfter = '"+Integer.parseInt(r.getAvailabilityAfterRepair())+"', "
+				+ "availabilityAfter = '"+r.getAvailabilityAfterRepair().charAt(0)+"', "
 				+ "repairProcess = '"+r.getRepairProcess()+"', "
 				+ "idLocalization = "+r.getFailureLocalization()+", "
 				+ "isRepaired = "+r.isRepaired()+", "

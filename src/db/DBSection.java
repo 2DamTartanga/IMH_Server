@@ -132,7 +132,7 @@ public class DBSection extends DBConn {
 			int imp=rs.getInt("importance");
 			total=total+imp;
 			if(rs.getString("status").equals("V"))acum=acum+imp;
-			else if(rs.getString("status").equals("A"))acum=acum+imp*0.75f;
+			else if(rs.getString("status").equals("A"))acum=acum+imp*0.25f;
 		}
 		this.close();
 		percent=acum/total*100;

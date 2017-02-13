@@ -57,7 +57,7 @@ public class DBBreakdown extends DBConn {
 		this.connect();
 		sql="SELECT * FROM breakdowns "+
 		"WHERE codMachine = '"+machine.getId()+"';";
-		System.out.println(sql);//TODO remove
+		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			break1=new Breakdown();

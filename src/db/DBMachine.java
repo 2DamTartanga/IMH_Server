@@ -16,6 +16,7 @@ public class DBMachine extends DBConn {
 		"INNER JOIN sections USING(idSection) "+
 		"INNER JOIN models USING (model) "+
 		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
+		"INNER JOIN machineFamilies ON(model.machine=machineFamilies.id)"+
 		"WHERE codMachine='"+machine.getId()+"';";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
@@ -37,7 +38,8 @@ public class DBMachine extends DBConn {
 		"INNER JOIN sections USING(idSection) "+
 		"INNER JOIN models USING (model) "+
 		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
-		"WHERE idSection='"+section.getId()+"' ORDER BY status ASC;";
+		"INNER JOIN machineFamilies ON(model.machine=machineFamilies.id)"+
+		"WHERE idSection='"+section.getId()+"' ORDER BY machine DESC, codMachine DESC;";
 		rs=stmt.executeQuery(sql);
 		while(rs.next()){
 			m=getMachineFromResultSet();
@@ -55,7 +57,7 @@ public class DBMachine extends DBConn {
 		mach1.setFileSearch(rs.getString("fileSearch"));
 		mach1.setHydraulicConnection(rs.getString("hydraulicSystem"));
 		mach1.setImportance(rs.getInt("importance"));
-		mach1.setMachineFamilly(rs.getString("machine"));
+		mach1.setMachineFamilly(rs.getString("machineFamilies.name"));
 		mach1.setManufacturer(rs.getString("models.manufacturer"));
 		mach1.setModel(rs.getString("model"));
 		mach1.setPneumaticConnection(rs.getString("pneumaticConnection"));

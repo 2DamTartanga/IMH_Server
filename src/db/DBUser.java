@@ -17,12 +17,14 @@ public class DBUser extends DBConn {
 				+ "FROM users "
 				+ "LEFT OUTER JOIN others USING(username) "
 				+ "LEFT OUTER JOIN maintenance USING(username)"
+				+"LEFT OUTER JOIN groups ON(maintenance.idGroup=groups.id) "
 				+ "WHERE LOWER(username) LIKE LOWER('"+username+"') "
 					+ "AND password LIKE '"+password+"';";
 		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
-			rUser = getUserFromResult(true);	
+			if(rs.getString("role")!=null && rs.getString("role").charAt(0)=='T')rUser = getUserFromResult(true);
+			else rUser=getUserFromResult(false);
 			System.out.println(rUser);
 		}
 		this.close();
