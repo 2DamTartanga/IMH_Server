@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class ThreadServer extends Thread{
 
-	private static final int PORT = 8008;
+	private static final int PORT = 6100;
 	private ServerSocket serverSocket;
 
 	public static void main(String[] args){

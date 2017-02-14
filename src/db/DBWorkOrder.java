@@ -49,8 +49,9 @@ public class DBWorkOrder extends DBConn {
 		ArrayList<WorkOrder> rWorkOrders = new ArrayList<>();
 		int id = group.getId();
 		this.connect();
-		String sub = "SELECT codBreakdown FROM repairs WHERE time IS NULL AND LOWER(idGroup) LIKE LOWER('"+id+"')";
-		sql = "SELECT * FROM workorders "
+		//String sub = "SELECT codBreakdown FROM repairs WHERE LOWER(idGroup) LIKE LOWER('"+id+"')";
+		String sub="SELECT codBreakdown FROM asignations LEFT OUTER JOIN repairs USING(codBreakdown) WHERE asignations.idGroup="+id+"";
+		sql = "SELECT * FROM workorders INNER JOIN asignations ON(workorders.idBreakdown=asignations.codBreakdown) "
 				+ "WHERE idBreakdown IN ("+sub+") ORDER BY severity DESC";//TODO AND repairDate(subselect) = 1990-01-01
 		System.out.println(sql);
 		rs = stmt.executeQuery(sql);

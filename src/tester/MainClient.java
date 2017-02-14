@@ -130,13 +130,13 @@ public class MainClient implements MessageListener {
     	WorkOrder wo = new WorkOrder();
    		wo.setBreakdown(new Breakdown(1));
    		Repair rep = null;
-		try {
-			rep = new Repair(format.parse("1990-01-01 00:00:00"), 1, 4f, "2", "xDDDD", true, "eee");
+		//try {
+			//rep = new Repair(format.parse("1990-01-01 00:00:00"), 1, 4f, "2", "xDDDD", true, "eee");
 			rep.setGroup(new Group(8));
-		} catch (ParseException e) {
+		//} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		//}
    		wo.setRepair(rep);
         Message msg = new Message(Message.GET, Message.REPAIR, wo);
        
@@ -184,9 +184,9 @@ public class MainClient implements MessageListener {
     	wo.setOthers("MongoLite");
     	wo.setSeverity(2);
     	wo.setTypeOfMaintenance("e");
-    	Repair rep = new Repair(new Date(), 1, 4f, "2", "xDDDD", true, "eee");
-    	rep.setGroup(new Group(8));
-        wo.setRepair(rep);
+    	//Repair rep = new Repair(new Date(), 1, 4f, "2", "xDDDD", true, "eee");
+    	//rep.setGroup(new Group(8));
+        //wo.setRepair(rep);
     	Message msg = new Message(Message.ADD, Message.REPAIR, wo);
         ThreadSender ts = new ThreadSender(this, cs, msg);
         ts.start();

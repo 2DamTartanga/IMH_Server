@@ -16,7 +16,7 @@ public class DBMachine extends DBConn {
 		"INNER JOIN sections USING(idSection) "+
 		"INNER JOIN models USING (model) "+
 		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
-		"INNER JOIN machineFamilies ON(model.machine=machineFamilies.id)"+
+		"INNER JOIN machineFamilies ON(models.machine=machineFamilies.id)"+
 		"WHERE codMachine='"+machine.getId()+"';";
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
@@ -71,6 +71,44 @@ public class DBMachine extends DBConn {
 		mach1.setWorkingPressure(rs.getString("workingPressure"));
 		mach1.setYear(rs.getString("year"));
 		return mach1;
+	}
+	public boolean updateMachineStatus(Machine machine) throws Exception{
+		this.connect();
+		String newStatus="V";
+		sql="SELECT upper(equipmentAvailable) FROM breakdowns OUTER JOIN repairs USING(codBreakdown)"+
+		" WHERE lower(codMachine) LIKE lower('"+machine.getId()+"');";
+		rs=stmt.executeQuery(sql);
+		while(rs.next()){
+			if(rs.getString(1).charAt(0)=='R'){
+				newStatus="R";
+				break;
+			}
+			else if(rs.getString(1).charAt(0)=='A'){
+				newStatus="A";
+			}
+		}
+		close();
+		if(newStatus.equals("A")||newStatus==null){
+			this.connect();
+			sql="SELECT upper(equipmentAvailable) FROM breakdowns iNNER JOIN repairs USING(codBreakdown)"+
+					" WHERE lower(codMachine) LIKE lower('"+machine.getId()+"') AND isRepaired=false;";
+			rs=stmt.executeQuery(sql);
+			while(rs.next()){
+				if(rs.getString(1).charAt(0)=='R'){
+					newStatus="R";
+					break;
+				}
+				else if(rs.getString(1).charAt(0)=='A'){
+					newStatus="A";
+				}
+			}
+			close();
+		}
+		this.connect();
+		sql="UPDATE machines SET status='"+newStatus+"' WHERE lower(codMachine) LIKE lower('"+machine.getId()+"');";
+		boolean ok = stmt.executeUpdate(sql) == 1;
+		close();
+		return ok;
 	}
 	
 }
