@@ -84,7 +84,7 @@ public class DBRepair extends DBConn {
 				+ " "
 				+ "WHERE codBreakdown = "+workOrder.getId()+" "
 				+ "AND idGroup = "+r.getGroup().getId()+" ;";*/
-		sql = "INSERT INTO ";
+		new DBMachine().updateMachineStatus(workOrder.getBreakdown().getMachine());
 		System.out.println(sql);
 		result = stmt.executeUpdate(sql);
 		new DBTools().insertTootls(workOrder);
