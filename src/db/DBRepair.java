@@ -94,7 +94,8 @@ public class DBRepair extends DBConn {
 				rs.getString("availabilityAfter"),
 				rs.getString("repairProcess"),
 				rs.getBoolean("isRepaired"),
-				rs.getString("replacements")
+				rs.getString("replacements"),
+				rs.getDate("asignationDate")
 		);
 		rRepair.setTools(new DBTools().getToolsFromRepair(
 				rs.getInt("codBreakdown"), 

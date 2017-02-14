@@ -23,7 +23,7 @@ public class Repair implements Serializable {
 	
 	public Repair(){};
 	public Repair(Date date, int failureLocalization, float time, String availabilityAfterRepair, String repairProcess,
-			boolean isRepaired, String replacements) {
+			boolean isRepaired, String replacements, Date asignationDate) {
 		this.date = date;
 		this.failureLocalization = failureLocalization;
 		this.time = time;
@@ -31,6 +31,7 @@ public class Repair implements Serializable {
 		this.repairProcess = repairProcess;
 		this.isRepaired = isRepaired;
 		this.replacements = replacements;
+		this.asignationDate = asignationDate;
 	}
 	public Date getDate() {
 		return date;
