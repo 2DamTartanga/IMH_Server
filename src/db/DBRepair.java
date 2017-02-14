@@ -36,12 +36,44 @@ public class DBRepair extends DBConn {
 	
 	public boolean addRepair(WorkOrder workOrder) throws Exception{//TODO acabar
 		int result;
-		
+		//TODO dani
 		this.connect();
 		Repair r = workOrder.getRepair();
+		int id = workOrder.getId();
+		int group = r.getGroup().getId();
+		Date repairDate = r.getDate();
+		float time = r.getTime();
+		String availabilityAfterRepair = r.getAvailabilityAfterRepair();
+		String repairProcess = r.getRepairProcess();
+		int idLocalization = r.getFailureLocalization();
+		boolean isRepaired = r.isRepaired();
+		String replacements = r.getReplacements();
+		Date assignationDate = r.getAsignationDate();
 		
-		
-		sql = "UPDATE repairs SET "
+		sql = "INSERT INTO repairs ("
+				+ "codBreakdown, "
+				+ "idGroup, "
+				+ "repairDate, "
+				+ "time, "
+				+ "availabilityAfter, "
+				+ "repairProcess, "
+				+ "idLocalization, "
+				+ "isRepaired, "
+				+ "replacements, "
+				+ "assignationDate "
+				+ ")VALUES("
+				+ id +", "
+				+ group+", "
+				+ "'"+ format.format(repairDate) +"', "
+				+ time +", "
+				+ "'"+ availabilityAfterRepair +"', "
+				+ "'"+ repairProcess +"', "
+				+ idLocalization +", "
+				+ isRepaired +", "
+				+ "'"+ replacements +"', "
+				+"'"+ format.format(assignationDate) +"' "
+				+ ")";
+		/*sql = "UPDATE repairs SET "
 				+ "repairDate = '"+format.format(r.getDate())+"', "
 				+ "time = "+r.getTime()+", "
 				+ "availabilityAfter = '"+r.getAvailabilityAfterRepair().charAt(0)+"', "
@@ -51,7 +83,8 @@ public class DBRepair extends DBConn {
 				+ "replacements = '"+r.getReplacements()+"' "
 				+ " "
 				+ "WHERE codBreakdown = "+workOrder.getId()+" "
-				+ "AND idGroup = "+r.getGroup().getId()+" ;";
+				+ "AND idGroup = "+r.getGroup().getId()+" ;";*/
+		sql = "INSERT INTO ";
 		System.out.println(sql);
 		result = stmt.executeUpdate(sql);
 		new DBTools().insertTootls(workOrder);
