@@ -17,6 +17,7 @@ public class DBBreakdown extends DBConn {
 		System.out.println(sql);
 		boolean ok = stmt.executeUpdate(sql) == 1;
 		this.close();
+		new DBMachine().updateMachineStatus(breakdown.getMachine());
 		return ok;
 	}
 	
