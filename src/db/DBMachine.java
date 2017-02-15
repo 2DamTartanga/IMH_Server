@@ -88,7 +88,7 @@ public class DBMachine extends DBConn {
 			}
 		}
 		close();
-		if(newStatus.equals("A")||newStatus==null){
+		if(newStatus.equals("A")||newStatus.equals("V")){
 			this.connect();
 			sql="SELECT upper(equipmentAvailable) FROM breakdowns iNNER JOIN repairs USING(codBreakdown)"+
 					" WHERE lower(codMachine) LIKE lower('"+machine.getId()+"') AND isRepaired=false;";

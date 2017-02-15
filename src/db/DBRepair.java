@@ -115,7 +115,7 @@ public class DBRepair extends DBConn {
 	
 	private Repair getRepairFromResultSet(boolean needsGroup) throws Exception{
 		Repair rRepair = null;
-		Timestamp timestamp = rs.getTimestamp("repairDate");
+		Timestamp timestamp = rs.getTimestamp("asignationDate");
 		Date date = null;
 		if (timestamp != null)
 			date = new Date(timestamp.getTime());
@@ -130,6 +130,7 @@ public class DBRepair extends DBConn {
 				rs.getString("replacements"),
 				rs.getDate("asignationDate")
 		);
+			date = new Date(timestamp.getTime());
 		rRepair.setTools(new DBTools().getToolsFromRepair(
 				rs.getInt("codBreakdown"), 
 				rs.getString("idGroup"), 

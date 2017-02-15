@@ -63,7 +63,7 @@ public class DBTools extends DBConn{
 				+ "FROM repairTools"
 				+ " WHERE codBreakdown = "+id+" "
 				+ "AND idGroup = "+group+" "
-				+ "AND repairDate = "
+				+ "AND asignationDate = "
 					+ "DATE_FORMAT('"+format.format(date)+"','%Y-%m-%d %T')  ";
 		sql = "SELECT * FROM tools WHERE idTools IN ("+sub+");";
 		System.out.println(sql);
