@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.tartanga.dam.imhandroid.model.Machine;
 import com.tartanga.dam.imhandroid.model.Section;
 
-import log.Logger;
-
 public class DBSection extends DBConn {
 
 	public Section getSection(Section section, boolean needsMachines)throws Exception{
@@ -14,7 +12,6 @@ public class DBSection extends DBConn {
 		sect1.setId(section.getId());
 		this.connect();
 		sql= "SELECT nameSection FROM sections WHERE lower(idSection) LIKE lower('"+section.getId()+"');";
-		Logger.xDD().info("DBSection -> " + sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			sect1.setName(rs.getString(1));
@@ -32,7 +29,6 @@ public class DBSection extends DBConn {
 		ArrayList<Section> sections = new ArrayList<>();
 		this.connect();
 		sql = "SELECT * FROM sections;";
-		Logger.xDD().info("DBSection -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			Section sec = new Section();
@@ -54,11 +50,9 @@ public class DBSection extends DBConn {
 		this.connect();
 		if(section!=null){
 			sql="SELECT COUNT(*), upper(status) AS status FROM MACHINES WHERE lower(idSection) LIKE lower('"+section.getId()+"') GROUP BY status;";
-			Logger.xDD().info("DBSection -> " + sql);
 		}
 		else 
 		sql="SELECT COUNT(*), status FROM MACHINES GROUP BY status;";
-		Logger.xDD().info("DBSection -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			if(rs.getString("status").equals("V")){
@@ -78,7 +72,6 @@ public class DBSection extends DBConn {
 		ArrayList<Machine> machines = new ArrayList<>();
 		this.connect();
 		sql = "SELECT DISTINCT(machine) FROM models INNER JOIN machines USING(model) WHERE idSection = " + sec.getId();
-		Logger.xDD().info("DBSection -> " + sql);
 		stmt.executeQuery(sql);
 		while(rs.next()){
 			Machine m = new Machine();
@@ -95,7 +88,6 @@ public class DBSection extends DBConn {
 		sql = "SELECT *"
 				+ "FROM machines m INNER JOIN models USING(model) "
 				+ "WHERE m.idSection = " + sec.getId();
-		Logger.xDD().info("DBSection -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			Machine m = getMachineFromResultSet();
@@ -134,7 +126,6 @@ public class DBSection extends DBConn {
 		float total=0;
 		this.connect();
 		sql="SELECT upper(status) AS status, importance FROM machines;";
-		Logger.xDD().info("DBSection -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			int imp=rs.getInt("importance");

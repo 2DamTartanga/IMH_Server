@@ -31,19 +31,18 @@ public class ThreadClient extends Thread {
 		try{
 			in = new ObjectInputStream(clientSocket.getInputStream());
 			input = in.readObject();
-			Logger.xDD().info("ThreadClient -> Socket cliente ha enviado un objeto.");
+			Logger.xDD().info("New request from " + clientSocket.getInetAddress());
 			if(input instanceof Message){
-				Logger.xDD().info("ThreadClient -> Socket cliente ha enviado un objeto del tipo Message.");
+				Logger.xDD().debug("Message -> " + (Message) input);
 				output = manager.manageMessages((Message) input);
-				Logger.xDD().info("ThreadClient -> Optenida salida de manageMessages().");
 				out.writeObject(output);
-				Logger.xDD().info("ThreadClient -> Enviada salida de manageMessages() a socket cliente.");
+				Logger.xDD().debug("Output -> " + output);
 			}
 		}catch(ClassNotFoundException e){
-			Logger.xDD().error("ThreadClient -> Error ClassNotFoundException.");
+			Logger.xDD().error("ThreadClient -> Error ClassNotFoundException = " + e.getMessage());
 			e.printStackTrace();
 		}catch(IOException e){
-			Logger.xDD().error("ThreadClient -> Error IOException.");
+			Logger.xDD().error("ThreadClient -> Error IOException = " + e.getMessage());
 			e.printStackTrace();
 		}finally{
 			try {

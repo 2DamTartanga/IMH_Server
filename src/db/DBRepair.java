@@ -72,7 +72,6 @@ public class DBRepair extends DBConn {
 				+ "'"+ replacements +"', "
 				+"'"+ format.format(assignationDate) +"' "
 				+ ")";
-		Logger.xDD().info("DBRepair -> " + sql);
 		/*sql = "UPDATE repairs SET "
 				+ "repairDate = '"+format.format(r.getDate())+"', "
 				+ "time = "+r.getTime()+", "

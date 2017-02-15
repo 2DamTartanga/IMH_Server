@@ -6,8 +6,6 @@ import com.tartanga.dam.imhandroid.model.Breakdown;
 import com.tartanga.dam.imhandroid.model.Machine;
 import com.tartanga.dam.imhandroid.model.User;
 
-import log.Logger;
-
 public class DBBreakdown extends DBConn {
 
 	public boolean addBreakdown(Breakdown breakdown) throws Exception{
@@ -16,7 +14,6 @@ public class DBBreakdown extends DBConn {
 		"VALUES('"+format.format(breakdown.getDate())+"','"+breakdown.getMachine().getId()+"','"+breakdown.getReporter().getUsername()+
 		"','"+breakdown.getFailureType()+"','"+breakdown.getDescription()+"','"+breakdown.getEquipmentAvailable()+
 		"','"+breakdown.getSubject()+"')";
-		Logger.xDD().debug("DBBreakdown -> " + sql);
 		boolean ok = stmt.executeUpdate(sql) == 1;
 		this.close();
 		new DBMachine().updateMachineStatus(breakdown.getMachine());
@@ -30,7 +27,6 @@ public class DBBreakdown extends DBConn {
 		this.connect();
 		sql="SELECT * FROM breakdowns "+
 		"WHERE codBreakdown ="+breakdown.getId()+";";
-		Logger.xDD().debug("DBBreakdown -> " + sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			break1.setDate(rs.getDate("date"));
@@ -61,7 +57,6 @@ public class DBBreakdown extends DBConn {
 		this.connect();
 		sql="SELECT * FROM breakdowns "+
 		"WHERE codMachine = '"+machine.getId()+"';";
-		Logger.xDD().debug("DBBreakdown -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			break1=new Breakdown();
@@ -87,7 +82,6 @@ public class DBBreakdown extends DBConn {
 		"INNER JOIN repairs USING(codBreakdown)"+
 		"WHERE codMachine = '"+machine.getId()+
 		"AND isRrpaired = false';";
-		Logger.xDD().debug("DBBreakdown -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			break1=new Breakdown();

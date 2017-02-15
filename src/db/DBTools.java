@@ -6,8 +6,6 @@ import java.util.Map;
 
 import com.tartanga.dam.imhandroid.model.WorkOrder;
 
-import log.Logger;
-
 public class DBTools extends DBConn{
 
 	public HashMap<Integer, String> getToolsFromRepair(WorkOrder wo) throws Exception{
@@ -18,7 +16,6 @@ public class DBTools extends DBConn{
 		this.connect();
 		String sub = "SELECT idTool FROM repairTools WHERE codBreakdown = "+idBreakdown+" AND idGroup = "+idGroup+" AND repairDate = DATE_FORMAT('"+format.format(date)+"','yyyy-MM-dd HH:mm:ss')  ";
 		sql = "SELECT * FROM tools WHERE idTools IN ("+sub+");";
-		Logger.xDD().info("DBTools -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rTools.put(rs.getInt("idTools"), rs.getString("name"));
@@ -43,7 +40,6 @@ public class DBTools extends DBConn{
 			try{
 				sql = "INSERT INTO repairTools(codBreakdown,idGroup,repairDate, idTool) "
 						+ "VALUES("+id+","+idGroup+",'"+fDate+"',"+tool.getKey()+") ";
-				Logger.xDD().info("DBTools -> " + sql);
 				stmt.executeUpdate(sql);
 				rowsInserted++;
 			}catch(Exception e){
@@ -68,7 +64,6 @@ public class DBTools extends DBConn{
 				+ "AND asignationDate = "
 					+ "DATE_FORMAT('"+format.format(date)+"','%Y-%m-%d %T')  ";
 		sql = "SELECT * FROM tools WHERE idTools IN ("+sub+");";
-		Logger.xDD().info("DBTools -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rTools.put(
@@ -85,7 +80,6 @@ public class DBTools extends DBConn{
 		HashMap<Integer, String> rTools = new HashMap<>();
 		this.connect();
 		sql = "SELECT * FROM tools";
-		Logger.xDD().info("DBTools -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rTools.put(
