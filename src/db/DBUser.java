@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.tartanga.dam.imhandroid.model.Group;
 import com.tartanga.dam.imhandroid.model.User;
 
+import log.Logger;
+
 public class DBUser extends DBConn {
 
 	public User login(User user) throws Exception{
@@ -20,7 +22,7 @@ public class DBUser extends DBConn {
 				+"LEFT OUTER JOIN groups ON(maintenance.idGroup=groups.id) "
 				+ "WHERE LOWER(username) LIKE LOWER('"+username+"') "
 					+ "AND password LIKE '"+password+"';";
-		System.out.println(sql);
+		Logger.xDD().info("DBUser -> " + sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			if(rs.getString("role")!=null && rs.getString("role").charAt(0)=='T')rUser = getUserFromResult(true);
@@ -40,6 +42,7 @@ public class DBUser extends DBConn {
 				+ "LEFT OUTER JOIN others USING(username) "
 				+ "JOIN maintenance USING(username)"
 				+ "WHERE LOWER(username) LIKE LOWER('"+username+"');";
+		Logger.xDD().info("DBUser -> " + sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			rUser = getUserFromResult(true);
@@ -58,6 +61,7 @@ public class DBUser extends DBConn {
 				+ "LEFT OUTER JOIN others USING(username) "
 				+ "LEFT OUTER JOIN maintenance USING(username)"
 				+ "WHERE idGroup = "+id+";";
+		Logger.xDD().info("DBUser -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rUsers.add(getUserFromResult(false));
@@ -88,6 +92,7 @@ public class DBUser extends DBConn {
 		sql="UPDATE users "+
 		"SET password='"+user.getPassword()+
 		"' WHERE username LIKE '"+user.getUsername()+"';";
+		Logger.xDD().info("DBUser -> " + sql);
 		int result = stmt.executeUpdate(sql);
 		this.close();
 		return result==1;
