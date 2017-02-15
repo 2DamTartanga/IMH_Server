@@ -5,6 +5,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import log.Logger;
+
 public class ThreadServer extends Thread{
 
 	private static final int PORT = 6100;
@@ -22,26 +24,28 @@ public class ThreadServer extends Thread{
 		String msg = "Listening for connections...";
 		try {
 			serverSocket = new ServerSocket(PORT);
-			System.out.println(msg);
+			Logger.xDD().info("ThreadServer -> " + msg);
 			while (true) {
 				Thread.sleep(100);
+				Logger.xDD().info("ThreadServer -> " + " dormiendo el thread 100ms");
 				{
 					examineRequest();
 				}
 			}
 		} catch (IOException e) {
+			Logger.xDD().error("ThreadServer -> " + "IOException: " + e.getMessage());
 			e.printStackTrace();
 		} catch (InterruptedException e) {
+			Logger.xDD().error("ThreadServer -> " + "InterruptedException: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
 	private void examineRequest() throws IOException {
 		Socket cs = serverSocket.accept();
-		String msg = "New request: " + cs.getInetAddress() + "\n";
 		ObjectOutputStream out = new ObjectOutputStream(cs.getOutputStream());
 		ThreadClient tc = new ThreadClient(cs, out);
 		tc.start();
-		System.out.println(msg);
+		Logger.xDD().info("ThreadServer -> " + "New request: " + cs.getInetAddress() + "\n");
 	}
 }
