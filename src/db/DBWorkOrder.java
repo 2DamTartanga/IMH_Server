@@ -11,6 +11,8 @@ import com.tartanga.dam.imhandroid.model.Machine;
 import com.tartanga.dam.imhandroid.model.Repair;
 import com.tartanga.dam.imhandroid.model.WorkOrder;
 
+import log.Logger;
+
 public class DBWorkOrder extends DBConn {
 
 	public WorkOrder getWorkOrder(WorkOrder workOrder) throws Exception{
@@ -19,7 +21,7 @@ public class DBWorkOrder extends DBConn {
 		sql = "SELECT * FROM workorders w" +
 				"INNER JOIN breakdowns " + 
 				"ON " + workOrder.getId() + "=breakdowns.codBreakdown";
-		
+		Logger.xDD().info("DBWorkOrder -> " + sql);
 		ResultSet rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			
@@ -53,7 +55,7 @@ public class DBWorkOrder extends DBConn {
 		String sub="SELECT codBreakdown FROM asignations LEFT OUTER JOIN repairs USING(codBreakdown) WHERE asignations.idGroup="+id+"";
 		sql = "SELECT * FROM workorders INNER JOIN asignations ON(workorders.idBreakdown=asignations.codBreakdown) "
 				+ "WHERE idBreakdown IN ("+sub+") ORDER BY severity DESC";//TODO AND repairDate(subselect) = 1990-01-01
-		System.out.println(sql);
+		Logger.xDD().info("DBWorkOrder -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rWorkOrders.add(getWorkOrderFromResult(group));
