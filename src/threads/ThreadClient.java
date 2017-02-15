@@ -30,6 +30,7 @@ public class ThreadClient extends Thread {
 		try{
 			in = new ObjectInputStream(clientSocket.getInputStream());
 			input = in.readObject();
+			Logger.
 			if(input instanceof Message){
 				output = manager.manageMessages((Message) input);
 				out.writeObject(output);
