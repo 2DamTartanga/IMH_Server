@@ -7,9 +7,10 @@ import com.tartanga.dam.imhandroid.model.Group;
 import com.tartanga.dam.imhandroid.model.Repair;
 import com.tartanga.dam.imhandroid.model.WorkOrder;
 
+import log.Logger;
+
 public class DBRepair extends DBConn {
 	
-	 //static Logger log = Logger.getLogger(DBRepair.class.getName());
 	
 	public WorkOrder getRepairs(WorkOrder workOrder, boolean needsGroup) throws Exception{
 		Repair r = null;
@@ -19,11 +20,10 @@ public class DBRepair extends DBConn {
 		sql = "SELECT * FROM repairs "
 			+ "WHERE codBreakdown = "+id+" "
 			+ "AND idGroup LIKE "+idGroup+";";
-		System.out.println(sql);
+		Logger.xDD().info("DBRepair -> " + sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			r = getRepairFromResultSet(needsGroup);
-			//r.setTools(new DBTools().getToolsFromRepair(workOrder));//TODO ESTO!!
 		}
 		workOrder.setRepair(r);
 		this.close();
@@ -36,7 +36,6 @@ public class DBRepair extends DBConn {
 	
 	public boolean addRepair(WorkOrder workOrder) throws Exception{//TODO acabar
 		int result;
-		//TODO dani
 		this.connect();
 		Repair r = workOrder.getRepair();
 		int id = workOrder.getId();
@@ -73,6 +72,7 @@ public class DBRepair extends DBConn {
 				+ "'"+ replacements +"', "
 				+"'"+ format.format(assignationDate) +"' "
 				+ ")";
+		Logger.xDD().info("DBRepair -> " + sql);
 		/*sql = "UPDATE repairs SET "
 				+ "repairDate = '"+format.format(r.getDate())+"', "
 				+ "time = "+r.getTime()+", "
@@ -85,7 +85,6 @@ public class DBRepair extends DBConn {
 				+ "WHERE codBreakdown = "+workOrder.getId()+" "
 				+ "AND idGroup = "+r.getGroup().getId()+" ;";*/
 		new DBMachine().updateMachineStatus(workOrder.getBreakdown().getMachine());
-		System.out.println(sql);
 		result = stmt.executeUpdate(sql);
 		new DBTools().insertTootls(workOrder);
 		
@@ -101,7 +100,7 @@ public class DBRepair extends DBConn {
 		sql = "SELECT * FROM repairs "
 				+ "WHERE idGroup='"
 				+ group.getId() + "';";
-		System.out.println(sql);
+		Logger.xDD().info("DBRepair -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rRepair = getRepairFromResultSet(false);
@@ -144,7 +143,7 @@ public class DBRepair extends DBConn {
 		int group = workOrder.getRepair().getGroup().getId();
 		this.connect();
 		sql = "SELECT * FROM repairs WHERE codBreakdown = "+id+" AND isRepaired = 0 AND idGroup = "+group+";";
-		System.out.println(sql); // TODO
+		Logger.xDD().info("DBRepair -> " + sql);
 		rs = stmt.executeQuery(sql);
 		while(rs.next()){
 			rRepair = getRepairFromResultSet(false);
