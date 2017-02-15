@@ -13,6 +13,7 @@ import com.tartanga.dam.imhandroid.model.WorkOrder;
 
 import db.DBManager;
 import interfaces.Database;
+import log.Logger;
 
 public class Manager implements Database {
 
@@ -45,7 +46,7 @@ public class Manager implements Database {
 				break;
 			}
 		}catch(Exception ex){
-			ex.printStackTrace();
+			Logger.xDD().error("Manager (manageMessages) -> " + ex.getMessage());
 		}
 		
 		return objectToReturn;
