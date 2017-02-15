@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
+import log.Logger;
+
 public abstract class DBConn {
 	protected Connection con;
 	protected Statement stmt;
@@ -23,9 +25,11 @@ public abstract class DBConn {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://10.22.82.173:3306/bdaimh","tartanga","tartanga");
+			Logger.xDD().info("DBConn -> " + "Conexion establecida con la base de datos.");
 			stmt = con.createStatement();
 			sql = "";
 		} catch (Exception e) {
+			Logger.xDD().error("DBConn -> " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -41,5 +45,6 @@ public abstract class DBConn {
 		if(rs != null) rs.close();
 		con.close();
 		sql = "";
+		Logger.xDD().info("DBConn -> " + "Todo lo que hay en DBConn cerrado.");
 	}
 }
