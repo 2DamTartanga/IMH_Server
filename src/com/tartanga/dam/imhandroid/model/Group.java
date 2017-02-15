@@ -40,7 +40,7 @@ public class Group implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Group [\n\tid=" + id + ", \n\tusers=" + users + ", \n\tworkOrders=" + workOrders + "\n]";
+		return "Group [id=" + id + ", users=" + users + ", workOrders=" + workOrders + "]";
 	}
 	
 	
