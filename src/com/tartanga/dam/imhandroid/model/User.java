@@ -104,8 +104,8 @@ public class User implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "User [\n\tusername=" + username + ", \n\tpassword=" + password + ", \n\temail=" + email + ", \n\tname=" + name
-				+ ", \n\tsurname=" + surname + ", \n\tcourse=" + course + ", \n\tgroup=" + group + "\n]";
+		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name
+				+ ", surname=" + surname + ", course=" + course + ", group=" + group + "]";
 
 	
 	}	

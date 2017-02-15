@@ -61,6 +61,11 @@ public class Message implements Serializable{
 		return content;
 	}
 
+	@Override
+	public String toString() {
+		return "Message [action=" + action + ", object=" + object + ", content=" + content + "]";
+	}
+
 	/*public String getLanguage() {
 		return this.language;
 	}*/

@@ -166,13 +166,13 @@ public class Machine implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Machine [\n\tid=" + id + ", \n\t status=" + status + ", \n\t importance=" + importance + ", \n\t model=" + model
-				+ ", \n\t manufacturer=" + manufacturer + ", \n\t hydraulicConnection=" + hydraulicConnection
-				+ ", \n\t pneumaticConnection=" + pneumaticConnection + ", \n\t dimmensions=" + dimmensions + ", \n\t powerSource="
-				+ powerSource + ", \n\t electricConnection=" + electricConnection + ", \n\t workingPressure=" + workingPressure
-				+ ", \n\t machineFamilly=" + machineFamilly + ", \n\t fileSearch=" + fileSearch + ", \n\t telephone=" + telephone
-				+ ", \n\t responsable=" + responsable + ", \n\t weight=" + weight + ", \n\t typeOfOil=" + typeOfOil + ", \n\t serialNumber="
-				+ serialNumber + ", \n\t year=" + year + ", \n\t section=" + section + ", \n\t breakdowns=" + breakdowns + "\n]";
+		return "Machine [id=" + id + ",  status=" + status + ",  importance=" + importance + ",  model=" + model
+				+ ",  manufacturer=" + manufacturer + ",  hydraulicConnection=" + hydraulicConnection
+				+ ",  pneumaticConnection=" + pneumaticConnection + ",  dimmensions=" + dimmensions + ",  powerSource="
+				+ powerSource + ",  electricConnection=" + electricConnection + ",  workingPressure=" + workingPressure
+				+ ",  machineFamilly=" + machineFamilly + ",  fileSearch=" + fileSearch + ",  telephone=" + telephone
+				+ ",  responsable=" + responsable + ",  weight=" + weight + ",  typeOfOil=" + typeOfOil + ",  serialNumber="
+				+ serialNumber + ",  year=" + year + ",  section=" + section + ",  breakdowns=" + breakdowns + "]";
 	}
 	
 	
