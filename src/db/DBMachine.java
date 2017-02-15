@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.tartanga.dam.imhandroid.model.Machine;
 import com.tartanga.dam.imhandroid.model.Section;
 
+import log.Logger;
+
 public class DBMachine extends DBConn {
 
 	public Machine getMachine(Machine machine) throws Exception{
@@ -18,6 +20,7 @@ public class DBMachine extends DBConn {
 		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
 		"INNER JOIN machineFamilies ON(models.machine=machineFamilies.id)"+
 		"WHERE codMachine='"+machine.getId()+"';";
+		Logger.xDD().info("DBMachine -> " + sql);
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			mach1=getMachineFromResultSet();
@@ -40,10 +43,10 @@ public class DBMachine extends DBConn {
 		"INNER JOIN manufacturers ON(models.manufacturer=manufacturers.id) "+
 		"INNER JOIN machineFamilies ON(models.machine=machineFamilies.id)"+
 		"WHERE idSection='"+section.getId()+"' ORDER BY machine DESC, codMachine DESC;";
+		Logger.xDD().info("DBMachine -> " + sql);
 		rs=stmt.executeQuery(sql);
 		while(rs.next()){
 			m=getMachineFromResultSet();
-			//m.setId(rs.getString(1));
 			machines.add(m);
 		}
 		this.close();
@@ -78,6 +81,7 @@ public class DBMachine extends DBConn {
 		sql="SELECT upper(equipmentAvailable) FROM breakdowns OUTER JOIN repairs USING(codBreakdown)"+
 		" WHERE lower(codMachine) LIKE lower('"+machine.getId()+"');";
 		rs=stmt.executeQuery(sql);
+		Logger.xDD().info("DBMachine -> " + sql);
 		while(rs.next()){
 			if(rs.getString(1).charAt(0)=='R'){
 				newStatus="R";
@@ -92,6 +96,7 @@ public class DBMachine extends DBConn {
 			this.connect();
 			sql="SELECT upper(equipmentAvailable) FROM breakdowns iNNER JOIN repairs USING(codBreakdown)"+
 					" WHERE lower(codMachine) LIKE lower('"+machine.getId()+"') AND isRepaired=false;";
+			Logger.xDD().info("DBMachine -> " + sql);
 			rs=stmt.executeQuery(sql);
 			while(rs.next()){
 				if(rs.getString(1).charAt(0)=='R'){
@@ -106,6 +111,7 @@ public class DBMachine extends DBConn {
 		}
 		this.connect();
 		sql="UPDATE machines SET status='"+newStatus+"' WHERE lower(codMachine) LIKE lower('"+machine.getId()+"');";
+		Logger.xDD().info("DBMachine -> " + sql);
 		boolean ok = stmt.executeUpdate(sql) == 1;
 		close();
 		return ok;
