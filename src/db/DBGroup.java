@@ -10,10 +10,6 @@ public class DBGroup extends DBConn {
 			DBUser dbUser = new DBUser();
 			rGroup.setUsers(dbUser.getUsersFromGroup(rGroup));
 		}
-		if(false){
-			DBWorkOrder dbWorkOrder = new DBWorkOrder();
-			rGroup.setWorkOrders(dbWorkOrder.getPendingWorkOrdersFromGroup(rGroup));
-		}
 		return rGroup;
 	}
 	
