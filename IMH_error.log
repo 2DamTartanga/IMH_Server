@@ -1,0 +1,2 @@
+2017-02-16 08:18:34 ERROR Logger:33 - ThreadServer -> IOException: Address already in use: JVM_Bind
+2017-02-16 08:42:10 ERROR Logger:37 - ThreadServer -> IOException: Address already in use: JVM_Bind

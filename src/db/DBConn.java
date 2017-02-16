@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
+import config.Config;
 import log.Logger;
 
 public abstract class DBConn {
@@ -24,7 +25,7 @@ public abstract class DBConn {
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://10.22.82.173:3306/bdaimh","tartanga","tartanga");
+			con = DriverManager.getConnection("jdbc:mysql://"+Config.HOST+":"+Config.PORT+"/"+Config.DB,Config.USER,Config.PASSWORD);
 			Logger.xDD().info("DBConn -> " + "Conexion establecida con la base de datos.");
 			stmt = con.createStatement();
 			sql = "";
