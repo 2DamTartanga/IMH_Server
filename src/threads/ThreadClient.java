@@ -33,17 +33,17 @@ public class ThreadClient extends Thread {
 			input = in.readObject();
 			Logger.xDD().info("New request from " + clientSocket.getInetAddress());
 			if(input instanceof Message){
+				Logger.xDD().info("ThreadClient -> " + "Request tipo Message recibida.");
 				Logger.xDD().debug("Message -> " + (Message) input);
 				output = manager.manageMessages((Message) input);
 				out.writeObject(output);
 				Logger.xDD().debug("Output -> " + output);
+				Logger.xDD().info("ThreadClient -> " + "Response enviada.");
 			}
 		}catch(ClassNotFoundException e){
 			Logger.xDD().error("ThreadClient -> Error ClassNotFoundException = " + e.getMessage());
-			e.printStackTrace();
 		}catch(IOException e){
 			Logger.xDD().error("ThreadClient -> Error IOException = " + e.getMessage());
-			e.printStackTrace();
 		}finally{
 			try {
 				if(in != null) in.close();
@@ -51,7 +51,7 @@ public class ThreadClient extends Thread {
 				if(clientSocket != null) clientSocket.close();
 				Logger.xDD().info("ThreadClient -> Cerrados el socket y los streams.");
 			}catch(IOException ex) {
-				ex.printStackTrace();
+				Logger.xDD().error("ThreadClient -> Error al cerrar socks y streams = " + ex.getMessage());
 			}
 		}
 	}
